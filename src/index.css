@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 180 65% 85%;
     --foreground: 210 20% 20%;
 
     --card: 0 0% 100%;
@@ -19,9 +19,9 @@ All colors MUST be HSL.
 
     --primary: 174 65% 55%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 174 65% 45%;
+    --primary-dark: 174 70% 40%;
     
-    --secondary: 174 30% 85%;
+    --secondary: 180 60% 75%;
     --secondary-foreground: 174 65% 25%;
 
     --muted: 210 20% 95%;
@@ -30,22 +30,37 @@ All colors MUST be HSL.
     --accent: 30 95% 60%;
     --accent-foreground: 0 0% 100%;
     
-    --success: 145 65% 50%;
+    --success: 145 65% 55%;
     --success-foreground: 0 0% 100%;
+    
+    --success-light: 145 65% 65%;
+    
+    --info: 210 80% 60%;
+    --info-foreground: 0 0% 100%;
+    
+    --purple: 270 60% 60%;
+    --purple-foreground: 0 0% 100%;
+    
+    --teal: 174 65% 55%;
+    --teal-foreground: 0 0% 100%;
+    
+    --pink: 340 75% 55%;
+    --pink-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 20% 88%;
-    --input: 214 20% 92%;
+    --input: 0 0% 100%;
     --ring: 174 65% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
     
-    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-widget: 0 8px 20px rgba(0, 0, 0, 0.1);
     --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.08);
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 180 60% 80%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
 

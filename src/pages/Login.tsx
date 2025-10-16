@@ -13,7 +13,6 @@ const Login = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Check if user is first time
     const isFirstTimeUser = !localStorage.getItem("inductionComplete");
     
     if (isFirstTimeUser) {
@@ -26,15 +25,15 @@ const Login = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Panel - Branded */}
-      <div className="hidden lg:flex lg:w-2/5 bg-primary flex-col justify-between p-12 text-primary-foreground">
-        <div>
-          <div className="mb-16">
-            <h1 className="text-5xl font-light mb-2">phyzii</h1>
-            <p className="text-sm opacity-90 uppercase tracking-wider">PHARMA CRM</p>
+      <div className="hidden lg:flex lg:w-2/5 bg-primary flex-col justify-between p-12 text-primary-foreground relative overflow-hidden">
+        <div className="relative z-10">
+          <div className="mb-24">
+            <h1 className="text-6xl font-extralight mb-1 tracking-wide">phyzii</h1>
+            <p className="text-xs opacity-90 uppercase tracking-[0.3em]">PHARMA CRM</p>
           </div>
           
-          <div className="space-y-6">
-            <h2 className="text-4xl font-light leading-tight">
+          <div className="space-y-8">
+            <h2 className="text-5xl font-light leading-tight">
               Begin your<br />
               <span className="font-semibold">Digital Transformation</span><br />
               journey...
@@ -42,35 +41,42 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="bg-primary-dark rounded-2xl p-6">
+        <div className="bg-primary-dark/60 backdrop-blur rounded-3xl p-6 relative z-10">
           <div className="flex items-start gap-3 mb-3">
-            <div className="bg-accent text-accent-foreground px-3 py-1 rounded-lg text-sm font-semibold">
+            <div className="bg-accent text-accent-foreground px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide">
               DID YOU KNOW
             </div>
-            <span className="text-3xl">?</span>
+            <span className="text-2xl">?</span>
           </div>
-          <p className="text-sm opacity-90 leading-relaxed">
+          <p className="text-sm opacity-95 leading-relaxed">
             You can share educational resources and marketing materials with doctors directly through
             the app, enhancing your engagement efforts.
           </p>
         </div>
+        
+        {/* Decorative dots */}
+        <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+          {[1, 2, 3, 4].map((dot) => (
+            <div key={dot} className={`w-2 h-2 rounded-full ${dot === 1 ? 'bg-white' : 'bg-white/30'}`} />
+          ))}
+        </div>
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+      <div className="flex-1 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-muted mb-6">
-              <User className="w-16 h-16 text-muted-foreground" />
+              <User className="w-16 h-16 text-muted-foreground/50" />
             </div>
-            <h1 className="text-3xl font-light text-primary mb-8">
+            <h1 className="text-3xl font-light text-primary mb-10">
               Hi, Prakash Patil
             </h1>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-muted-foreground mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
                 Enter your password
               </label>
               <div className="relative">
@@ -80,7 +86,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="*****"
-                  className="pr-12 h-12 text-lg"
+                  className="pr-12 h-12 text-base border-border rounded-lg"
                   required
                 />
                 <button
@@ -100,24 +106,24 @@ const Login = () => {
                   checked={keepLoggedIn}
                   onCheckedChange={(checked) => setKeepLoggedIn(checked as boolean)}
                 />
-                <label htmlFor="keep-logged-in" className="text-sm text-muted-foreground cursor-pointer">
+                <label htmlFor="keep-logged-in" className="text-sm text-foreground cursor-pointer">
                   Keep me logged in
                 </label>
               </div>
-              <button type="button" className="text-sm text-primary hover:underline">
+              <button type="button" className="text-sm text-primary hover:underline font-medium">
                 Need help logging in?
               </button>
             </div>
 
-            <Button type="submit" className="w-full h-12 text-base font-semibold">
+            <Button type="submit" className="w-full h-12 text-base font-semibold bg-primary hover:bg-primary/90 rounded-lg">
               LOGIN
             </Button>
           </form>
 
-          <div className="border border-border rounded-lg p-8 text-center space-y-2">
+          <div className="border border-border rounded-lg p-8 text-center space-y-2 mt-8">
             <p className="text-sm text-muted-foreground">Maximum Width</p>
             <p className="text-2xl font-semibold text-foreground">416px</p>
-            <p className="text-sm text-primary">client logo placeholder area</p>
+            <p className="text-sm text-primary font-medium">client logo placeholder area</p>
             <p className="text-sm text-muted-foreground">Maximum Height</p>
             <p className="text-xl font-semibold text-foreground">160px</p>
           </div>
