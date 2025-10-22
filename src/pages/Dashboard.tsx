@@ -5,12 +5,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge";
 import { LeaderboardWidget } from "@/components/LeaderboardWidget";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Power,
   Mail,
   RefreshCw,
   Settings,
   Bell,
+  Lightbulb,
   Menu,
   Calendar,
   Search,
@@ -40,6 +42,7 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [isProductFocusOpen, setIsProductFocusOpen] = useState(false);
   
   const customers = [
@@ -109,6 +112,15 @@ const Dashboard = () => {
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20 h-10 w-10 relative">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-destructive rounded-full border-2 border-white" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-primary-foreground hover:bg-white/20 h-10 w-10 relative"
+            onClick={() => navigate("/nudge-center")}
+          >
+            <Lightbulb className="w-5 h-5" />
+            <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-white animate-pulse" />
           </Button>
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20 h-10 w-10">
             <Menu className="w-5 h-5" />

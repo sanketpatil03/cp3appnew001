@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Induction from "./pages/Induction";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
+import NudgeCenter from "./pages/NudgeCenter";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/induction" element={<Induction />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/nudge-center" element={<NudgeCenter />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
