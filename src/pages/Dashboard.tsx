@@ -51,7 +51,7 @@ const Dashboard = () => {
   
   // Focus brands data with launch dates
   const focusBrands = [
-    { name: "Aprox", launchDate: new Date("2023-12-15") },
+    { name: "Aprox", launchDate: new Date("2024-03-15") }, // Newly launched
     { name: "Bprox", launchDate: new Date("2024-01-20") },
     { name: "Cprox", launchDate: new Date("2023-06-10") },
     { name: "Dprox", launchDate: new Date("2023-09-05") },
@@ -767,30 +767,25 @@ const Dashboard = () => {
 
                 {/* Focus Brands Card */}
                 <Card 
-                  className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl cursor-pointer hover:shadow-xl transition-shadow"
+                  className="w-[315px] h-[155px] p-4 relative shadow-lg bg-card border-0 rounded-2xl cursor-pointer hover:shadow-xl transition-shadow"
                   onClick={() => setIsProductFocusOpen(true)}
                 >
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
-                  <div className="flex items-center gap-2 mb-2">
-                    <Pill className="w-4 h-4 text-purple" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <Pill className="w-5 h-5 text-purple" />
                     <p className="text-xs text-muted-foreground font-medium">Focus Brands</p>
                   </div>
-                  <div className="space-y-2.5">
-                    {topBrands.map((brand, index) => (
-                      <div key={brand.name} className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                          <span className="text-xs font-medium truncate">{brand.name}</span>
-                          {isNewBrand(brand.launchDate) && (
-                            <Badge className="bg-destructive text-white text-[8px] px-1 py-0 h-4 rounded">
-                              NEW
-                            </Badge>
-                          )}
-                        </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    {topBrands.map((brand) => (
+                      <div key={brand.name} className="flex flex-col items-center justify-center p-2 bg-muted/30 rounded-lg">
+                        <span className="text-sm font-semibold mb-1">{brand.name}</span>
+                        {isNewBrand(brand.launchDate) && (
+                          <Badge className="bg-destructive text-white text-[9px] px-1.5 py-0.5 h-4 rounded">
+                            NEW
+                          </Badge>
+                        )}
                       </div>
                     ))}
-                    <p className="text-[10px] text-muted-foreground text-center mt-2 pt-2 border-t border-border">
-                      Click to view all brands
-                    </p>
                   </div>
                 </Card>
               </div>
