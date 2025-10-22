@@ -57,6 +57,7 @@ const Dashboard = () => {
     { name: "Dprox", launchDate: new Date("2023-09-05") },
     { name: "Eprox", launchDate: new Date("2024-03-01") },
     { name: "Fprox", launchDate: new Date("2023-08-15") },
+    { name: "Gprox", launchDate: new Date("2024-01-10") },
   ];
   
   // Helper function to check if a brand is new (launched within last 3 months)
@@ -764,7 +765,7 @@ const Dashboard = () => {
                   </div>
                 </Card>
 
-                {/* Product Focus Card */}
+                {/* Focus Brands Card */}
                 <Card 
                   className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl cursor-pointer hover:shadow-xl transition-shadow"
                   onClick={() => setIsProductFocusOpen(true)}
@@ -772,7 +773,7 @@ const Dashboard = () => {
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
                   <div className="flex items-center gap-2 mb-2">
                     <Pill className="w-4 h-4 text-purple" />
-                    <p className="text-xs text-muted-foreground font-medium">Product Focus</p>
+                    <p className="text-xs text-muted-foreground font-medium">Focus Brands</p>
                   </div>
                   <div className="space-y-2.5">
                     {topBrands.map((brand, index) => (
@@ -949,7 +950,7 @@ const Dashboard = () => {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Pill className="w-5 h-5 text-purple" />
-              Product Focus Brands
+              Focus Brands
             </DialogTitle>
           </DialogHeader>
           <div className="mt-4">
