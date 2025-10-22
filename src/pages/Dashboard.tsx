@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { LeaderboardWidget } from "@/components/LeaderboardWidget";
 import { useState } from "react";
 import {
   Power,
@@ -648,6 +649,9 @@ const Dashboard = () => {
             {/* Row 7: Coverage & Customer Breakdown */}
             <div className="flex gap-4">
               <div className="flex gap-4">
+                {/* Leaderboard Widget */}
+                <LeaderboardWidget />
+
                 {/* Coverage Card */}
                 <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
