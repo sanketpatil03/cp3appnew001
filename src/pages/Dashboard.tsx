@@ -794,10 +794,15 @@ const Dashboard = () => {
                     {topBrands.map((brand) => (
                       <div key={brand.name} className="flex items-center justify-between">
                         <span className="text-sm font-semibold">{brand.name}</span>
-                        {isNewBrand(brand.launchDate) && (
-                          <Badge className="bg-destructive text-white text-[8px] px-1.5 py-0.5 h-4 rounded">
-                            NEW
-                          </Badge>
+                        {brand.name === "Bprox" && (
+                          <div className="relative">
+                            <div className="relative inline-flex items-center justify-center">
+                              <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-full blur-sm opacity-75 animate-pulse" />
+                              <Badge className="relative bg-gradient-to-br from-orange-500 to-red-500 text-white text-[8px] px-2 py-0.5 h-4 rounded-full font-bold shadow-lg border-0">
+                                NEW
+                              </Badge>
+                            </div>
+                          </div>
                         )}
                       </div>
                     ))}
@@ -984,10 +989,15 @@ const Dashboard = () => {
                     </div>
                     <span className="font-medium text-sm">{brand.name}</span>
                   </div>
-                  {isNewBrand(brand.launchDate) && (
-                    <Badge className="bg-destructive text-white text-xs px-2 py-0.5 rounded">
-                      NEW
-                    </Badge>
+                  {brand.name === "Bprox" && (
+                    <div className="relative">
+                      <div className="relative inline-flex items-center justify-center">
+                        <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-full blur-sm opacity-75 animate-pulse" />
+                        <Badge className="relative bg-gradient-to-br from-orange-500 to-red-500 text-white text-xs px-2.5 py-0.5 rounded-full font-bold shadow-lg border-0">
+                          NEW
+                        </Badge>
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
