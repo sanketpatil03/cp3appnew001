@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 import {
   Power,
   Mail,
@@ -36,6 +39,8 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
+  const [isProductFocusOpen, setIsProductFocusOpen] = useState(false);
+  
   const customers = [
     { name: "Dr. Prakash Patil", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
     { name: "Dr. Austin Berg", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
@@ -43,6 +48,26 @@ const Dashboard = () => {
     { name: "Dr. Lindsey Stack", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
     { name: "Dr. Cesar Amadon", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
   ];
+  
+  // Focus brands data with launch dates
+  const focusBrands = [
+    { name: "Aprox", launchDate: new Date("2023-12-15") },
+    { name: "Bprox", launchDate: new Date("2024-01-20") },
+    { name: "Cprox", launchDate: new Date("2023-06-10") },
+    { name: "Dprox", launchDate: new Date("2023-09-05") },
+    { name: "Eprox", launchDate: new Date("2024-03-01") },
+    { name: "Fprox", launchDate: new Date("2023-08-15") },
+  ];
+  
+  // Helper function to check if a brand is new (launched within last 3 months)
+  const isNewBrand = (launchDate: Date) => {
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+    return launchDate > threeMonthsAgo;
+  };
+  
+  // Get top 3 brands for display
+  const topBrands = focusBrands.slice(0, 3);
 
   const lockedDates = [
     "05-Jul, Friday (2)",
@@ -740,40 +765,31 @@ const Dashboard = () => {
                 </Card>
 
                 {/* Product Focus Card */}
-                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <Card 
+                  className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl cursor-pointer hover:shadow-xl transition-shadow"
+                  onClick={() => setIsProductFocusOpen(true)}
+                >
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
                   <div className="flex items-center gap-2 mb-2">
                     <Pill className="w-4 h-4 text-purple" />
                     <p className="text-xs text-muted-foreground font-medium">Product Focus</p>
                   </div>
-                  <div className="space-y-2">
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs font-medium">Aprox</span>
-                        <span className="text-xs font-semibold text-success">45%</span>
+                  <div className="space-y-2.5">
+                    {topBrands.map((brand, index) => (
+                      <div key={brand.name} className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                          <span className="text-xs font-medium truncate">{brand.name}</span>
+                          {isNewBrand(brand.launchDate) && (
+                            <Badge className="bg-destructive text-white text-[8px] px-1 py-0 h-4 rounded">
+                              NEW
+                            </Badge>
+                          )}
+                        </div>
                       </div>
-                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                        <div className="h-full bg-success" style={{ width: "45%" }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs font-medium">Bprox</span>
-                        <span className="text-xs font-semibold text-info">30%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                        <div className="h-full bg-info" style={{ width: "30%" }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs font-medium">Cprox</span>
-                        <span className="text-xs font-semibold text-purple">25%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                        <div className="h-full bg-purple" style={{ width: "25%" }} />
-                      </div>
-                    </div>
+                    ))}
+                    <p className="text-[10px] text-muted-foreground text-center mt-2 pt-2 border-t border-border">
+                      Click to view all brands
+                    </p>
                   </div>
                 </Card>
               </div>
@@ -926,6 +942,43 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Product Focus Dialog */}
+      <Dialog open={isProductFocusOpen} onOpenChange={setIsProductFocusOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Pill className="w-5 h-5 text-purple" />
+              Product Focus Brands
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            <div className="space-y-3">
+              {focusBrands.map((brand, index) => (
+                <div
+                  key={brand.name}
+                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-sm font-semibold text-primary">{index + 1}</span>
+                    </div>
+                    <span className="font-medium text-sm">{brand.name}</span>
+                  </div>
+                  {isNewBrand(brand.launchDate) && (
+                    <Badge className="bg-destructive text-white text-xs px-2 py-0.5 rounded">
+                      NEW
+                    </Badge>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-4 text-center">
+              {focusBrands.filter(b => isNewBrand(b.launchDate)).length} newly launched brand(s) (last 3 months)
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
