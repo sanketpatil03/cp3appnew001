@@ -510,25 +510,23 @@ const Dashboard = () => {
               </div>
 
               {/* Special Occasions Card */}
-              <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl">
+              <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
                 <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
-                <p className="text-[10px] text-muted-foreground font-medium mb-2 uppercase tracking-wide">Special Occasions</p>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-2">
-                    <Cake className="w-4 h-4 text-pink-500 flex-shrink-0 mt-0.5" />
+                <p className="text-[10px] text-muted-foreground font-semibold mb-3 uppercase tracking-wide">Special Occasions</p>
+                <div className="space-y-2.5 flex-1">
+                  <div className="flex items-center gap-2">
+                    <Cake className="w-5 h-5 text-pink-500 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold truncate">Dr. Rama Sane</p>
-                      <p className="text-[9px] text-muted-foreground">Birthday</p>
-                      <p className="text-[9px] text-primary font-medium">13 July 2023</p>
+                      <p className="text-xs font-bold truncate">Dr. Rama Sane</p>
+                      <p className="text-[10px] text-primary font-semibold">13 July 2023</p>
                     </div>
                   </div>
-                  <div className="h-px bg-border" />
-                  <div className="flex items-start gap-2">
-                    <Gift className="w-4 h-4 text-purple flex-shrink-0 mt-0.5" />
+                  <div className="h-px bg-border/50 my-2" />
+                  <div className="flex items-center gap-2">
+                    <Gift className="w-5 h-5 text-purple flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold truncate">Dr. Jay Mishra</p>
-                      <p className="text-[9px] text-muted-foreground">Anniversary</p>
-                      <p className="text-[9px] text-primary font-medium">15 July 2023</p>
+                      <p className="text-xs font-bold truncate">Dr. Jay Mishra</p>
+                      <p className="text-[10px] text-primary font-semibold">15 July 2023</p>
                     </div>
                   </div>
                 </div>
@@ -591,23 +589,23 @@ const Dashboard = () => {
 
               <div className="flex gap-4">
                 {/* Customers Add/Drop Card */}
-                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
-                  <p className="text-xs text-muted-foreground font-medium mb-3">Customers Add/Drop</p>
-                  <div className="grid grid-cols-2 gap-2 text-center h-[90px] items-center">
-                    <div>
+                  <p className="text-xs text-muted-foreground font-semibold mb-3">Customers Add/Drop</p>
+                  <div className="grid grid-cols-2 gap-3 text-center flex-1">
+                    <div className="flex flex-col justify-center">
                       <div className="flex items-center justify-center mb-2">
-                        <UserPlus className="w-5 h-5 text-success" />
+                        <UserPlus className="w-6 h-6 text-success" />
                       </div>
-                      <p className="text-3xl font-bold text-success">+2</p>
-                      <p className="text-[10px] text-muted-foreground mt-1">Added Doctors</p>
+                      <p className="text-3xl font-bold text-success mb-1">+2</p>
+                      <p className="text-[10px] text-muted-foreground">Added</p>
                     </div>
-                    <div className="border-l border-border pl-2">
+                    <div className="border-l-2 border-border/50 flex flex-col justify-center">
                       <div className="flex items-center justify-center mb-2">
-                        <UserMinus className="w-5 h-5 text-destructive" />
+                        <UserMinus className="w-6 h-6 text-destructive" />
                       </div>
-                      <p className="text-3xl font-bold text-destructive">-1</p>
-                      <p className="text-[10px] text-muted-foreground mt-1">Removed Doctors</p>
+                      <p className="text-3xl font-bold text-destructive mb-1">-1</p>
+                      <p className="text-[10px] text-muted-foreground">Removed</p>
                     </div>
                   </div>
                 </Card>
@@ -682,25 +680,26 @@ const Dashboard = () => {
                 </Card>
 
                 {/* Total Customers Card */}
-                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center">
-                      <Users className="w-5 h-5 text-purple" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">Total Customers</p>
+                    <Users className="w-5 h-5 text-purple" />
+                    <p className="text-xs text-muted-foreground font-semibold">Total Customers</p>
                   </div>
-                  <p className="text-4xl font-bold mb-2">450</p>
-                  <div className="space-y-1 text-[10px]">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Doctors - 150</span>
+                  <p className="text-4xl font-bold mb-3">450</p>
+                  <div className="space-y-1.5 text-[10px] flex-1">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Doctors</span>
+                      <span className="font-bold text-xs">150</span>
                     </div>
-                    <div className="text-muted-foreground text-[9px]">A - 50 / B - 50 / C - 50</div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Chemists - 150</span>
+                    <div className="text-muted-foreground text-[9px] pl-2">A: 50  |  B: 50  |  C: 50</div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Chemists</span>
+                      <span className="font-bold text-xs">150</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Stockists - 150</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Stockists</span>
+                      <span className="font-bold text-xs">150</span>
                     </div>
                   </div>
                 </Card>
@@ -792,58 +791,66 @@ const Dashboard = () => {
 
               <div className="flex gap-4">
                 {/* Doctor Coverage Insights Card */}
-                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
-                  <div className="flex items-center gap-2 mb-2">
-                    <BarChart3 className="w-4 h-4 text-teal" />
-                    <p className="text-xs text-muted-foreground font-medium">Doctor Coverage</p>
+                  <div className="flex items-center gap-2 mb-3">
+                    <BarChart3 className="w-5 h-5 text-teal" />
+                    <p className="text-xs text-muted-foreground font-semibold">Doctor Coverage</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium">A-Class</span>
-                      <span className="text-xs font-semibold text-success">42/50</span>
+                  <div className="space-y-2.5 flex-1">
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-semibold">A-Class</span>
+                        <span className="text-xs font-bold text-success">42/50</span>
+                      </div>
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-success rounded-full" style={{ width: "84%" }} />
+                      </div>
                     </div>
-                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-success" style={{ width: "84%" }} />
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-semibold">B-Class</span>
+                        <span className="text-xs font-bold text-info">38/50</span>
+                      </div>
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-info rounded-full" style={{ width: "76%" }} />
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium">B-Class</span>
-                      <span className="text-xs font-semibold text-info">38/50</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-info" style={{ width: "76%" }} />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium">C-Class</span>
-                      <span className="text-xs font-semibold text-accent">30/50</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-accent" style={{ width: "60%" }} />
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-semibold">C-Class</span>
+                        <span className="text-xs font-bold text-accent">30/50</span>
+                      </div>
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-accent rounded-full" style={{ width: "60%" }} />
+                      </div>
                     </div>
                   </div>
                 </Card>
 
                 {/* Sample Distribution Card */}
-                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
                   <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
                   <div className="flex items-center gap-2 mb-2">
-                    <Package className="w-4 h-4 text-info" />
-                    <p className="text-xs text-muted-foreground font-medium">Sample Distribution</p>
+                    <Package className="w-5 h-5 text-info" />
+                    <p className="text-xs text-muted-foreground font-semibold">Sample Distribution</p>
                   </div>
-                  <p className="text-3xl font-bold text-center mb-2">127</p>
-                  <p className="text-[10px] text-center text-muted-foreground mb-3">Samples Distributed Today</p>
-                  <div className="space-y-1 text-[10px]">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Aprox:</span>
-                      <span className="font-semibold">52</span>
+                  <div className="text-center mb-3">
+                    <p className="text-4xl font-bold mb-1">127</p>
+                    <p className="text-[10px] text-muted-foreground font-medium">Distributed Today</p>
+                  </div>
+                  <div className="space-y-1.5 text-[10px] flex-1">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Aprox</span>
+                      <span className="font-bold text-xs">52</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Bprox:</span>
-                      <span className="font-semibold">45</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Bprox</span>
+                      <span className="font-bold text-xs">45</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Cprox:</span>
-                      <span className="font-semibold">30</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Cprox</span>
+                      <span className="font-bold text-xs">30</span>
                     </div>
                   </div>
                 </Card>
