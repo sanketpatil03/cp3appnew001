@@ -73,58 +73,53 @@ export const LeaderboardWidget = () => {
 
   return (
     <>
-      {/* Large Widget */}
+      {/* Compact Widget */}
       <Card
-        className="w-[320px] h-[200px] p-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border-2 border-amber-200 dark:border-amber-800 shadow-lg hover:shadow-xl transition-all cursor-pointer group relative overflow-hidden"
+        className="w-[315px] h-[155px] p-4 bg-card border shadow-lg hover:shadow-xl transition-all cursor-pointer group relative overflow-hidden"
         onClick={() => setIsExpanded(true)}
       >
-        {/* Animated background effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 dark:from-amber-700/20 dark:to-orange-700/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-        
-        <div className="relative z-10 flex flex-col h-full">
-          <div className="flex items-center justify-between mb-4">
-            <Trophy className="w-8 h-8 text-amber-600 dark:text-amber-400" />
-            <Badge variant="secondary" className="text-xs bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100">
+        <div className="flex flex-col h-full">
+          <div className="flex items-center justify-between mb-3">
+            <Trophy className="w-5 h-5 text-primary" />
+            <Badge variant="secondary" className="text-[10px]">
               Leaderboard
             </Badge>
           </div>
 
-          <div className="flex-1 flex items-center gap-6">
-            <div className="flex flex-col items-center">
-              <div className="text-6xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+          <div className="flex-1 flex items-center gap-4">
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-4xl font-bold text-primary mb-1">
                 {currentUser?.badge || "🏅"}
               </div>
-              <div className="text-4xl font-bold text-foreground">#{currentUser?.rank || 0}</div>
-              <div className="text-sm text-muted-foreground mt-1">Your Rank</div>
+              <div className="text-2xl font-bold text-foreground">#{currentUser?.rank || 0}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5">Your Rank</div>
             </div>
 
-            <div className="flex-1">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Points</span>
-                  <span className="text-xl font-bold text-foreground">{currentUser?.points || 0}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Sales</span>
-                  <span className="text-lg font-semibold text-foreground">₹{((currentUser?.salesPerformance || 0) / 1000).toFixed(0)}K</span>
-                </div>
+            <div className="flex-1 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Points</span>
+                <span className="text-lg font-bold text-foreground">{currentUser?.points || 0}</span>
               </div>
-
-              <div className="mt-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-foreground">Progress to Rank {nextRank?.rank || 1}</span>
-                  <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Sales</span>
+                <span className="text-sm font-semibold text-foreground">₹{((currentUser?.salesPerformance || 0) / 1000).toFixed(0)}K</span>
+              </div>
+              
+              <div className="pt-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-semibold text-muted-foreground">To Rank {nextRank?.rank || 1}</span>
+                  <Sparkles className="w-3 h-3 text-primary" />
                 </div>
-                <Progress value={progressToNextRank} className="h-2 bg-amber-100 dark:bg-amber-900" />
-                <p className="text-xs text-muted-foreground mt-2">
+                <Progress value={progressToNextRank} className="h-1.5" />
+                <p className="text-[8px] text-muted-foreground mt-1">
                   {nextRank ? `${nextRank.points - (currentUser?.points || 0)} pts needed` : "Top rank!"}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ChevronUp className="w-5 h-5 text-amber-600 dark:text-amber-400 animate-bounce" />
+          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <ChevronUp className="w-4 h-4 text-primary animate-bounce" />
           </div>
         </div>
       </Card>
