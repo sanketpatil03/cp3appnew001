@@ -18,6 +18,21 @@ import {
   ChevronLeft,
   ChevronRight,
   Lock,
+  PhoneOff,
+  Phone,
+  FileText,
+  UserPlus,
+  UserMinus,
+  TrendingUp,
+  Package,
+  Target,
+  Activity,
+  Cake,
+  Gift,
+  Pill,
+  ClipboardList,
+  BarChart3,
+  AlertCircle,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -412,6 +427,494 @@ const Dashboard = () => {
                   <p className="text-[10px] font-medium text-muted-foreground">RCPA</p>
                   <p className="text-xs font-semibold">94,000</p>
                 </div>
+              </div>
+                </Card>
+              </div>
+            </div>
+
+            {/* Row 5: New Pharma Widgets - Compliance & Geo Tagging */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* Phyzii Compliance Card */}
+                <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-3">Phyzii Compliance</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center">
+                      <p className="text-5xl font-bold text-destructive mb-1">50<span className="text-2xl text-muted-foreground">/100</span></p>
+                      <p className="text-xs text-muted-foreground">Limit Exceeded</p>
+                    </div>
+                    <div className="border-l border-border pl-4 text-center">
+                      <p className="text-5xl font-bold text-success mb-1">20<span className="text-2xl text-muted-foreground">/100</span></p>
+                      <p className="text-xs text-muted-foreground">Near Limit</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Geo Tagging Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-2">Geo Tagging</p>
+                  <p className="text-4xl font-bold text-center mb-2">20<span className="text-xl text-muted-foreground">/100</span></p>
+                  <div className="flex items-center justify-center">
+                    <div className="relative w-16 h-16">
+                      <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="32" cy="32" r="28" stroke="#E5E7EB" strokeWidth="6" fill="none" />
+                        <circle 
+                          cx="32" 
+                          cy="32" 
+                          r="28" 
+                          stroke="#F43F5E" 
+                          strokeWidth="6" 
+                          fill="none"
+                          strokeDasharray="176"
+                          strokeDashoffset="140"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <MapPin className="w-6 h-6 text-destructive" />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              {/* Special Occasions Card */}
+              <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                <div className="space-y-3">
+                  <div className="flex items-start gap-2">
+                    <Cake className="w-4 h-4 text-pink-500 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold truncate">Dr. Rama Sane</p>
+                      <p className="text-[10px] text-muted-foreground">Birthday</p>
+                      <p className="text-[10px] text-primary font-medium">13 July 2023</p>
+                    </div>
+                  </div>
+                  <div className="h-px bg-border" />
+                  <div className="flex items-start gap-2">
+                    <Gift className="w-4 h-4 text-purple flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold truncate">Dr. Jay Mishra</p>
+                      <p className="text-[10px] text-muted-foreground">Anniversary</p>
+                      <p className="text-[10px] text-primary font-medium">15 July 2023</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Row 6: Call Tracking Widgets */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* Missed Calls Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-destructive/20 flex items-center justify-center">
+                      <PhoneOff className="w-4 h-4 text-destructive" />
+                    </div>
+                    <p className="text-xs text-muted-foreground font-medium">Missed Calls</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">VF-3</span>
+                      <span className="text-xs text-muted-foreground">20/100</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">VF-2</span>
+                      <span className="text-xs text-muted-foreground">15/100</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">VF-1</span>
+                      <span className="text-xs text-muted-foreground">15/100</span>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Today's Activity Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
+                      <Activity className="w-4 h-4 text-accent" />
+                    </div>
+                    <p className="text-xs text-muted-foreground font-medium">Todays Activity</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">Pending Calls</span>
+                      <span className="text-xs font-semibold text-primary">04/10</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">NCA</span>
+                      <span className="text-xs font-semibold text-muted-foreground">0/10</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">Draft</span>
+                      <span className="text-xs font-semibold text-muted-foreground">0/4</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="flex gap-4">
+                {/* Customers Add/Drop Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-3">Customers Add/Drop</p>
+                  <div className="grid grid-cols-2 gap-2 text-center h-[90px] items-center">
+                    <div>
+                      <div className="flex items-center justify-center mb-2">
+                        <UserPlus className="w-5 h-5 text-success" />
+                      </div>
+                      <p className="text-3xl font-bold text-success">+2</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">Added Doctors</p>
+                    </div>
+                    <div className="border-l border-border pl-2">
+                      <div className="flex items-center justify-center mb-2">
+                        <UserMinus className="w-5 h-5 text-destructive" />
+                      </div>
+                      <p className="text-3xl font-bold text-destructive">-1</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">Removed Doctors</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Call Average Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-1">Call Average</p>
+                  <div className="h-16 flex items-end mb-2">
+                    <svg className="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="callGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="#F43F5E" stopOpacity="0.3"/>
+                          <stop offset="100%" stopColor="#F43F5E" stopOpacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 40 L 20 35 L 40 25 L 60 30 L 80 20 L 100 15 L 100 50 L 0 50 Z"
+                        fill="url(#callGradient)"
+                      />
+                      <path
+                        d="M 0 40 L 20 35 L 40 25 L 60 30 L 80 20 L 100 15"
+                        stroke="#F43F5E"
+                        strokeWidth="3"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <circle cx="100" cy="15" r="4" fill="#F43F5E" />
+                    </svg>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <p className="text-3xl font-bold">10</p>
+                    <TrendingUp className="w-4 h-4 text-success" />
+                  </div>
+                </Card>
+              </div>
+            </div>
+
+            {/* Row 7: Coverage & Customer Breakdown */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* Coverage Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-2">Coverage</p>
+                  <div className="h-16 flex items-center justify-center mb-2">
+                    <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="coverageGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="#A855F7" stopOpacity="0.4"/>
+                          <stop offset="100%" stopColor="#A855F7" stopOpacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 20 Q 10 15 20 18 Q 30 22 40 16 Q 50 10 60 14 Q 70 18 80 12 Q 90 6 100 10 L 100 40 L 0 40 Z"
+                        fill="url(#coverageGradient)"
+                      />
+                      <path
+                        d="M 0 20 Q 10 15 20 18 Q 30 22 40 16 Q 50 10 60 14 Q 70 18 80 12 Q 90 6 100 10"
+                        stroke="#A855F7"
+                        strokeWidth="3"
+                        fill="none"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <p className="text-3xl font-bold text-purple">35%</p>
+                    <TrendingUp className="w-4 h-4 text-purple" />
+                  </div>
+                </Card>
+
+                {/* Total Customers Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center">
+                      <Users className="w-5 h-5 text-purple" />
+                    </div>
+                    <p className="text-xs text-muted-foreground font-medium">Total Customers</p>
+                  </div>
+                  <p className="text-4xl font-bold mb-2">450</p>
+                  <div className="space-y-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Doctors - 150</span>
+                    </div>
+                    <div className="text-muted-foreground text-[9px]">A - 50 / B - 50 / C - 50</div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Chemists - 150</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Stockists - 150</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="flex gap-4">
+                {/* Inventory Card */}
+                <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <p className="text-xs text-muted-foreground font-medium mb-3">Inventory</p>
+                  <div className="grid grid-cols-2 gap-8">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <div className="w-12 h-12 rounded-xl bg-info/20 flex items-center justify-center">
+                          <Package className="w-6 h-6 text-info" />
+                        </div>
+                      </div>
+                      <p className="text-4xl font-bold text-info mb-1">30</p>
+                      <p className="text-xs text-muted-foreground">Samples</p>
+                    </div>
+                    <div className="border-l border-border pl-8 text-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <div className="w-12 h-12 rounded-xl bg-teal/20 flex items-center justify-center">
+                          <ClipboardList className="w-6 h-6 text-teal" />
+                        </div>
+                      </div>
+                      <p className="text-4xl font-bold text-teal mb-1">25</p>
+                      <p className="text-xs text-muted-foreground">Inputs</p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+
+            {/* Row 8: Additional MR-Relevant Widgets */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* Target vs Achievement Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-success" />
+                    <p className="text-xs text-muted-foreground font-medium">Target vs Actual</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-[10px] text-muted-foreground">Monthly Target</span>
+                        <span className="text-xs font-semibold">₹50L</span>
+                      </div>
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-success" style={{ width: "75%" }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-[10px] text-muted-foreground">Achievement</span>
+                        <span className="text-xs font-semibold text-success">₹37.5L</span>
+                      </div>
+                      <p className="text-center text-2xl font-bold text-success">75%</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Product Focus Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <Pill className="w-4 h-4 text-purple" />
+                    <p className="text-xs text-muted-foreground font-medium">Product Focus</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium">Aprox</span>
+                        <span className="text-xs font-semibold text-success">45%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-success" style={{ width: "45%" }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium">Bprox</span>
+                        <span className="text-xs font-semibold text-info">30%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-info" style={{ width: "30%" }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs font-medium">Cprox</span>
+                        <span className="text-xs font-semibold text-purple">25%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-purple" style={{ width: "25%" }} />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="flex gap-4">
+                {/* Doctor Coverage Insights Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <BarChart3 className="w-4 h-4 text-teal" />
+                    <p className="text-xs text-muted-foreground font-medium">Doctor Coverage</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">A-Class</span>
+                      <span className="text-xs font-semibold text-success">42/50</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-success" style={{ width: "84%" }} />
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">B-Class</span>
+                      <span className="text-xs font-semibold text-info">38/50</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-info" style={{ width: "76%" }} />
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium">C-Class</span>
+                      <span className="text-xs font-semibold text-accent">30/50</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-accent" style={{ width: "60%" }} />
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Sample Distribution Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <Package className="w-4 h-4 text-info" />
+                    <p className="text-xs text-muted-foreground font-medium">Sample Distribution</p>
+                  </div>
+                  <p className="text-3xl font-bold text-center mb-2">127</p>
+                  <p className="text-[10px] text-center text-muted-foreground mb-3">Samples Distributed Today</p>
+                  <div className="space-y-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Aprox:</span>
+                      <span className="font-semibold">52</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Bprox:</span>
+                      <span className="font-semibold">45</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Cprox:</span>
+                      <span className="font-semibold">30</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+
+            {/* Row 9: Prescription Tracking & Alerts */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* RCPA Tracking Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4 text-purple" />
+                    <p className="text-xs text-muted-foreground font-medium">RCPA Status</p>
+                  </div>
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="relative w-20 h-20">
+                      <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="40" cy="40" r="35" stroke="#E5E7EB" strokeWidth="6" fill="none" />
+                        <circle 
+                          cx="40" 
+                          cy="40" 
+                          r="35" 
+                          stroke="#A855F7" 
+                          strokeWidth="6" 
+                          fill="none"
+                          strokeDasharray="220"
+                          strokeDashoffset="55"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <p className="text-xl font-bold text-purple">75%</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-center text-muted-foreground">32/42 Pending</p>
+                </Card>
+
+                {/* Daily Call Performance Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                  <div className="flex items-center gap-2 mb-2">
+                    <Phone className="w-4 h-4 text-success" />
+                    <p className="text-xs text-muted-foreground font-medium">Daily Calls</p>
+                  </div>
+                  <div className="text-center mb-2">
+                    <p className="text-4xl font-bold text-success">18</p>
+                    <p className="text-[10px] text-muted-foreground">Calls Completed</p>
+                  </div>
+                  <div className="space-y-1 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Productive:</span>
+                      <span className="font-semibold text-success">15</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Non-Productive:</span>
+                      <span className="font-semibold text-muted-foreground">3</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="flex gap-4">
+                {/* Territory Alerts Card */}
+                <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+                  <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-destructive rounded-full animate-pulse" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <AlertCircle className="w-5 h-5 text-destructive" />
+                    <p className="text-xs text-muted-foreground font-medium">Territory Alerts</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 p-2 bg-destructive/10 rounded-lg">
+                      <div className="w-1.5 h-1.5 rounded-full bg-destructive mt-1.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold">3 High Priority Doctors Not Met</p>
+                        <p className="text-[10px] text-muted-foreground">Last visit: 45+ days ago</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2 p-2 bg-accent/10 rounded-lg">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold">Low Sample Stock Alert</p>
+                        <p className="text-[10px] text-muted-foreground">Restock needed for 2 products</p>
+                      </div>
+                    </div>
                   </div>
                 </Card>
               </div>
