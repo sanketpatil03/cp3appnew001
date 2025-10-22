@@ -226,8 +226,8 @@ export const LeaderboardWidget = () => {
                           "bg-amber-50 dark:bg-amber-950/30 hover:bg-amber-100 dark:hover:bg-amber-950/50 border-l-4 border-l-amber-500"
                       )}
                     >
-                      <td className="p-3">
-                        <div className="flex items-center justify-center gap-2">
+                      <td className="p-3 pl-4">
+                        <div className="flex items-center gap-2">
                           <span className="text-lg">{getRankBadge(displayRank)}</span>
                           <span
                             className={cn(
@@ -237,11 +237,6 @@ export const LeaderboardWidget = () => {
                           >
                             #{displayRank}
                           </span>
-                          {entry.isCurrentUser && (
-                            <Badge variant="secondary" className="text-[9px]">
-                              YOU
-                            </Badge>
-                          )}
                         </div>
                       </td>
                       <td className="p-3 text-center">
