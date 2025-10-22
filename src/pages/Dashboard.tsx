@@ -158,10 +158,11 @@ const Dashboard = () => {
 
         {/* Right Panel - Widgets */}
         <div className="flex-1 p-4 overflow-y-auto">
-          <div className="grid grid-cols-2 gap-4 max-w-[660px]">
+          <div className="flex flex-col gap-4 max-w-[660px]">
             {/* Row 1: Large Widgets */}
-            {/* Reminder Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+            <div className="flex gap-4">
+              {/* Reminder Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
@@ -182,10 +183,10 @@ const Dashboard = () => {
                   <p className="text-[10px] text-muted-foreground">25 July 2023</p>
                 </div>
               </div>
-            </Card>
+              </Card>
 
-            {/* Action Points Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+              {/* Action Points Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-destructive rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-purple/20 flex items-center justify-center flex-shrink-0">
@@ -206,10 +207,13 @@ const Dashboard = () => {
                   <p className="text-[10px] text-muted-foreground">Dr. Jalen Tindel</p>
                 </div>
               </div>
-            </Card>
+              </Card>
+            </div>
 
-            {/* Events Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+            {/* Row 2: Large Widgets */}
+            <div className="flex gap-4">
+              {/* Events Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-success rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center flex-shrink-0">
@@ -230,10 +234,10 @@ const Dashboard = () => {
                   <p className="text-[10px] text-muted-foreground">16 July 2023</p>
                 </div>
               </div>
-            </Card>
+              </Card>
 
-            {/* Leaves & Holidays Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+              {/* Leaves & Holidays Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center flex-shrink-0">
@@ -254,10 +258,13 @@ const Dashboard = () => {
                   <p className="text-[10px] text-muted-foreground">5 September 2024 - Thu</p>
                 </div>
               </div>
-            </Card>
+              </Card>
+            </div>
 
-            {/* Approval Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+            {/* Row 3: Large Widgets */}
+            <div className="flex gap-4">
+              {/* Approval Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-info/20 flex items-center justify-center flex-shrink-0">
@@ -278,10 +285,10 @@ const Dashboard = () => {
                   <p className="text-[10px] text-destructive">Rejected by admin</p>
                 </div>
               </div>
-            </Card>
+              </Card>
 
-            {/* Sync Status Card */}
-            <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+              {/* Sync Status Card */}
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <div className="mb-2">
                 <p className="text-xs text-muted-foreground font-medium">Sync Status</p>
@@ -306,11 +313,14 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            </Card>
+              </Card>
+            </div>
 
-            {/* Row 2: Small Widgets */}
-            {/* Sales Trend Card */}
-            <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+            {/* Row 4: Small Widgets Paired Together */}
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                {/* Sales Trend Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <p className="text-xs text-muted-foreground font-medium mb-1">Sales Trend</p>
               <p className="text-3xl font-bold mb-3">50000</p>
@@ -327,11 +337,11 @@ const Dashboard = () => {
                   <circle cx="100" cy="15" r="3" fill="#F43F5E" />
                 </svg>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1.5 text-right">Jun 23</p>
-            </Card>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 text-right">Jun 23</p>
+                </Card>
 
-            {/* Efforts Trend Card */}
-            <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+                {/* Efforts Trend Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <p className="text-xs text-muted-foreground font-medium mb-1">Efforts Trend</p>
               <p className="text-3xl font-bold mb-3">93%</p>
@@ -347,11 +357,13 @@ const Dashboard = () => {
                   <circle cx="100" cy="20" r="3" fill="#84CC16" />
                 </svg>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1.5 text-right">Jun 23</p>
-            </Card>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 text-right">Jun 23</p>
+                </Card>
+              </div>
 
-            {/* Geo Fence Card */}
-            <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl flex flex-col">
+              <div className="flex gap-4">
+                {/* Geo Fence Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl flex flex-col">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <p className="text-xs text-muted-foreground font-medium mb-1">Geo Fence</p>
               <p className="text-3xl font-bold mb-2">93%</p>
@@ -382,11 +394,11 @@ const Dashboard = () => {
                     <CheckCircle2 className="w-8 h-8 text-info" />
                   </div>
                 </div>
-              </div>
-            </Card>
+                  </div>
+                </Card>
 
-            {/* Business Plan Card */}
-            <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl flex flex-col">
+                {/* Business Plan Card */}
+                <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl flex flex-col">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <p className="text-xs text-muted-foreground font-medium mb-2">Business Plan</p>
               <div className="flex-1 flex items-end justify-center gap-3 pb-2">
@@ -400,8 +412,10 @@ const Dashboard = () => {
                   <p className="text-[10px] font-medium text-muted-foreground">RCPA</p>
                   <p className="text-xs font-semibold">94,000</p>
                 </div>
+                  </div>
+                </Card>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </div>
