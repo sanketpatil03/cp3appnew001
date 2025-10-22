@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trophy, TrendingUp, Info, ChevronUp, Sparkles } from "lucide-react";
+import { Trophy, Info, ChevronUp, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LeaderboardEntry {
@@ -52,10 +52,8 @@ const scoringCriteria = [
 export const LeaderboardWidget = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-  const [rankingType, setRankingType] = useState<"points" | "sales">("points");
-  const [filterBU, setFilterBU] = useState("all");
-  const [filterZone, setFilterZone] = useState("all");
-  const [filterTeam, setFilterTeam] = useState("all");
+  const [filterType, setFilterType] = useState<"all" | "team" | "zone" | "bu">("all");
+  const [filterValue, setFilterValue] = useState("all");
 
   const currentUser = leaderboardData.find((entry) => entry.isCurrentUser);
   const nextRank = leaderboardData.find((entry) => entry.rank === (currentUser?.rank || 0) - 1);
@@ -63,12 +61,8 @@ export const LeaderboardWidget = () => {
     ? ((currentUser?.points || 0) / nextRank.points) * 100
     : 100;
 
-  const sortedData = [...leaderboardData].sort((a, b) => {
-    if (rankingType === "points") {
-      return b.points - a.points;
-    }
-    return b.salesPerformance - a.salesPerformance;
-  });
+  // Always sort by points (can be extended to filter by team/zone/bu)
+  const sortedData = [...leaderboardData].sort((a, b) => b.points - a.points);
 
   const getRankBadge = (rank: number) => {
     if (rank === 1) return "🏆";
@@ -79,45 +73,58 @@ export const LeaderboardWidget = () => {
 
   return (
     <>
-      {/* Compact Widget */}
+      {/* Large Widget */}
       <Card
-        className="w-[150px] h-[155px] p-4 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border-2 border-amber-200 dark:border-amber-800 shadow-lg hover:shadow-xl transition-all cursor-pointer group relative overflow-hidden"
+        className="w-[320px] h-[200px] p-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border-2 border-amber-200 dark:border-amber-800 shadow-lg hover:shadow-xl transition-all cursor-pointer group relative overflow-hidden"
         onClick={() => setIsExpanded(true)}
       >
         {/* Animated background effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 dark:from-amber-700/20 dark:to-orange-700/20 opacity-0 group-hover:opacity-100 transition-opacity" />
         
         <div className="relative z-10 flex flex-col h-full">
-          <div className="flex items-center justify-between mb-3">
-            <Trophy className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-            <Badge variant="secondary" className="text-[10px] bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100">
-              Rank
+          <div className="flex items-center justify-between mb-4">
+            <Trophy className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+            <Badge variant="secondary" className="text-xs bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100">
+              Leaderboard
             </Badge>
           </div>
 
-          <div className="flex-1 flex flex-col justify-center items-center">
-            <div className="text-5xl font-bold text-amber-600 dark:text-amber-400 mb-1">
-              {currentUser?.badge || "🏅"}
+          <div className="flex-1 flex items-center gap-6">
+            <div className="flex flex-col items-center">
+              <div className="text-6xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+                {currentUser?.badge || "🏅"}
+              </div>
+              <div className="text-4xl font-bold text-foreground">#{currentUser?.rank || 0}</div>
+              <div className="text-sm text-muted-foreground mt-1">Your Rank</div>
             </div>
-            <div className="text-3xl font-bold text-foreground">#{currentUser?.rank || 0}</div>
-            <div className="text-xs text-muted-foreground mt-1">Your Rank</div>
+
+            <div className="flex-1">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Points</span>
+                  <span className="text-xl font-bold text-foreground">{currentUser?.points || 0}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Sales</span>
+                  <span className="text-lg font-semibold text-foreground">₹{((currentUser?.salesPerformance || 0) / 1000).toFixed(0)}K</span>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-foreground">Progress to Rank {nextRank?.rank || 1}</span>
+                  <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                </div>
+                <Progress value={progressToNextRank} className="h-2 bg-amber-100 dark:bg-amber-900" />
+                <p className="text-xs text-muted-foreground mt-2">
+                  {nextRank ? `${nextRank.points - (currentUser?.points || 0)} pts needed` : "Top rank!"}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-auto">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-semibold text-foreground">
-                {currentUser?.points || 0} pts
-              </span>
-              <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-            </div>
-            <Progress value={progressToNextRank} className="h-1.5 bg-amber-100 dark:bg-amber-900" />
-            <p className="text-[9px] text-muted-foreground mt-1 text-center">
-              {nextRank ? `${nextRank.points - (currentUser?.points || 0)} pts to rank ${nextRank.rank}` : "Top rank!"}
-            </p>
-          </div>
-
-          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ChevronUp className="w-4 h-4 text-amber-600 dark:text-amber-400 animate-bounce" />
+          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            <ChevronUp className="w-5 h-5 text-amber-600 dark:text-amber-400 animate-bounce" />
           </div>
         </div>
       </Card>
@@ -164,57 +171,48 @@ export const LeaderboardWidget = () => {
             </div>
           )}
 
-          {/* Filters and Toggle */}
+          {/* Filters */}
           <div className="flex flex-wrap gap-2 mb-4">
-            <Tabs value={rankingType} onValueChange={(v) => setRankingType(v as "points" | "sales")} className="w-auto">
-              <TabsList>
-                <TabsTrigger value="points" className="text-xs">
-                  <Trophy className="w-3 h-3 mr-1" />
-                  Points
-                </TabsTrigger>
-                <TabsTrigger value="sales" className="text-xs">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  Sales
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            <Select value={filterBU} onValueChange={setFilterBU}>
-              <SelectTrigger className="w-32 h-9 text-xs">
-                <SelectValue placeholder="All BUs" />
+            <Select value={filterType} onValueChange={(v) => setFilterType(v as "all" | "team" | "zone" | "bu")}>
+              <SelectTrigger className="w-36 h-9 text-xs">
+                <SelectValue placeholder="Filter by" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All BUs</SelectItem>
-                <SelectItem value="bu1">BU 1</SelectItem>
-                <SelectItem value="bu2">BU 2</SelectItem>
-                <SelectItem value="bu3">BU 3</SelectItem>
+                <SelectItem value="all">All Leaderboard</SelectItem>
+                <SelectItem value="team">My Team</SelectItem>
+                <SelectItem value="zone">Zone</SelectItem>
+                <SelectItem value="bu">BU</SelectItem>
               </SelectContent>
             </Select>
 
-            <Select value={filterZone} onValueChange={setFilterZone}>
-              <SelectTrigger className="w-32 h-9 text-xs">
-                <SelectValue placeholder="All Zones" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Zones</SelectItem>
-                <SelectItem value="north">North</SelectItem>
-                <SelectItem value="south">South</SelectItem>
-                <SelectItem value="east">East</SelectItem>
-                <SelectItem value="west">West</SelectItem>
-              </SelectContent>
-            </Select>
+            {filterType === "zone" && (
+              <Select value={filterValue} onValueChange={setFilterValue}>
+                <SelectTrigger className="w-32 h-9 text-xs">
+                  <SelectValue placeholder="Select Zone" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Zones</SelectItem>
+                  <SelectItem value="north">North</SelectItem>
+                  <SelectItem value="south">South</SelectItem>
+                  <SelectItem value="east">East</SelectItem>
+                  <SelectItem value="west">West</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
 
-            <Select value={filterTeam} onValueChange={setFilterTeam}>
-              <SelectTrigger className="w-32 h-9 text-xs">
-                <SelectValue placeholder="All Teams" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Teams</SelectItem>
-                <SelectItem value="team1">Team A</SelectItem>
-                <SelectItem value="team2">Team B</SelectItem>
-                <SelectItem value="team3">Team C</SelectItem>
-              </SelectContent>
-            </Select>
+            {filterType === "bu" && (
+              <Select value={filterValue} onValueChange={setFilterValue}>
+                <SelectTrigger className="w-32 h-9 text-xs">
+                  <SelectValue placeholder="Select BU" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All BUs</SelectItem>
+                  <SelectItem value="bu1">BU 1</SelectItem>
+                  <SelectItem value="bu2">BU 2</SelectItem>
+                  <SelectItem value="bu3">BU 3</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           {/* Leaderboard Table */}
@@ -226,7 +224,6 @@ export const LeaderboardWidget = () => {
                   <th className="text-left p-3 text-xs font-semibold">Rep Name</th>
                   <th className="text-right p-3 text-xs font-semibold">Points</th>
                   <th className="text-right p-3 text-xs font-semibold">Sales</th>
-                  <th className="text-center p-3 text-xs font-semibold">Badge</th>
                 </tr>
               </thead>
               <tbody>
@@ -243,6 +240,7 @@ export const LeaderboardWidget = () => {
                     >
                       <td className="p-3">
                         <div className="flex items-center gap-2">
+                          <span className="text-lg">{getRankBadge(displayRank)}</span>
                           <span
                             className={cn(
                               "text-sm font-bold",
@@ -273,9 +271,6 @@ export const LeaderboardWidget = () => {
                       </td>
                       <td className="p-3 text-right">
                         <span className="text-sm">₹{(entry.salesPerformance / 1000).toFixed(0)}K</span>
-                      </td>
-                      <td className="p-3 text-center">
-                        <span className="text-xl">{getRankBadge(displayRank)}</span>
                       </td>
                     </tr>
                   );
