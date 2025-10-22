@@ -120,7 +120,7 @@ export const LeaderboardWidget = () => {
 
       {/* Expanded Dialog */}
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl">
               <Trophy className="w-6 h-6 text-amber-600 dark:text-amber-400" />
@@ -209,9 +209,9 @@ export const LeaderboardWidget = () => {
             <table className="w-full">
               <thead className="bg-muted sticky top-0 z-10">
                 <tr>
-                  <th className="text-center p-3 text-xs font-semibold">Rank</th>
+                  <th className="text-left p-3 pl-4 text-xs font-semibold w-[100px]">Rank</th>
                   <th className="text-center p-3 text-xs font-semibold">Rep Name</th>
-                  <th className="text-center p-3 text-xs font-semibold">Points</th>
+                  <th className="text-center p-3 text-xs font-semibold w-[100px]">Points</th>
                 </tr>
               </thead>
               <tbody>
@@ -249,7 +249,7 @@ export const LeaderboardWidget = () => {
                           {entry.repName}
                         </span>
                       </td>
-                      <td className="p-3 text-center">
+                      <td className="p-3 text-center w-[100px]">
                         <span className="text-sm font-semibold">{entry.points}</span>
                       </td>
                     </tr>
