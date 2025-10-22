@@ -89,137 +89,140 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex">
-        {/* Left Panel - Calendar View */}
-        <div className="w-[374px] bg-gradient-to-br from-primary to-secondary p-4 space-y-3 min-h-[calc(100vh-64px)] overflow-y-auto">
-          {/* Calendar Header */}
-          <div className="flex items-center justify-between mb-2">
+      <div className="flex h-[calc(100vh-64px)]">
+        {/* Left Panel - Calendar View - Fixed */}
+        <div className="w-[374px] bg-gradient-to-br from-primary to-secondary p-4 flex flex-col h-full">
+          {/* Calendar Header - Fixed */}
+          <div className="flex items-center justify-between mb-3 flex-shrink-0">
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-white" />
-              <ChevronLeft className="w-5 h-5 text-white cursor-pointer hover:opacity-80" />
-              <span className="font-semibold text-white text-base">July 2023</span>
-              <ChevronRight className="w-5 h-5 text-white cursor-pointer hover:opacity-80" />
+              <Calendar className="w-5 h-5 text-white flex-shrink-0" />
+              <ChevronLeft className="w-5 h-5 text-white cursor-pointer hover:opacity-80 flex-shrink-0" />
+              <span className="font-semibold text-white text-sm">July 2023</span>
+              <ChevronRight className="w-5 h-5 text-white cursor-pointer hover:opacity-80 flex-shrink-0" />
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20">
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4" />
               </Button>
-              <div className="bg-white/20 text-white text-sm font-semibold px-3 py-1.5 rounded-md backdrop-blur-sm">
+              <div className="bg-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-md backdrop-blur-sm">
                 AZ
               </div>
             </div>
           </div>
 
-          {/* Date Strip */}
-          <div className="bg-primary-dark/40 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between">
-            <span className="text-white font-medium text-sm">04-Jul, Thursday (5)</span>
-            <Button size="icon" className="h-7 w-7 bg-white/20 hover:bg-white/30 text-white border-0">
-              <Plus className="w-4 h-4" />
-            </Button>
-          </div>
+          {/* Scrollable Date Section */}
+          <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+            {/* Date Strip */}
+            <div className="bg-primary-dark/40 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between flex-shrink-0">
+              <span className="text-white font-medium text-xs">04-Jul, Thursday (5)</span>
+              <Button size="icon" className="h-7 w-7 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
 
-          {/* Customer Cards */}
-          <div className="space-y-2">
-            {customers.map((customer, idx) => (
-              <Card key={idx} className="w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between h-full">
-                  <div className="flex items-center gap-2.5 flex-1">
-                    <Avatar className="w-12 h-12 border-2 border-primary/20">
-                      <AvatarImage src="" alt={customer.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-primary/20 to-secondary/20 text-primary text-sm font-semibold">
-                        {customer.name.split(" ").slice(1).map((n) => n[0]).join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-sm leading-tight text-foreground truncate">{customer.name}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{customer.specialty}</p>
-                      <div className="flex gap-1 mt-1.5">
-                        {customer.status.map((s, i) => (
-                          <div key={i} className="w-5 h-5 rounded border border-border bg-muted/50 flex items-center justify-center text-[9px] font-medium text-muted-foreground">
-                            {s}
-                          </div>
-                        ))}
+            {/* Customer Cards */}
+            <div className="space-y-2">
+              {customers.map((customer, idx) => (
+                <Card key={idx} className="w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-shadow">
+                  <div className="flex items-center justify-between h-full">
+                    <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                      <Avatar className="w-12 h-12 border-2 border-primary/20 flex-shrink-0">
+                        <AvatarImage src="" alt={customer.name} />
+                        <AvatarFallback className="bg-gradient-to-br from-primary/20 to-secondary/20 text-primary text-xs font-semibold">
+                          {customer.name.split(" ").slice(1).map((n) => n[0]).join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-xs leading-tight text-foreground truncate">{customer.name}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{customer.specialty}</p>
+                        <div className="flex gap-1 mt-1.5">
+                          {customer.status.map((s, i) => (
+                            <div key={i} className="w-5 h-5 rounded border border-border bg-muted/50 flex items-center justify-center text-[9px] font-medium text-muted-foreground">
+                              {s}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1.5 ml-2 flex-shrink-0">
+                      <span className="text-[10px] text-muted-foreground font-medium whitespace-nowrap">{customer.time}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] text-primary font-medium">Andheri</span>
+                        <MapPin className="w-3.5 h-3.5 text-primary" />
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-1.5 ml-2">
-                    <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">{customer.time}</span>
-                    <div className="flex items-center gap-1">
-                      <span className="text-xs text-primary font-medium">Andheri</span>
-                      <MapPin className="w-4 h-4 text-primary" />
-                    </div>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              ))}
+            </div>
+
+            {/* Next Date - Collapsible */}
+            <div className="bg-primary-dark/40 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between cursor-pointer hover:bg-primary-dark/50 transition-colors">
+              <span className="text-white font-medium text-xs">05-Jul, Friday (2)</span>
+              <Button size="icon" className="h-7 w-7 bg-white/20 hover:bg-white/30 text-white border-0">
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Locked Dates */}
+            {lockedDates.slice(1).map((date, idx) => (
+              <div key={idx} className="bg-primary-dark/30 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between opacity-60">
+                <span className="text-white font-medium text-xs">{date}</span>
+                <Lock className="w-4 h-4 text-white" />
+              </div>
             ))}
           </div>
-
-          {/* Next Date - Collapsible */}
-          <div className="bg-primary-dark/40 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between cursor-pointer hover:bg-primary-dark/50 transition-colors">
-            <span className="text-white font-medium text-sm">05-Jul, Friday (2)</span>
-            <Button size="icon" className="h-7 w-7 bg-white/20 hover:bg-white/30 text-white border-0">
-              <Plus className="w-4 h-4" />
-            </Button>
-          </div>
-
-          {/* Locked Dates */}
-          {lockedDates.slice(1).map((date, idx) => (
-            <div key={idx} className="bg-primary-dark/30 backdrop-blur-sm rounded-lg px-4 py-2.5 flex items-center justify-between opacity-60">
-              <span className="text-white font-medium text-sm">{date}</span>
-              <Lock className="w-4 h-4 text-white" />
-            </div>
-          ))}
         </div>
 
-        {/* Right Panel - Widgets */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div className="flex flex-col gap-4 max-w-[660px]">
+        {/* Right Panel - Widgets - Scrollable */}
+        <div className="flex-1 overflow-y-auto bg-background">
+          <div className="flex flex-col gap-4 max-w-[660px] p-4 pb-8">
             {/* Row 1: Large Widgets */}
             <div className="flex gap-4">
               {/* Reminder Card */}
-              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
                   <AlignLeft className="w-5 h-5 text-accent" />
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground font-medium">Reminder</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Reminder</p>
                   <p className="text-3xl font-bold leading-none mt-0.5">03</p>
                 </div>
               </div>
-              <div className="space-y-1.5 text-sm">
+              <div className="space-y-1.5 flex-1 overflow-hidden">
                 <div className="border-l-2 border-accent pl-2.5">
-                  <p className="font-medium text-xs leading-tight">Secondary Sales Pending</p>
+                  <p className="font-medium text-xs leading-tight truncate">Secondary Sales Pending</p>
                   <p className="text-[10px] text-muted-foreground">14 July 2023</p>
                 </div>
                 <div className="border-l-2 border-accent pl-2.5">
-                  <p className="font-medium text-xs leading-tight">Create MTP : July 23</p>
+                  <p className="font-medium text-xs leading-tight truncate">Create MTP : July 23</p>
                   <p className="text-[10px] text-muted-foreground">25 July 2023</p>
                 </div>
               </div>
               </Card>
 
               {/* Action Points Card */}
-              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-white border-0 rounded-2xl">
+              <Card className="w-[315px] h-[155px] p-4 relative shadow-lg bg-card border-0 rounded-2xl flex flex-col">
               <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-destructive rounded-full" />
               <div className="flex items-start gap-3 mb-2">
                 <div className="w-10 h-10 rounded-xl bg-purple/20 flex items-center justify-center flex-shrink-0">
                   <CheckCircle2 className="w-5 h-5 text-purple" />
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground font-medium">Action Points</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Action Points</p>
                   <p className="text-3xl font-bold leading-none mt-0.5">03</p>
                 </div>
               </div>
-              <div className="space-y-1.5 text-sm">
+              <div className="space-y-1.5 flex-1 overflow-hidden">
                 <div className="border-l-2 border-purple pl-2.5">
-                  <p className="font-medium text-xs leading-tight">Study Material for Aprox</p>
-                  <p className="text-[10px] text-muted-foreground">Dr. Austin Berg</p>
+                  <p className="font-medium text-xs leading-tight truncate">Study Material for Aprox</p>
+                  <p className="text-[10px] text-muted-foreground truncate">Dr. Austin Berg</p>
                 </div>
                 <div className="border-l-2 border-purple pl-2.5">
-                  <p className="font-medium text-xs leading-tight">Conduct & Event for Bprox</p>
-                  <p className="text-[10px] text-muted-foreground">Dr. Jalen Tindel</p>
+                  <p className="font-medium text-xs leading-tight truncate">Conduct & Event for Bprox</p>
+                  <p className="text-[10px] text-muted-foreground truncate">Dr. Jalen Tindel</p>
                 </div>
               </div>
               </Card>
@@ -481,15 +484,16 @@ const Dashboard = () => {
               </div>
 
               {/* Special Occasions Card */}
-              <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-white border-0 rounded-2xl">
+              <Card className="w-[150px] h-[155px] p-3 relative shadow-lg bg-card border-0 rounded-2xl">
                 <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-accent rounded-full" />
+                <p className="text-[10px] text-muted-foreground font-medium mb-2 uppercase tracking-wide">Special Occasions</p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
                     <Cake className="w-4 h-4 text-pink-500 flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-semibold truncate">Dr. Rama Sane</p>
-                      <p className="text-[10px] text-muted-foreground">Birthday</p>
-                      <p className="text-[10px] text-primary font-medium">13 July 2023</p>
+                      <p className="text-[9px] text-muted-foreground">Birthday</p>
+                      <p className="text-[9px] text-primary font-medium">13 July 2023</p>
                     </div>
                   </div>
                   <div className="h-px bg-border" />
@@ -497,8 +501,8 @@ const Dashboard = () => {
                     <Gift className="w-4 h-4 text-purple flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-semibold truncate">Dr. Jay Mishra</p>
-                      <p className="text-[10px] text-muted-foreground">Anniversary</p>
-                      <p className="text-[10px] text-primary font-medium">15 July 2023</p>
+                      <p className="text-[9px] text-muted-foreground">Anniversary</p>
+                      <p className="text-[9px] text-primary font-medium">15 July 2023</p>
                     </div>
                   </div>
                 </div>
