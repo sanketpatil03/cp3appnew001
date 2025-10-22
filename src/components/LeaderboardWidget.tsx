@@ -13,40 +13,38 @@ interface LeaderboardEntry {
   rank: number;
   repName: string;
   points: number;
-  salesPerformance: number;
   badge: string;
   isCurrentUser?: boolean;
 }
 
 const leaderboardData: LeaderboardEntry[] = [
-  { rank: 1, repName: "Rakesh", points: 300, salesPerformance: 120000, badge: "🏆" },
-  { rank: 2, repName: "Priya", points: 260, salesPerformance: 105000, badge: "🥈" },
-  { rank: 3, repName: "You", points: 220, salesPerformance: 95000, badge: "🥉", isCurrentUser: true },
-  { rank: 4, repName: "Amit", points: 200, salesPerformance: 88000, badge: "" },
-  { rank: 5, repName: "Sneha", points: 180, salesPerformance: 80000, badge: "" },
-  { rank: 6, repName: "Nikhil", points: 175, salesPerformance: 78000, badge: "" },
-  { rank: 7, repName: "Kavita", points: 170, salesPerformance: 75000, badge: "" },
-  { rank: 8, repName: "Rohan", points: 165, salesPerformance: 73000, badge: "" },
-  { rank: 9, repName: "Anjali", points: 160, salesPerformance: 70000, badge: "" },
-  { rank: 10, repName: "Arjun", points: 155, salesPerformance: 68000, badge: "" },
-  { rank: 11, repName: "Priyanka", points: 150, salesPerformance: 65000, badge: "" },
-  { rank: 12, repName: "Sanjay", points: 145, salesPerformance: 63000, badge: "" },
-  { rank: 13, repName: "Divya", points: 140, salesPerformance: 60000, badge: "" },
-  { rank: 14, repName: "Varun", points: 135, salesPerformance: 58000, badge: "" },
-  { rank: 15, repName: "Meera", points: 130, salesPerformance: 55000, badge: "" },
-  { rank: 16, repName: "Kiran", points: 125, salesPerformance: 53000, badge: "" },
-  { rank: 17, repName: "Shalini", points: 120, salesPerformance: 50000, badge: "" },
-  { rank: 18, repName: "Rohit", points: 115, salesPerformance: 48000, badge: "" },
-  { rank: 19, repName: "Snehal", points: 110, salesPerformance: 45000, badge: "" },
-  { rank: 20, repName: "Deepak", points: 105, salesPerformance: 43000, badge: "" },
+  { rank: 1, repName: "Rakesh", points: 300, badge: "🏆" },
+  { rank: 2, repName: "Priya", points: 260, badge: "🥈" },
+  { rank: 3, repName: "You", points: 220, badge: "🥉", isCurrentUser: true },
+  { rank: 4, repName: "Amit", points: 200, badge: "" },
+  { rank: 5, repName: "Sneha", points: 180, badge: "" },
+  { rank: 6, repName: "Nikhil", points: 175, badge: "" },
+  { rank: 7, repName: "Kavita", points: 170, badge: "" },
+  { rank: 8, repName: "Rohan", points: 165, badge: "" },
+  { rank: 9, repName: "Anjali", points: 160, badge: "" },
+  { rank: 10, repName: "Arjun", points: 155, badge: "" },
+  { rank: 11, repName: "Priyanka", points: 150, badge: "" },
+  { rank: 12, repName: "Sanjay", points: 145, badge: "" },
+  { rank: 13, repName: "Divya", points: 140, badge: "" },
+  { rank: 14, repName: "Varun", points: 135, badge: "" },
+  { rank: 15, repName: "Meera", points: 130, badge: "" },
+  { rank: 16, repName: "Kiran", points: 125, badge: "" },
+  { rank: 17, repName: "Shalini", points: 120, badge: "" },
+  { rank: 18, repName: "Rohit", points: 115, badge: "" },
+  { rank: 19, repName: "Snehal", points: 110, badge: "" },
+  { rank: 20, repName: "Deepak", points: 105, badge: "" },
 ];
 
 const scoringCriteria = [
-  { activity: "Daily activity completion", points: 5, icon: "✅" },
-  { activity: "Achieving 100% doctor coverage", points: 10, icon: "📈" },
-  { activity: "Campaign participation", points: 15, icon: "💡" },
-  { activity: "Order fulfillment accuracy", points: 5, icon: "🧾" },
-  { activity: "Positive feedback from manager", points: 10, icon: "💬" },
+  { activity: "MTP done properly (on time & complete)", points: 10, icon: "📋" },
+  { activity: "Pre-call planning done", points: 10, icon: "📝" },
+  { activity: "Detailing done", points: 20, icon: "💼" },
+  { activity: "Doctor Rx conversions", points: 50, icon: "💊" },
 ];
 
 export const LeaderboardWidget = () => {
@@ -100,12 +98,8 @@ export const LeaderboardWidget = () => {
                 <span className="text-xs text-muted-foreground">Points</span>
                 <span className="text-lg font-bold text-foreground">{currentUser?.points || 0}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">Sales</span>
-                <span className="text-sm font-semibold text-foreground">₹{((currentUser?.salesPerformance || 0) / 1000).toFixed(0)}K</span>
-              </div>
               
-              <div className="pt-1">
+              <div className="pt-2">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[9px] font-semibold text-muted-foreground">To Rank {nextRank?.rank || 1}</span>
                   <Sparkles className="w-3 h-3 text-primary" />
@@ -218,7 +212,6 @@ export const LeaderboardWidget = () => {
                   <th className="text-left p-3 text-xs font-semibold">Rank</th>
                   <th className="text-left p-3 text-xs font-semibold">Rep Name</th>
                   <th className="text-right p-3 text-xs font-semibold">Points</th>
-                  <th className="text-right p-3 text-xs font-semibold">Sales</th>
                 </tr>
               </thead>
               <tbody>
@@ -263,9 +256,6 @@ export const LeaderboardWidget = () => {
                       </td>
                       <td className="p-3 text-right">
                         <span className="text-sm font-semibold">{entry.points}</span>
-                      </td>
-                      <td className="p-3 text-right">
-                        <span className="text-sm">₹{(entry.salesPerformance / 1000).toFixed(0)}K</span>
                       </td>
                     </tr>
                   );
