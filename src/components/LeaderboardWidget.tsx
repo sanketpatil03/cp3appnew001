@@ -77,11 +77,11 @@ export const LeaderboardWidget = () => {
         onClick={() => setIsExpanded(true)}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2 mb-3">
             <Trophy className="w-5 h-5 text-primary" />
-            <Badge variant="secondary" className="text-[10px]">
+            <span className="text-xs font-medium text-muted-foreground uppercase">
               Leaderboard
-            </Badge>
+            </span>
           </div>
 
           <div className="flex-1 flex items-center gap-4">
