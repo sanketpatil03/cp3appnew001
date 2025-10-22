@@ -205,13 +205,13 @@ export const LeaderboardWidget = () => {
           </div>
 
           {/* Leaderboard Table */}
-          <div className="flex-1 overflow-auto border rounded-lg">
+          <div className="flex-1 overflow-auto border rounded-lg scrollbar-hide">
             <table className="w-full">
               <thead className="bg-muted sticky top-0 z-10">
                 <tr>
-                  <th className="text-left p-3 text-xs font-semibold">Rank</th>
-                  <th className="text-left p-3 text-xs font-semibold">Rep Name</th>
-                  <th className="text-right p-3 text-xs font-semibold">Points</th>
+                  <th className="text-center p-3 text-xs font-semibold">Rank</th>
+                  <th className="text-center p-3 text-xs font-semibold">Rep Name</th>
+                  <th className="text-center p-3 text-xs font-semibold">Points</th>
                 </tr>
               </thead>
               <tbody>
@@ -227,7 +227,7 @@ export const LeaderboardWidget = () => {
                       )}
                     >
                       <td className="p-3">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center gap-2">
                           <span className="text-lg">{getRankBadge(displayRank)}</span>
                           <span
                             className={cn(
@@ -244,7 +244,7 @@ export const LeaderboardWidget = () => {
                           )}
                         </div>
                       </td>
-                      <td className="p-3">
+                      <td className="p-3 text-center">
                         <span
                           className={cn(
                             "text-sm font-medium",
@@ -254,7 +254,7 @@ export const LeaderboardWidget = () => {
                           {entry.repName}
                         </span>
                       </td>
-                      <td className="p-3 text-right">
+                      <td className="p-3 text-center">
                         <span className="text-sm font-semibold">{entry.points}</span>
                       </td>
                     </tr>
