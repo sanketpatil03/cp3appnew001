@@ -255,11 +255,11 @@ const PopupDesigns = () => {
         >
           <Bell className="h-5 w-5 mr-2" />
           <span className="font-semibold">Nudge Center</span>
-          {5 > 0 && (
+          {3 > 0 && (
             <Badge 
               className="ml-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-destructive text-destructive-foreground animate-pulse"
             >
-              5
+              3
             </Badge>
           )}
         </Button>
