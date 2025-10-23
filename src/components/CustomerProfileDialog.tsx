@@ -14,9 +14,9 @@ interface CustomerProfileDialogProps {
 export const CustomerProfileDialog = ({ open, onOpenChange, customer }: CustomerProfileDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[1008px] h-[748px] overflow-y-auto p-0">
-        {/* Header - 1008px x 90px */}
-        <div className="sticky top-0 bg-background z-10 h-[90px] px-6 flex items-center border-b">
+      <DialogContent className="max-w-[1008px] max-h-[90vh] overflow-y-auto p-0">
+        {/* Header */}
+        <div className="sticky top-0 bg-background z-10 px-6 py-4 flex items-center border-b">
           <div className="flex-1">
             <p className="text-sm text-muted-foreground">04-Jul, Thursday</p>
             <DialogTitle className="text-xl font-bold mt-1">{customer.name}</DialogTitle>
@@ -35,22 +35,22 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
         </div>
 
         {/* Content */}
-        <div className="px-6 pb-6">
-          {/* Information Sections Grid - 314px x 175px cards */}
+        <div className="px-6 pb-6 pt-4">
+          {/* Information Sections Grid */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             {/* Current Playlist */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-info/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-info uppercase">Current Playlist</h3>
+                  <h3 className="text-xs font-bold text-cyan-500 uppercase tracking-wide">Current Playlist</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -78,18 +78,18 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
 
             {/* Last Detailing Session */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-info/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-info uppercase">Last Detailing</h3>
+                  <h3 className="text-xs font-bold text-cyan-500 uppercase tracking-wide">Last Detailing Session</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -117,18 +117,18 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
 
             {/* Action Point */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-success/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-success uppercase">Action Point</h3>
+                  <h3 className="text-xs font-bold text-green-500 uppercase tracking-wide">Action Point</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -156,18 +156,18 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
 
             {/* Focus Brands */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-purple uppercase">Focus Brands</h3>
+                  <h3 className="text-xs font-bold text-cyan-500 uppercase tracking-wide">Focus Brands</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -192,18 +192,18 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
 
             {/* Personal Details */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-info/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-info uppercase">Personal Details</h3>
+                  <h3 className="text-xs font-bold text-cyan-500 uppercase tracking-wide">Personal Details</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -231,18 +231,18 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
 
             {/* Business Details */}
-            <div className="w-[314px] h-[175px] border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
+            <div className="border rounded-lg p-4 bg-card shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-success/20 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <h3 className="text-xs font-bold text-success uppercase">Business Details</h3>
+                  <h3 className="text-xs font-bold text-green-500 uppercase tracking-wide">Business Details</h3>
                 </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Maximize2 className="h-3 w-3" />
+                <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <Maximize2 className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-2">
@@ -270,11 +270,11 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </div>
           </div>
 
-          {/* Action Menu - 231px x 50px buttons */}
+          {/* Action Menu */}
           <div className="grid grid-cols-4 gap-3">
             <Button 
               variant="outline" 
-              className="w-[231px] h-[50px] border"
+              className="h-12 font-medium"
               style={{ 
                 backgroundColor: '#21BFD01A',
                 borderColor: '#21BFD080'
@@ -284,7 +284,7 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </Button>
             <Button 
               variant="outline" 
-              className="w-[231px] h-[50px] border"
+              className="h-12 font-medium"
               style={{ 
                 backgroundColor: '#21BFD01A',
                 borderColor: '#21BFD080'
@@ -294,7 +294,7 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </Button>
             <Button 
               variant="outline" 
-              className="w-[231px] h-[50px] border"
+              className="h-12 font-medium"
               style={{ 
                 backgroundColor: '#21BFD01A',
                 borderColor: '#21BFD080'
@@ -304,7 +304,7 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             </Button>
             <Button 
               variant="outline" 
-              className="w-[231px] h-[50px] border"
+              className="h-12 font-medium"
               style={{ 
                 backgroundColor: '#21BFD01A',
                 borderColor: '#21BFD080'
@@ -313,29 +313,29 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
               Rehearse
             </Button>
             
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Edit Playlist
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               History
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Skip
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Reschedule
             </Button>
             
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               View Playlist
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Video Streaming
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Consent
             </Button>
-            <Button variant="outline" className="w-[231px] h-[50px] bg-card hover:bg-muted/50">
+            <Button variant="outline" className="h-12 bg-card hover:bg-muted/50 font-medium">
               Check In
             </Button>
           </div>
