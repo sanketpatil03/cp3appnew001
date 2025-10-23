@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { LeaderboardWidget } from "@/components/LeaderboardWidget";
 import { CustomerProfileDialog } from "@/components/CustomerProfileDialog";
 import { VoiceBot } from "@/components/VoiceBot";
+import { AppSidebar } from "@/components/AppSidebar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -47,6 +48,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [isProductFocusOpen, setIsProductFocusOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<{ name: string; specialty: string } | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   const customers = [
     { name: "Dr. Prakash Patil", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
@@ -125,7 +127,12 @@ const Dashboard = () => {
             <Lightbulb className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-white animate-pulse" />
           </Button>
-          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-white/20 h-10 w-10">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-primary-foreground hover:bg-white/20 h-10 w-10"
+            onClick={() => setIsSidebarOpen(true)}
+          >
             <Menu className="w-5 h-5" />
           </Button>
         </div>
@@ -1027,6 +1034,9 @@ const Dashboard = () => {
 
       {/* Voice Bot */}
       <VoiceBot />
+
+      {/* Sidebar Menu */}
+      <AppSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </div>
   );
 };
