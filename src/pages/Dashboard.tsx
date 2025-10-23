@@ -8,6 +8,8 @@ import { CustomerProfileDialog } from "@/components/CustomerProfileDialog";
 import { VoiceBot } from "@/components/VoiceBot";
 import { AppSidebar } from "@/components/AppSidebar";
 import { PerformanceSummaryDialog } from "@/components/PerformanceSummaryDialog";
+import { PrimarySalesWidget } from "@/components/PrimarySalesWidget";
+import { PrimarySalesDialog } from "@/components/PrimarySalesDialog";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -51,6 +53,7 @@ const Dashboard = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<{ name: string; specialty: string } | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPerformanceSummaryOpen, setIsPerformanceSummaryOpen] = useState(false);
+  const [isPrimarySalesOpen, setIsPrimarySalesOpen] = useState(false);
 
   // Show performance summary on mount (first login)
   useEffect(() => {
@@ -997,6 +1000,11 @@ const Dashboard = () => {
                 </Card>
               </div>
             </div>
+
+            {/* Row 10: Primary Sales Performance Widget */}
+            <div className="flex gap-4">
+              <PrimarySalesWidget onClick={() => setIsPrimarySalesOpen(true)} />
+            </div>
           </div>
         </div>
       </div>
@@ -1062,6 +1070,12 @@ const Dashboard = () => {
       <PerformanceSummaryDialog 
         open={isPerformanceSummaryOpen} 
         onOpenChange={setIsPerformanceSummaryOpen} 
+      />
+
+      {/* Primary Sales Dialog */}
+      <PrimarySalesDialog 
+        open={isPrimarySalesOpen} 
+        onOpenChange={setIsPrimarySalesOpen} 
       />
     </div>
   );
