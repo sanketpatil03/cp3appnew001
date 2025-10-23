@@ -6,9 +6,9 @@ interface PrimarySalesWidgetProps {
 }
 
 export const PrimarySalesWidget = ({ onClick }: PrimarySalesWidgetProps) => {
-  const mtdTarget = 237008;
-  const mtdActual = 84025;
-  const mtdAchievement = ((mtdActual / mtdTarget) * 100).toFixed(2);
+  const mtdTarget = 72000;
+  const mtdActual = 70500;
+  const mtdAchievement = ((mtdActual / mtdTarget) * 100).toFixed(1);
 
   return (
     <Card 
@@ -27,11 +27,11 @@ export const PrimarySalesWidget = ({ onClick }: PrimarySalesWidgetProps) => {
       <div className="space-y-2">
         <div className="flex justify-between items-center">
           <span className="text-xs text-muted-foreground">MTD Target</span>
-          <span className="text-sm font-bold">{mtdTarget.toLocaleString()}</span>
+          <span className="text-sm font-bold">₹{mtdTarget.toLocaleString()}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-xs text-muted-foreground">MTD Actual</span>
-          <span className="text-sm font-bold text-primary">{mtdActual.toLocaleString()}</span>
+          <span className="text-sm font-bold text-primary">₹{mtdActual.toLocaleString()}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-xs text-muted-foreground">MTD Achievement%</span>

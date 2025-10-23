@@ -16,153 +16,153 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   const trendData = [
-    { month: "Jan", "2025": 20000, "2024": 15000 },
-    { month: "Feb", "2025": 45000, "2024": 35000 },
-    { month: "Mar", "2025": 75000, "2024": 60000 },
-    { month: "Apr", "2025": 100000, "2024": 85000 },
-    { month: "May", "2025": 135000, "2024": 115000 },
-    { month: "Jun", "2025": 165000, "2024": 145000 },
-    { month: "Jul", "2025": 185000, "2024": 165000 },
-    { month: "Aug", "2025": 200000, "2024": 180000 },
-    { month: "Sep", "2025": 215000, "2024": 195000 },
-    { month: "Oct", "2025": 230000, "2024": 205000 },
+    { month: "Jan", "2025": 42000, "2024": 38000 },
+    { month: "Feb", "2025": 45000, "2024": 41000 },
+    { month: "Mar", "2025": 48500, "2024": 43500 },
+    { month: "Apr", "2025": 52000, "2024": 46000 },
+    { month: "May", "2025": 55500, "2024": 48500 },
+    { month: "Jun", "2025": 58000, "2024": 51000 },
+    { month: "Jul", "2025": 61500, "2024": 53500 },
+    { month: "Aug", "2025": 64000, "2024": 56000 },
+    { month: "Sep", "2025": 67500, "2024": 58500 },
+    { month: "Oct", "2025": 70500, "2024": 61000 },
   ];
 
   const tableData = [
-    { month: "January", "2025": 20000, "2024": 15000, growth: "+33.3%" },
-    { month: "February", "2025": 45000, "2024": 35000, growth: "+28.6%" },
-    { month: "March", "2025": 75000, "2024": 60000, growth: "+25.0%" },
-    { month: "April", "2025": 100000, "2024": 85000, growth: "+17.6%" },
-    { month: "May", "2025": 135000, "2024": 115000, growth: "+17.4%" },
-    { month: "June", "2025": 165000, "2024": 145000, growth: "+13.8%" },
-    { month: "July", "2025": 185000, "2024": 165000, growth: "+12.1%" },
-    { month: "August", "2025": 200000, "2024": 180000, growth: "+11.1%" },
-    { month: "September", "2025": 215000, "2024": 195000, growth: "+10.3%" },
-    { month: "October", "2025": 230000, "2024": 205000, growth: "+12.2%" },
+    { month: "January", "2025": 42000, "2024": 38000, growth: "+10.5%" },
+    { month: "February", "2025": 45000, "2024": 41000, growth: "+9.8%" },
+    { month: "March", "2025": 48500, "2024": 43500, growth: "+11.5%" },
+    { month: "April", "2025": 52000, "2024": 46000, growth: "+13.0%" },
+    { month: "May", "2025": 55500, "2024": 48500, growth: "+14.4%" },
+    { month: "June", "2025": 58000, "2024": 51000, growth: "+13.7%" },
+    { month: "July", "2025": 61500, "2024": 53500, growth: "+15.0%" },
+    { month: "August", "2025": 64000, "2024": 56000, growth: "+14.3%" },
+    { month: "September", "2025": 67500, "2024": 58500, growth: "+15.4%" },
+    { month: "October", "2025": 70500, "2024": 61000, growth: "+15.6%" },
   ];
 
   const products = [
     { 
-      name: "Aprox", 
+      name: "Cardipro 50mg", 
       status: "performing", 
       change: "+18%", 
-      insight: "Strong momentum with increasing prescription rates",
+      insight: "Strong momentum with increasing prescription rates among cardiologists",
       monthlyData: [
-        { month: "Jan", sales: 5000, target: 4500 },
-        { month: "Feb", sales: 7500, target: 6000 },
-        { month: "Mar", sales: 9200, target: 7500 },
-        { month: "Apr", sales: 11000, target: 9000 },
-        { month: "May", sales: 13500, target: 10500 },
-        { month: "Jun", sales: 15200, target: 12000 },
-        { month: "Jul", sales: 16800, target: 13500 },
-        { month: "Aug", sales: 18000, target: 15000 },
-        { month: "Sep", sales: 19500, target: 16500 },
-        { month: "Oct", sales: 21000, target: 18000 },
-        { month: "Nov", sales: 22500, target: 19500 },
-        { month: "Dec", sales: 24000, target: 21000 },
+        { month: "Jan", sales: 8500, target: 8000 },
+        { month: "Feb", sales: 9200, target: 8500 },
+        { month: "Mar", sales: 10100, target: 9000 },
+        { month: "Apr", sales: 11200, target: 9500 },
+        { month: "May", sales: 12500, target: 10500 },
+        { month: "Jun", sales: 13800, target: 11500 },
+        { month: "Jul", sales: 14800, target: 12500 },
+        { month: "Aug", sales: 15500, target: 13000 },
+        { month: "Sep", sales: 16200, target: 13500 },
+        { month: "Oct", sales: 17000, target: 14000 },
+        { month: "Nov", sales: 17500, target: 14500 },
+        { month: "Dec", sales: 18200, target: 15000 },
       ]
     },
     { 
-      name: "Bprox", 
+      name: "Diabetrol XR", 
       status: "performing", 
       change: "+12%", 
-      insight: "Steady growth in tier-2 markets",
+      insight: "Steady growth in tier-2 cities, good acceptance among diabetologists",
       monthlyData: [
-        { month: "Jan", sales: 4200, target: 4000 },
-        { month: "Feb", sales: 5800, target: 5500 },
-        { month: "Mar", sales: 7100, target: 6800 },
-        { month: "Apr", sales: 8500, target: 8000 },
-        { month: "May", sales: 10200, target: 9500 },
-        { month: "Jun", sales: 11800, target: 11000 },
-        { month: "Jul", sales: 13200, target: 12500 },
-        { month: "Aug", sales: 14500, target: 13800 },
-        { month: "Sep", sales: 15800, target: 15000 },
-        { month: "Oct", sales: 17000, target: 16200 },
-        { month: "Nov", sales: 18200, target: 17500 },
-        { month: "Dec", sales: 19500, target: 18800 },
+        { month: "Jan", sales: 12000, target: 11500 },
+        { month: "Feb", sales: 12800, target: 12000 },
+        { month: "Mar", sales: 13500, target: 12500 },
+        { month: "Apr", sales: 14200, target: 13000 },
+        { month: "May", sales: 15000, target: 13500 },
+        { month: "Jun", sales: 15800, target: 14000 },
+        { month: "Jul", sales: 16500, target: 14500 },
+        { month: "Aug", sales: 17200, target: 15000 },
+        { month: "Sep", sales: 17900, target: 15500 },
+        { month: "Oct", sales: 18500, target: 16000 },
+        { month: "Nov", sales: 19200, target: 16500 },
+        { month: "Dec", sales: 20000, target: 17000 },
       ]
     },
     { 
-      name: "Cprox", 
+      name: "Painrelief Plus", 
+      status: "underperforming", 
+      change: "-8%", 
+      insight: "Declining engagement - competitor launched similar product at lower price",
+      monthlyData: [
+        { month: "Jan", sales: 9500, target: 10000 },
+        { month: "Feb", sales: 9200, target: 10200 },
+        { month: "Mar", sales: 8800, target: 10500 },
+        { month: "Apr", sales: 8500, target: 10800 },
+        { month: "May", sales: 8200, target: 11000 },
+        { month: "Jun", sales: 7900, target: 11200 },
+        { month: "Jul", sales: 7600, target: 11500 },
+        { month: "Aug", sales: 7400, target: 11800 },
+        { month: "Sep", sales: 7200, target: 12000 },
+        { month: "Oct", sales: 7000, target: 12200 },
+        { month: "Nov", sales: 6900, target: 12500 },
+        { month: "Dec", sales: 6800, target: 12800 },
+      ]
+    },
+    { 
+      name: "Antibiox 500", 
+      status: "performing", 
+      change: "+15%", 
+      insight: "Consistent performance across general physicians and pediatricians",
+      monthlyData: [
+        { month: "Jan", sales: 14000, target: 13000 },
+        { month: "Feb", sales: 14800, target: 13500 },
+        { month: "Mar", sales: 15600, target: 14000 },
+        { month: "Apr", sales: 16500, target: 14500 },
+        { month: "May", sales: 17400, target: 15000 },
+        { month: "Jun", sales: 18200, target: 15500 },
+        { month: "Jul", sales: 19000, target: 16000 },
+        { month: "Aug", sales: 19800, target: 16500 },
+        { month: "Sep", sales: 20500, target: 17000 },
+        { month: "Oct", sales: 21200, target: 17500 },
+        { month: "Nov", sales: 22000, target: 18000 },
+        { month: "Dec", sales: 22800, target: 18500 },
+      ]
+    },
+    { 
+      name: "Gastrocare DS", 
       status: "underperforming", 
       change: "-5%", 
-      insight: "Declining engagement - competitor activity increased",
+      insight: "Supply chain delays affecting stock availability in key territories",
       monthlyData: [
-        { month: "Jan", sales: 6000, target: 6500 },
-        { month: "Feb", sales: 5500, target: 6800 },
-        { month: "Mar", sales: 5200, target: 7000 },
-        { month: "Apr", sales: 4800, target: 7200 },
-        { month: "May", sales: 4500, target: 7500 },
-        { month: "Jun", sales: 4200, target: 7800 },
-        { month: "Jul", sales: 4000, target: 8000 },
-        { month: "Aug", sales: 3800, target: 8200 },
-        { month: "Sep", sales: 3600, target: 8500 },
-        { month: "Oct", sales: 3500, target: 8800 },
-        { month: "Nov", sales: 3400, target: 9000 },
-        { month: "Dec", sales: 3300, target: 9200 },
-      ]
-    },
-    { 
-      name: "Dprox", 
-      status: "performing", 
-      change: "+8%", 
-      insight: "Consistent performance in key accounts",
-      monthlyData: [
-        { month: "Jan", sales: 3500, target: 3200 },
-        { month: "Feb", sales: 4200, target: 3800 },
-        { month: "Mar", sales: 5000, target: 4500 },
-        { month: "Apr", sales: 5800, target: 5200 },
-        { month: "May", sales: 6500, target: 5900 },
-        { month: "Jun", sales: 7200, target: 6600 },
-        { month: "Jul", sales: 7800, target: 7300 },
-        { month: "Aug", sales: 8400, target: 8000 },
-        { month: "Sep", sales: 9000, target: 8700 },
-        { month: "Oct", sales: 9600, target: 9400 },
-        { month: "Nov", sales: 10200, target: 10100 },
-        { month: "Dec", sales: 10800, target: 10800 },
-      ]
-    },
-    { 
-      name: "Eprox", 
-      status: "underperforming", 
-      change: "-3%", 
-      insight: "Supply chain issues affecting availability",
-      monthlyData: [
-        { month: "Jan", sales: 2800, target: 3000 },
-        { month: "Feb", sales: 2600, target: 3200 },
-        { month: "Mar", sales: 2400, target: 3400 },
-        { month: "Apr", sales: 2200, target: 3500 },
-        { month: "May", sales: 2100, target: 3600 },
-        { month: "Jun", sales: 2000, target: 3700 },
-        { month: "Jul", sales: 1900, target: 3800 },
-        { month: "Aug", sales: 1850, target: 3900 },
-        { month: "Sep", sales: 1800, target: 4000 },
-        { month: "Oct", sales: 1780, target: 4100 },
-        { month: "Nov", sales: 1760, target: 4200 },
-        { month: "Dec", sales: 1750, target: 4300 },
+        { month: "Jan", sales: 7200, target: 7500 },
+        { month: "Feb", sales: 7000, target: 7800 },
+        { month: "Mar", sales: 6800, target: 8000 },
+        { month: "Apr", sales: 6600, target: 8200 },
+        { month: "May", sales: 6400, target: 8500 },
+        { month: "Jun", sales: 6300, target: 8800 },
+        { month: "Jul", sales: 6200, target: 9000 },
+        { month: "Aug", sales: 6100, target: 9200 },
+        { month: "Sep", sales: 6000, target: 9500 },
+        { month: "Oct", sales: 5800, target: 9800 },
+        { month: "Nov", sales: 5700, target: 10000 },
+        { month: "Dec", sales: 5600, target: 10200 },
       ]
     },
   ];
 
   const recommendations = [
     {
-      title: "Focus on Cprox Recovery",
-      description: "Increase detailing frequency for Cprox with A-segment doctors. Schedule promotional events in underperforming territories.",
+      title: "Focus on Painrelief Plus Recovery",
+      description: "Increase detailing frequency with orthopedic surgeons and pain management specialists. Highlight unique efficacy benefits vs competitors. Schedule CME programs in underperforming territories.",
       priority: "high"
     },
     {
-      title: "Capitalize on Aprox Momentum",
-      description: "Expand Aprox reach to B-segment doctors. Current adoption rate suggests high potential for market expansion.",
+      title: "Capitalize on Cardipro Momentum",
+      description: "Expand Cardipro reach to general physicians in tier-2 cities. Current cardiologist adoption suggests high potential for primary care expansion.",
       priority: "medium"
     },
     {
-      title: "Address Eprox Supply Issues",
-      description: "Coordinate with supply chain team to resolve stock availability. Communicate expected timelines to key prescribers.",
+      title: "Address Gastrocare Supply Chain",
+      description: "Coordinate with supply chain to prioritize high-volume territories. Pre-communicate stock restoration timeline to top 50 prescribers to maintain relationship.",
       priority: "high"
     },
     {
-      title: "Cross-Sell Opportunities",
-      description: "Doctors prescribing Aprox show high receptivity to Bprox. Bundle promotional materials for combo detailing.",
+      title: "Cross-Therapy Detailing",
+      description: "Doctors prescribing Diabetrol XR show 65% receptivity to Cardipro. Create combo-detailing materials for diabetologists managing cardiovascular comorbidities.",
       priority: "medium"
     },
   ];
@@ -186,13 +186,16 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
               <Card className="p-4">
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={product.monthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" stroke="hsl(var(--foreground))" />
+                    <YAxis stroke="hsl(var(--foreground))" />
+                    <Tooltip 
+                      formatter={(value) => `₹${Number(value).toLocaleString()}`}
+                      contentStyle={{ backgroundColor: "hsl(var(--background))", border: "1px solid hsl(var(--border))" }}
+                    />
                     <Legend />
-                    <Line type="monotone" dataKey="sales" stroke="hsl(var(--primary))" strokeWidth={2} name="Actual Sales" />
-                    <Line type="monotone" dataKey="target" stroke="hsl(var(--warning))" strokeWidth={2} strokeDasharray="5 5" name="Target" />
+                    <Line type="monotone" dataKey="sales" stroke="hsl(var(--primary))" strokeWidth={3} name="Actual Sales" dot={{ fill: "hsl(var(--primary))", r: 4 }} />
+                    <Line type="monotone" dataKey="target" stroke="#f59e0b" strokeWidth={3} strokeDasharray="5 5" name="Target" dot={{ fill: "#f59e0b", r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </Card>
