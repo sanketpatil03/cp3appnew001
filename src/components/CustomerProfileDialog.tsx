@@ -311,9 +311,19 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
                       <Sparkles className="w-4 h-4 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-sm mb-1.5">Smart Insight</h4>
+                      <div className="flex items-start justify-between mb-1.5">
+                        <h4 className="font-semibold text-sm">Smart Insight</h4>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-5 w-5 -mt-1 -mr-1 hover:bg-muted"
+                          onClick={() => setShowNudge(false)}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        Dr. Prakash prefers short, visual presentations — prepare a 2-page playlist for quick impact.
+                        Dr. Prakash prescribes Cetil— Add Cetil pages in your playlist accordingly.
                       </p>
                     </div>
                   </div>
