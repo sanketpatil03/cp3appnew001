@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { LeaderboardWidget } from "@/components/LeaderboardWidget";
+import { CustomerProfileDialog } from "@/components/CustomerProfileDialog";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -44,6 +45,7 @@ import {
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isProductFocusOpen, setIsProductFocusOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<{ name: string; specialty: string } | null>(null);
   
   const customers = [
     { name: "Dr. Prakash Patil", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
@@ -162,7 +164,11 @@ const Dashboard = () => {
             {/* Customer Cards */}
             <div className="space-y-2">
               {customers.map((customer, idx) => (
-                <Card key={idx} className="w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-shadow">
+                <Card 
+                  key={idx} 
+                  className="w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => setSelectedCustomer(customer)}
+                >
                   <div className="flex items-center justify-between h-full">
                     <div className="flex items-center gap-2.5 flex-1 min-w-0">
                       <Avatar className="w-12 h-12 border-2 border-primary/20 flex-shrink-0">
@@ -1008,6 +1014,15 @@ const Dashboard = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Customer Profile Dialog */}
+      {selectedCustomer && (
+        <CustomerProfileDialog
+          open={!!selectedCustomer}
+          onOpenChange={(open) => !open && setSelectedCustomer(null)}
+          customer={selectedCustomer}
+        />
+      )}
     </div>
   );
 };
