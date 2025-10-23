@@ -52,6 +52,14 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
         { month: "Feb", sales: 7500, target: 6000 },
         { month: "Mar", sales: 9200, target: 7500 },
         { month: "Apr", sales: 11000, target: 9000 },
+        { month: "May", sales: 13500, target: 10500 },
+        { month: "Jun", sales: 15200, target: 12000 },
+        { month: "Jul", sales: 16800, target: 13500 },
+        { month: "Aug", sales: 18000, target: 15000 },
+        { month: "Sep", sales: 19500, target: 16500 },
+        { month: "Oct", sales: 21000, target: 18000 },
+        { month: "Nov", sales: 22500, target: 19500 },
+        { month: "Dec", sales: 24000, target: 21000 },
       ]
     },
     { 
@@ -64,6 +72,14 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
         { month: "Feb", sales: 5800, target: 5500 },
         { month: "Mar", sales: 7100, target: 6800 },
         { month: "Apr", sales: 8500, target: 8000 },
+        { month: "May", sales: 10200, target: 9500 },
+        { month: "Jun", sales: 11800, target: 11000 },
+        { month: "Jul", sales: 13200, target: 12500 },
+        { month: "Aug", sales: 14500, target: 13800 },
+        { month: "Sep", sales: 15800, target: 15000 },
+        { month: "Oct", sales: 17000, target: 16200 },
+        { month: "Nov", sales: 18200, target: 17500 },
+        { month: "Dec", sales: 19500, target: 18800 },
       ]
     },
     { 
@@ -76,6 +92,14 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
         { month: "Feb", sales: 5500, target: 6800 },
         { month: "Mar", sales: 5200, target: 7000 },
         { month: "Apr", sales: 4800, target: 7200 },
+        { month: "May", sales: 4500, target: 7500 },
+        { month: "Jun", sales: 4200, target: 7800 },
+        { month: "Jul", sales: 4000, target: 8000 },
+        { month: "Aug", sales: 3800, target: 8200 },
+        { month: "Sep", sales: 3600, target: 8500 },
+        { month: "Oct", sales: 3500, target: 8800 },
+        { month: "Nov", sales: 3400, target: 9000 },
+        { month: "Dec", sales: 3300, target: 9200 },
       ]
     },
     { 
@@ -88,6 +112,14 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
         { month: "Feb", sales: 4200, target: 3800 },
         { month: "Mar", sales: 5000, target: 4500 },
         { month: "Apr", sales: 5800, target: 5200 },
+        { month: "May", sales: 6500, target: 5900 },
+        { month: "Jun", sales: 7200, target: 6600 },
+        { month: "Jul", sales: 7800, target: 7300 },
+        { month: "Aug", sales: 8400, target: 8000 },
+        { month: "Sep", sales: 9000, target: 8700 },
+        { month: "Oct", sales: 9600, target: 9400 },
+        { month: "Nov", sales: 10200, target: 10100 },
+        { month: "Dec", sales: 10800, target: 10800 },
       ]
     },
     { 
@@ -100,6 +132,14 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
         { month: "Feb", sales: 2600, target: 3200 },
         { month: "Mar", sales: 2400, target: 3400 },
         { month: "Apr", sales: 2200, target: 3500 },
+        { month: "May", sales: 2100, target: 3600 },
+        { month: "Jun", sales: 2000, target: 3700 },
+        { month: "Jul", sales: 1900, target: 3800 },
+        { month: "Aug", sales: 1850, target: 3900 },
+        { month: "Sep", sales: 1800, target: 4000 },
+        { month: "Oct", sales: 1780, target: 4100 },
+        { month: "Nov", sales: 1760, target: 4200 },
+        { month: "Dec", sales: 1750, target: 4300 },
       ]
     },
   ];
@@ -207,15 +247,18 @@ export const PrimarySalesDialog = ({ open, onOpenChange }: PrimarySalesDialogPro
           <TabsContent value="chart" className="space-y-4 mt-4">
             <Card className="p-4">
               <ResponsiveContainer width="100%" height={350}>
-                <LineChart data={trendData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `₹${Number(value).toLocaleString()}`} />
-                  <Legend />
-                  <Line type="monotone" dataKey="2025" stroke="hsl(var(--primary))" strokeWidth={3} name="2025" />
-                  <Line type="monotone" dataKey="2024" stroke="hsl(var(--warning))" strokeWidth={3} name="2024" />
-                </LineChart>
+                  <LineChart data={trendData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" stroke="hsl(var(--foreground))" />
+                    <YAxis stroke="hsl(var(--foreground))" />
+                    <Tooltip 
+                      formatter={(value) => `₹${Number(value).toLocaleString()}`}
+                      contentStyle={{ backgroundColor: "hsl(var(--background))", border: "1px solid hsl(var(--border))" }}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="2025" stroke="hsl(var(--primary))" strokeWidth={3} name="2025 (Current)" dot={{ fill: "hsl(var(--primary))", r: 4 }} />
+                    <Line type="monotone" dataKey="2024" stroke="#f59e0b" strokeWidth={3} name="2024 (Last Year)" strokeDasharray="5 5" dot={{ fill: "#f59e0b", r: 4 }} />
+                  </LineChart>
               </ResponsiveContainer>
             </Card>
           </TabsContent>
