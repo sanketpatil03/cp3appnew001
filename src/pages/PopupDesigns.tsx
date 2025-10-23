@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Lightbulb, Edit3 } from "lucide-react";
+import { ArrowLeft, Lightbulb } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { NudgeCenterButton } from "@/components/NudgeCenterButton";
+import { NudgeCenterOverlay } from "@/components/NudgeCenterOverlay";
 
 interface NudgeType {
   id: string;
@@ -48,6 +50,7 @@ const nudgeTypes: NudgeType[] = [
 const PopupDesigns = () => {
   const navigate = useNavigate();
   const [selectedNudge, setSelectedNudge] = useState<NudgeType | null>(null);
+  const [nudgeCenterOpen, setNudgeCenterOpen] = useState(false);
 
   const renderNudgePopup = (nudgeId: string) => {
     switch (nudgeId) {
@@ -298,6 +301,16 @@ const PopupDesigns = () => {
           {selectedNudge && renderNudgePopup(selectedNudge.id)}
         </DialogContent>
       </Dialog>
+
+      {/* Nudge Center Button & Overlay */}
+      <NudgeCenterButton 
+        onClick={() => setNudgeCenterOpen(true)} 
+        nudgeCount={5} 
+      />
+      <NudgeCenterOverlay 
+        open={nudgeCenterOpen} 
+        onOpenChange={setNudgeCenterOpen} 
+      />
     </div>
   );
 };
