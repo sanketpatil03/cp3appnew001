@@ -6,38 +6,40 @@ import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trophy, Info, ChevronUp, Sparkles } from "lucide-react";
+import { Trophy, Info, ChevronUp, Sparkles, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import rankMedals from "@/assets/rank-medals.png";
 
 interface LeaderboardEntry {
   rank: number;
   repName: string;
   points: number;
+  territory: string;
   badge: string;
   isCurrentUser?: boolean;
 }
 
 const leaderboardData: LeaderboardEntry[] = [
-  { rank: 1, repName: "Rakesh", points: 300, badge: "🏆" },
-  { rank: 2, repName: "Priya", points: 260, badge: "🥈" },
-  { rank: 3, repName: "You", points: 220, badge: "🥉", isCurrentUser: true },
-  { rank: 4, repName: "Amit", points: 200, badge: "" },
-  { rank: 5, repName: "Sneha", points: 180, badge: "" },
-  { rank: 6, repName: "Nikhil", points: 175, badge: "" },
-  { rank: 7, repName: "Kavita", points: 170, badge: "" },
-  { rank: 8, repName: "Rohan", points: 165, badge: "" },
-  { rank: 9, repName: "Anjali", points: 160, badge: "" },
-  { rank: 10, repName: "Arjun", points: 155, badge: "" },
-  { rank: 11, repName: "Priyanka", points: 150, badge: "" },
-  { rank: 12, repName: "Sanjay", points: 145, badge: "" },
-  { rank: 13, repName: "Divya", points: 140, badge: "" },
-  { rank: 14, repName: "Varun", points: 135, badge: "" },
-  { rank: 15, repName: "Meera", points: 130, badge: "" },
-  { rank: 16, repName: "Kiran", points: 125, badge: "" },
-  { rank: 17, repName: "Shalini", points: 120, badge: "" },
-  { rank: 18, repName: "Rohit", points: 115, badge: "" },
-  { rank: 19, repName: "Snehal", points: 110, badge: "" },
-  { rank: 20, repName: "Deepak", points: 105, badge: "" },
+  { rank: 1, repName: "Rakesh Sharma", points: 300, territory: "Mumbai-OT40017", badge: "🏆" },
+  { rank: 2, repName: "Priya Joshi", points: 260, territory: "Noida-OT10076", badge: "🥈" },
+  { rank: 3, repName: "You", points: 220, territory: "Mumbai-OT40012", badge: "🥉", isCurrentUser: true },
+  { rank: 4, repName: "Amit Kumar", points: 200, territory: "Delhi-OT30045", badge: "" },
+  { rank: 5, repName: "Sneha Patel", points: 180, territory: "Pune-OT20089", badge: "" },
+  { rank: 6, repName: "Nikhil Desai", points: 175, territory: "Bangalore-OT50123", badge: "" },
+  { rank: 7, repName: "Kavita Singh", points: 170, territory: "Hyderabad-OT60034", badge: "" },
+  { rank: 8, repName: "Rohan Mehta", points: 165, territory: "Chennai-OT70056", badge: "" },
+  { rank: 9, repName: "Anjali Verma", points: 160, territory: "Kolkata-OT80078", badge: "" },
+  { rank: 10, repName: "Arjun Reddy", points: 155, territory: "Ahmedabad-OT90012", badge: "" },
+  { rank: 11, repName: "Priyanka Shah", points: 150, territory: "Surat-OT25045", badge: "" },
+  { rank: 12, repName: "Sanjay Gupta", points: 145, territory: "Jaipur-OT35067", badge: "" },
+  { rank: 13, repName: "Divya Nair", points: 140, territory: "Lucknow-OT45089", badge: "" },
+  { rank: 14, repName: "Varun Kapoor", points: 135, territory: "Indore-OT55012", badge: "" },
+  { rank: 15, repName: "Meera Iyer", points: 130, territory: "Bhopal-OT65034", badge: "" },
+  { rank: 16, repName: "Kiran Rao", points: 125, territory: "Nagpur-OT75056", badge: "" },
+  { rank: 17, repName: "Shalini Chopra", points: 120, territory: "Vadodara-OT85078", badge: "" },
+  { rank: 18, repName: "Rohit Sharma", points: 115, territory: "Kanpur-OT95012", badge: "" },
+  { rank: 19, repName: "Snehal Banerjee", points: 110, territory: "Gurgaon-OT15045", badge: "" },
+  { rank: 20, repName: "Deepak Malhotra", points: 105, territory: "Thane-OT40089", badge: "" },
 ];
 
 const scoringCriteria = [
@@ -62,6 +64,13 @@ export const LeaderboardWidget = () => {
   // Always sort by points (can be extended to filter by team/zone/bu)
   const sortedData = [...leaderboardData].sort((a, b) => b.points - a.points);
 
+  const getRankMedalStyle = (rank: number) => {
+    if (rank === 1) return { backgroundImage: `url(${rankMedals})`, backgroundPosition: '0% 50%', backgroundSize: '300% 100%' };
+    if (rank === 2) return { backgroundImage: `url(${rankMedals})`, backgroundPosition: '50% 50%', backgroundSize: '300% 100%' };
+    if (rank === 3) return { backgroundImage: `url(${rankMedals})`, backgroundPosition: '100% 50%', backgroundSize: '300% 100%' };
+    return null;
+  };
+
   const getRankBadge = (rank: number) => {
     if (rank === 1) return "🏆";
     if (rank === 2) return "🥈";
@@ -80,7 +89,7 @@ export const LeaderboardWidget = () => {
           <div className="flex items-center gap-2 mb-3">
             <Trophy className="w-5 h-5 text-primary" />
             <span className="text-xs font-medium text-muted-foreground uppercase">
-              Leaderboard
+              Phyzii Points
             </span>
           </div>
 
@@ -124,14 +133,22 @@ export const LeaderboardWidget = () => {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl">
               <Trophy className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-              Leaderboard
+              Phyzii Points
+              <Badge variant="secondary" className="ml-2 text-xs">Respi</Badge>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowInfo(!showInfo)}
-                className="ml-auto"
+                className="ml-auto mr-2"
               >
                 <Info className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsExpanded(false)}
+              >
+                <X className="w-4 h-4" />
               </Button>
             </DialogTitle>
           </DialogHeader>
@@ -168,7 +185,7 @@ export const LeaderboardWidget = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Leaderboard</SelectItem>
-                <SelectItem value="team">My Team</SelectItem>
+                <SelectItem value="team">Team</SelectItem>
                 <SelectItem value="zone">Zone</SelectItem>
                 <SelectItem value="bu">BU</SelectItem>
               </SelectContent>
@@ -209,14 +226,16 @@ export const LeaderboardWidget = () => {
             <table className="w-full">
               <thead className="bg-muted sticky top-0 z-10">
                 <tr>
-                  <th className="text-left p-3 pl-4 text-xs font-semibold w-[100px]">Rank</th>
-                  <th className="text-center p-3 text-xs font-semibold">Rep Name</th>
-                  <th className="text-center p-3 text-xs font-semibold w-[100px]">Points</th>
+                  <th className="text-left p-3 pl-4 text-xs font-semibold">Rank</th>
+                  <th className="text-left p-3 text-xs font-semibold">Name</th>
+                  <th className="text-center p-3 text-xs font-semibold">Points</th>
+                  <th className="text-left p-3 text-xs font-semibold">Territory</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedData.map((entry, index) => {
                   const displayRank = index + 1;
+                  const medalStyle = getRankMedalStyle(displayRank);
                   return (
                     <tr
                       key={entry.rank}
@@ -228,7 +247,12 @@ export const LeaderboardWidget = () => {
                     >
                       <td className="p-3 pl-4">
                         <div className="flex items-center gap-2">
-                          <span className="text-lg">{getRankBadge(displayRank)}</span>
+                          {medalStyle ? (
+                            <div 
+                              className="w-6 h-6 rounded-full"
+                              style={medalStyle}
+                            />
+                          ) : null}
                           <span
                             className={cn(
                               "text-sm font-bold",
@@ -239,7 +263,7 @@ export const LeaderboardWidget = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="p-3 text-center">
+                      <td className="p-3 text-left">
                         <span
                           className={cn(
                             "text-sm font-medium",
@@ -249,8 +273,11 @@ export const LeaderboardWidget = () => {
                           {entry.repName}
                         </span>
                       </td>
-                      <td className="p-3 text-center w-[100px]">
+                      <td className="p-3 text-center">
                         <span className="text-sm font-semibold">{entry.points}</span>
+                      </td>
+                      <td className="p-3 text-left">
+                        <span className="text-sm text-muted-foreground">{entry.territory}</span>
                       </td>
                     </tr>
                   );
