@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge";
 import { LeaderboardWidget } from "@/components/LeaderboardWidget";
 import { CustomerProfileDialog } from "@/components/CustomerProfileDialog";
+import { VoiceBot } from "@/components/VoiceBot";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -1023,6 +1024,9 @@ const Dashboard = () => {
           customer={selectedCustomer}
         />
       )}
+
+      {/* Voice Bot */}
+      <VoiceBot />
     </div>
   );
 };
