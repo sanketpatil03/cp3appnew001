@@ -100,88 +100,96 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-2xl p-0">
-        <SheetHeader className="px-6 pt-6 pb-4 border-b bg-gradient-to-r from-primary/5 to-secondary/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <SheetTitle className="text-2xl font-bold">Nudge Center</SheetTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                AI-powered insights to help you excel
+      <SheetContent side="right" className="w-full sm:max-w-3xl p-0 flex flex-col">
+        <SheetHeader className="px-6 pt-8 pb-6 border-b bg-gradient-to-br from-primary/10 via-secondary/5 to-background">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-1">
+              <SheetTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Nudge Center
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground">
+                AI-powered insights tailored for your success
               </p>
             </div>
-            <Badge variant="secondary" className="h-8 px-3">
-              {nudges.length} Active
+            <Badge 
+              variant="secondary" 
+              className="h-9 px-4 text-sm font-semibold shadow-sm bg-primary/10 text-primary border border-primary/20"
+            >
+              {nudges.length} Active Nudges
             </Badge>
           </div>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-120px)]">
-          <div className="p-6 space-y-4">
+        <ScrollArea className="flex-1">
+          <div className="p-6 space-y-5">
             {nudges.map((nudge) => {
               const Icon = nudge.icon;
               return (
                 <Card 
                   key={nudge.id} 
-                  className="overflow-hidden transition-all duration-300 hover:shadow-lg border-l-4"
+                  className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.01] border-l-[6px] bg-card/50 backdrop-blur"
                   style={{
                     borderLeftColor: nudge.priority === "high" ? "hsl(var(--destructive))" : 
                                     nudge.priority === "medium" ? "hsl(var(--warning))" : 
                                     "hsl(var(--primary))"
                   }}
                 >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3 flex-1">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                          nudge.priority === "high" ? "bg-destructive/10" :
-                          nudge.priority === "medium" ? "bg-warning/10" :
-                          "bg-primary/10"
+                  <CardHeader className="pb-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-4 flex-1">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm transition-transform group-hover:scale-110 ${
+                          nudge.priority === "high" ? "bg-gradient-to-br from-destructive/20 to-destructive/10" :
+                          nudge.priority === "medium" ? "bg-gradient-to-br from-warning/20 to-warning/10" :
+                          "bg-gradient-to-br from-primary/20 to-primary/10"
                         }`}>
-                          <Icon className={`w-5 h-5 ${
+                          <Icon className={`w-6 h-6 ${
                             nudge.priority === "high" ? "text-destructive" :
                             nudge.priority === "medium" ? "text-warning" :
                             "text-primary"
                           }`} />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-base font-semibold">
+                          <CardTitle className="text-lg font-bold">
                             {nudge.module}
                           </CardTitle>
-                          <p className="text-xs text-muted-foreground mt-0.5">
+                          <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
                             {nudge.timestamp}
                           </p>
                         </div>
                       </div>
                       <Badge 
                         variant="outline" 
-                        className={`text-xs font-medium border ${getPriorityColor(nudge.priority)}`}
+                        className={`text-xs font-semibold uppercase tracking-wider border-2 px-3 py-1 ${getPriorityColor(nudge.priority)}`}
                       >
                         {nudge.priority}
                       </Badge>
                     </div>
                   </CardHeader>
 
-                  <CardContent className="space-y-4">
-                    <p className="text-sm leading-relaxed text-foreground">
-                      {nudge.message}
-                    </p>
+                  <CardContent className="space-y-5">
+                    <div className="bg-gradient-to-r from-muted/50 to-muted/20 rounded-lg p-4 border border-muted">
+                      <p className="text-sm leading-relaxed text-foreground/90">
+                        {nudge.message}
+                      </p>
+                    </div>
 
-                    <div className="flex items-center justify-between gap-3 pt-2">
+                    <div className="flex items-center gap-3 pt-1">
                       <Button 
-                        className="flex-1"
+                        className="flex-1 h-11 font-semibold shadow-sm hover:shadow-md transition-all"
                         size="default"
                       >
                         {nudge.ctaText}
                       </Button>
 
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className={`h-9 w-9 transition-colors ${
+                          className={`h-9 w-9 rounded-full transition-all ${
                             feedback[nudge.id] === "like" 
-                              ? "bg-primary/10 text-primary hover:bg-primary/20" 
-                              : "hover:bg-muted"
+                              ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" 
+                              : "hover:bg-background"
                           }`}
                           onClick={() => handleFeedback(nudge.id, "like")}
                         >
@@ -190,10 +198,10 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
                         <Button
                           variant="ghost"
                           size="icon"
-                          className={`h-9 w-9 transition-colors ${
+                          className={`h-9 w-9 rounded-full transition-all ${
                             feedback[nudge.id] === "dislike" 
-                              ? "bg-destructive/10 text-destructive hover:bg-destructive/20" 
-                              : "hover:bg-muted"
+                              ? "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm" 
+                              : "hover:bg-background"
                           }`}
                           onClick={() => handleFeedback(nudge.id, "dislike")}
                         >

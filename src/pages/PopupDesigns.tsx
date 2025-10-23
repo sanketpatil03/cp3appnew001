@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Lightbulb } from "lucide-react";
+import { ArrowLeft, Lightbulb, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { NudgeCenterButton } from "@/components/NudgeCenterButton";
 import { NudgeCenterOverlay } from "@/components/NudgeCenterOverlay";
 
 interface NudgeType {
@@ -228,21 +228,41 @@ const PopupDesigns = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-6 py-4 flex items-center gap-4 shadow-md">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-primary-foreground hover:bg-white/20"
-          onClick={() => navigate("/dashboard")}
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
-        <div>
-          <h1 className="text-xl font-semibold">Pop-up Designs</h1>
-          <p className="text-sm text-primary-foreground/80">
-            Preview and explore all nudge popup designs
-          </p>
+      <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-6 py-4 flex items-center justify-between gap-4 shadow-md">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-primary-foreground hover:bg-white/20"
+            onClick={() => navigate("/dashboard")}
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <div>
+            <h1 className="text-xl font-semibold">Pop-up Designs</h1>
+            <p className="text-sm text-primary-foreground/80">
+              Preview and explore all nudge popup designs
+            </p>
+          </div>
         </div>
+        
+        {/* Nudge Center Button in Header */}
+        <Button
+          onClick={() => setNudgeCenterOpen(true)}
+          variant="secondary"
+          size="lg"
+          className="relative h-12 px-6 rounded-full shadow-lg hover:shadow-xl transition-all bg-white text-primary hover:bg-white/90"
+        >
+          <Bell className="h-5 w-5 mr-2" />
+          <span className="font-semibold">Nudge Center</span>
+          {5 > 0 && (
+            <Badge 
+              className="ml-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-destructive text-destructive-foreground animate-pulse"
+            >
+              5
+            </Badge>
+          )}
+        </Button>
       </div>
 
       {/* Content */}
@@ -302,11 +322,7 @@ const PopupDesigns = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Nudge Center Button & Overlay */}
-      <NudgeCenterButton 
-        onClick={() => setNudgeCenterOpen(true)} 
-        nudgeCount={5} 
-      />
+      {/* Nudge Center Overlay */}
       <NudgeCenterOverlay 
         open={nudgeCenterOpen} 
         onOpenChange={setNudgeCenterOpen} 
