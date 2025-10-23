@@ -94,10 +94,17 @@ export const LeaderboardWidget = () => {
           </div>
 
           <div className="flex-1 flex items-center gap-4">
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-4xl font-bold text-primary mb-1">
-                {currentUser?.badge || "🏅"}
-              </div>
+          <div className="flex flex-col items-center justify-center">
+              {currentUser?.rank && currentUser.rank <= 3 ? (
+                <div 
+                  className="w-12 h-12 rounded-full mb-1"
+                  style={getRankMedalStyle(currentUser.rank)}
+                />
+              ) : (
+                <div className="text-4xl font-bold text-primary mb-1">
+                  🏅
+                </div>
+              )}
               <div className="text-2xl font-bold text-foreground">#{currentUser?.rank || 0}</div>
               <div className="text-[10px] text-muted-foreground mt-0.5">Your Rank</div>
             </div>
@@ -139,16 +146,9 @@ export const LeaderboardWidget = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowInfo(!showInfo)}
-                className="ml-auto mr-2"
+                className="ml-auto"
               >
                 <Info className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsExpanded(false)}
-              >
-                <X className="w-4 h-4" />
               </Button>
             </DialogTitle>
           </DialogHeader>
@@ -249,18 +249,19 @@ export const LeaderboardWidget = () => {
                         <div className="flex items-center gap-2">
                           {medalStyle ? (
                             <div 
-                              className="w-6 h-6 rounded-full"
+                              className="w-7 h-7 rounded-full"
                               style={medalStyle}
                             />
-                          ) : null}
-                          <span
-                            className={cn(
-                              "text-sm font-bold",
-                              entry.isCurrentUser && "text-amber-600 dark:text-amber-400"
-                            )}
-                          >
-                            #{displayRank}
-                          </span>
+                          ) : (
+                            <span
+                              className={cn(
+                                "text-sm font-bold",
+                                entry.isCurrentUser && "text-amber-600 dark:text-amber-400"
+                              )}
+                            >
+                              #{displayRank}
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td className="p-3 text-left">
