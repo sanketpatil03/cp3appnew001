@@ -8,9 +8,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trophy, Info, ChevronUp, Sparkles, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import medalGold from "@/assets/medal-gold.png";
-import medalSilver from "@/assets/medal-silver.png";
-import medalBronze from "@/assets/medal-bronze.png";
 
 interface LeaderboardEntry {
   rank: number;
@@ -66,10 +63,10 @@ export const LeaderboardWidget = () => {
   // Always sort by points (can be extended to filter by team/zone/bu)
   const sortedData = [...leaderboardData].sort((a, b) => b.points - a.points);
 
-  const getRankMedalImage = (rank: number) => {
-    if (rank === 1) return medalGold;
-    if (rank === 2) return medalSilver;
-    if (rank === 3) return medalBronze;
+  const getMedalColor = (rank: number) => {
+    if (rank === 1) return "bg-gradient-to-br from-yellow-400 to-yellow-600";
+    if (rank === 2) return "bg-gradient-to-br from-gray-300 to-gray-500";
+    if (rank === 3) return "bg-gradient-to-br from-orange-400 to-orange-600";
     return null;
   };
 
@@ -98,11 +95,12 @@ export const LeaderboardWidget = () => {
           <div className="flex-1 flex items-center gap-4">
           <div className="flex flex-col items-center justify-center">
               {currentUser?.rank && currentUser.rank <= 3 ? (
-                <img 
-                  src={getRankMedalImage(currentUser.rank) || undefined}
-                  alt={`Rank ${currentUser.rank} medal`}
-                  className="w-12 h-12 mb-1"
-                />
+                <div className={cn(
+                  "w-12 h-12 mb-1 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg",
+                  getMedalColor(currentUser.rank)
+                )}>
+                  {currentUser.rank}
+                </div>
               ) : (
                 <div className="text-4xl font-bold text-primary mb-1">
                   🏅
@@ -238,7 +236,7 @@ export const LeaderboardWidget = () => {
               <tbody>
                 {sortedData.map((entry, index) => {
                   const displayRank = index + 1;
-                  const medalImage = getRankMedalImage(displayRank);
+                  const medalColor = getMedalColor(displayRank);
                   return (
                     <tr
                       key={entry.rank}
@@ -250,12 +248,13 @@ export const LeaderboardWidget = () => {
                     >
                       <td className="p-3 pl-4">
                         <div className="flex items-center gap-2">
-                          {medalImage ? (
-                            <img 
-                              src={medalImage}
-                              alt={`Rank ${displayRank} medal`}
-                              className="w-7 h-7"
-                            />
+                          {medalColor ? (
+                            <div className={cn(
+                              "w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md",
+                              medalColor
+                            )}>
+                              {displayRank}
+                            </div>
                           ) : (
                             <span
                               className={cn(
