@@ -21,16 +21,14 @@ const handleWebSocket = async (req: Request): Promise<Response> => {
     console.log("Client connected");
     
     try {
-      // Connect to OpenAI Realtime API
-      openAISocket = new WebSocket(
-        `wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01`,
-        {
-          headers: {
-            "Authorization": `Bearer ${OPENAI_API_KEY}`,
-            "OpenAI-Beta": "realtime=v1",
-          },
-        }
-      );
+      // Connect to OpenAI Realtime API using protocol substrings for authentication
+      const url = 'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01';
+      
+      openAISocket = new WebSocket(url, [
+        'realtime',
+        `openai-insecure-api-key.${OPENAI_API_KEY}`,
+        'openai-beta.realtime-v1',
+      ]);
 
       openAISocket.onopen = () => {
         console.log("Connected to OpenAI");
@@ -40,7 +38,7 @@ const handleWebSocket = async (req: Request): Promise<Response> => {
           type: "session.update",
           session: {
             modalities: ["text", "audio"],
-            instructions: "You are a helpful CRM assistant for pharmaceutical sales representatives. Help them with customer information, sales tracking, appointments, and product information. Be concise and professional.",
+            instructions: "You are Phyzii Bot, a helpful assistant for pharmaceutical sales representatives. Help them with customer information, sales tracking, appointments, and product information. Be concise and professional.",
             voice: "alloy",
             input_audio_format: "pcm16",
             output_audio_format: "pcm16",
@@ -95,10 +93,11 @@ const handleWebSocket = async (req: Request): Promise<Response> => {
 
     } catch (error) {
       console.error("Error connecting to OpenAI:", error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       if (clientSocket.readyState === WebSocket.OPEN) {
         clientSocket.send(JSON.stringify({ 
           type: "error", 
-          message: "Failed to connect to AI service" 
+          message: `Failed to connect to AI service: ${errorMessage}` 
         }));
         clientSocket.close();
       }

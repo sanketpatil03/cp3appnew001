@@ -52,8 +52,8 @@ export const VoiceBot = () => {
         startRecording();
         
         toast({
-          title: "Voice Assistant Ready",
-          description: "Start speaking to interact with your CRM assistant",
+          title: "Phyzii Bot Ready",
+          description: "Start speaking to interact with your assistant",
         });
       };
 
@@ -194,7 +194,7 @@ export const VoiceBot = () => {
             <div className="flex items-center gap-3">
               <img src={voiceBotIcon} alt="Voice Bot" className="w-8 h-8" />
               <div>
-                <h3 className="font-semibold">CRM Voice Assistant</h3>
+                <h3 className="font-semibold">Phyzii Bot</h3>
                 <p className="text-xs text-muted-foreground">
                   {isConnected ? "Connected" : "Connecting..."}
                 </p>
