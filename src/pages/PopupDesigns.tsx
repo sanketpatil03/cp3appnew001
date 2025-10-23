@@ -14,40 +14,34 @@ interface NudgeType {
 
 const nudgeTypes: NudgeType[] = [
   {
-    id: "detailing",
-    title: "Detailing",
-    description: "Smart recommendations for doctor detailing sessions based on preferences",
-    category: "Sales"
+    id: "doctor-coverage-gap",
+    title: "Doctor Coverage Gap",
+    description: "You haven't met Dr. R. Shah (High potential, Cardio) in the last 32 days - include him in Week 1.",
+    category: "Planning - Before Plan"
   },
   {
-    id: "post-call",
-    title: "Post-Call",
-    description: "Immediate action items and follow-ups after doctor visits",
-    category: "Follow-up"
+    id: "newly-added-doctors",
+    title: "Newly Added Doctors",
+    description: "2 new doctors Dr Rakesh J and Dr Ameer Patil were added in your territory this month - schedule first call.",
+    category: "Planning - Before Plan"
   },
   {
-    id: "planning",
-    title: "Planning",
-    description: "Territory and visit planning suggestions based on performance data",
-    category: "Strategy"
+    id: "missed-high-potential",
+    title: "Missed High-Potential Doctor",
+    description: "Dr. Patel (Top 10 prescriber in your zone) not planned for this month.",
+    category: "Planning - On Submit"
   },
   {
-    id: "product-focus",
-    title: "Product Focus",
-    description: "Targeted product promotion recommendations for specific doctors",
-    category: "Sales"
+    id: "leave-conflict",
+    title: "Leave Conflict",
+    description: "You've scheduled 2 calls on a national holiday — please recheck.",
+    category: "Planning - On Submit"
   },
   {
-    id: "event-reminder",
-    title: "Event Reminder",
-    description: "Timely reminders for upcoming events and activities",
-    category: "Engagement"
-  },
-  {
-    id: "performance",
-    title: "Performance",
-    description: "Real-time performance insights and improvement suggestions",
-    category: "Analytics"
+    id: "submission-reward",
+    title: "Submission Reward",
+    description: "You've submitted your MTP before the due date — +10 performance points earned",
+    category: "Planning - After Submit"
   }
 ];
 
@@ -57,47 +51,129 @@ const PopupDesigns = () => {
 
   const renderNudgePopup = (nudgeId: string) => {
     switch (nudgeId) {
-      case "detailing":
+      case "doctor-coverage-gap":
         return (
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="w-5 h-5 text-accent" />
+              <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-5 h-5 text-destructive" />
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Smart Detailing Insight</h4>
+                <h4 className="font-semibold text-foreground mb-1">Doctor Coverage Gap</h4>
                 <p className="text-sm text-muted-foreground">
-                  Dr. Prakash prefers short, visual presentations — prepare a 2-page playlist for quick impact
+                  You haven't met Dr. R. Shah (High potential, Cardio) in the last 32 days - include him in Week 1.
                 </p>
               </div>
             </div>
             
             <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-              <p className="text-xs font-medium text-muted-foreground uppercase">Recommendations</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                  <span>Focus on visual aids and infographics</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                  <span>Keep presentation under 5 minutes</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                  <span>Highlight key clinical data points</span>
-                </li>
-              </ul>
+              <p className="text-xs font-medium text-muted-foreground uppercase">How it helps</p>
+              <p className="text-sm">Promotes timely and complete coverage.</p>
             </div>
 
-            <Button className="w-full bg-primary hover:bg-primary/90">
-              <Edit3 className="w-4 h-4 mr-2" />
-              Edit Playlist Now
+            <Button className="w-full">
+              Add to Week 1 Plan
             </Button>
           </div>
         );
       
-      case "post-call":
+      case "newly-added-doctors":
+        return (
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Newly Added Doctors</h4>
+                <p className="text-sm text-muted-foreground">
+                  2 new doctors Dr Rakesh J and Dr Ameer Patil were added in your territory this month - schedule first call.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-muted/50 rounded-lg p-4">
+              <p className="text-xs font-medium text-muted-foreground uppercase mb-2">New Doctors</p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-semibold text-primary">1</span>
+                  </div>
+                  <span className="text-sm">Dr Rakesh J</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-semibold text-primary">2</span>
+                  </div>
+                  <span className="text-sm">Dr Ameer Patil</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <p className="text-xs font-medium text-muted-foreground uppercase">How it helps</p>
+              <p className="text-sm">Drives early engagement.</p>
+            </div>
+
+            <Button className="w-full">
+              Schedule First Calls
+            </Button>
+          </div>
+        );
+
+      case "missed-high-potential":
+        return (
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-5 h-5 text-warning" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Missed High-Potential Doctor</h4>
+                <p className="text-sm text-muted-foreground">
+                  Dr. Patel (Top 10 prescriber in your zone) not planned for this month.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <p className="text-xs font-medium text-muted-foreground uppercase">How it helps</p>
+              <p className="text-sm">Avoids missing key influencers.</p>
+            </div>
+
+            <Button className="w-full">
+              Add Dr. Patel to Plan
+            </Button>
+          </div>
+        );
+
+      case "leave-conflict":
+        return (
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-destructive/20 flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-5 h-5 text-destructive" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-foreground mb-1">Leave Conflict Detected</h4>
+                <p className="text-sm text-muted-foreground">
+                  You've scheduled 2 calls on a national holiday — please recheck.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <p className="text-xs font-medium text-muted-foreground uppercase">How it helps</p>
+              <p className="text-sm">Prevents invalid scheduling.</p>
+            </div>
+
+            <Button className="w-full">
+              Review Schedule
+            </Button>
+          </div>
+        );
+
+      case "submission-reward":
         return (
           <div className="space-y-4">
             <div className="flex items-start gap-3">
@@ -105,72 +181,20 @@ const PopupDesigns = () => {
                 <Lightbulb className="w-5 h-5 text-success" />
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Post-Call Action</h4>
+                <h4 className="font-semibold text-foreground mb-1">Early Submission Reward</h4>
                 <p className="text-sm text-muted-foreground">
-                  Dr. Austin Berg requested study materials for Aprox. Send them within 24 hours for best impact.
+                  You've submitted your MTP before the due date — +10 performance points earned
                 </p>
               </div>
             </div>
             
-            <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-xs font-medium text-muted-foreground uppercase mb-2">Action Items</p>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-success/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-semibold text-success">1</span>
-                  </div>
-                  <span className="text-sm">Email study materials</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-success/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-semibold text-success">2</span>
-                  </div>
-                  <span className="text-sm">Schedule follow-up call</span>
-                </div>
-              </div>
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <p className="text-xs font-medium text-muted-foreground uppercase">How it helps</p>
+              <p className="text-sm">Rewards discipline.</p>
             </div>
 
             <Button className="w-full bg-success hover:bg-success/90">
-              Complete Actions
-            </Button>
-          </div>
-        );
-
-      case "planning":
-        return (
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-info/20 flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="w-5 h-5 text-info" />
-              </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-foreground mb-1">Planning Suggestion</h4>
-                <p className="text-sm text-muted-foreground">
-                  3 high-value doctors in Andheri haven't been visited in 2 weeks. Schedule visits to maintain engagement.
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-xs font-medium text-muted-foreground uppercase mb-2">Priority Doctors</p>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span>Dr. Sharma</span>
-                  <span className="text-xs text-destructive">14 days</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Dr. Mehta</span>
-                  <span className="text-xs text-destructive">15 days</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Dr. Kapoor</span>
-                  <span className="text-xs text-destructive">16 days</span>
-                </div>
-              </div>
-            </div>
-
-            <Button className="w-full bg-info hover:bg-info/90">
-              Schedule Visits
+              View Performance Dashboard
             </Button>
           </div>
         );
