@@ -1,6 +1,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Maximize2, X } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Maximize2, X, Sparkles, ArrowRight } from "lucide-react";
+import { useState } from "react";
 
 interface CustomerProfileDialogProps {
   open: boolean;
@@ -12,6 +14,8 @@ interface CustomerProfileDialogProps {
 }
 
 export const CustomerProfileDialog = ({ open, onOpenChange, customer }: CustomerProfileDialogProps) => {
+  const [showNudge, setShowNudge] = useState(false);
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[900px] p-0 max-h-[95vh] flex flex-col">
@@ -282,16 +286,51 @@ export const CustomerProfileDialog = ({ open, onOpenChange, customer }: Customer
             >
               Profile
             </Button>
-            <Button 
-              variant="outline" 
-              className="h-11 font-medium text-sm"
-              style={{ 
-                backgroundColor: '#21BFD01A',
-                borderColor: '#21BFD080'
-              }}
-            >
-              Detailing
-            </Button>
+            <Popover open={showNudge} onOpenChange={setShowNudge}>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="h-11 font-medium text-sm"
+                  style={{ 
+                    backgroundColor: '#21BFD01A',
+                    borderColor: '#21BFD080'
+                  }}
+                  onClick={() => setShowNudge(true)}
+                >
+                  Detailing
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent 
+                className="w-80 p-4 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2"
+                side="top"
+                align="start"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Sparkles className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-sm mb-1.5">Smart Insight</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Dr. Prakash prefers short, visual presentations — prepare a 2-page playlist for quick impact.
+                      </p>
+                    </div>
+                  </div>
+                  <Button 
+                    className="w-full h-10 text-sm gap-2 group shadow-sm"
+                    onClick={() => {
+                      setShowNudge(false);
+                      // Navigate to playlist editing screen
+                      console.log("Navigate to playlist editor");
+                    }}
+                  >
+                    Edit Playlist Now
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
             <Button 
               variant="outline" 
               className="h-11 font-medium text-sm"
