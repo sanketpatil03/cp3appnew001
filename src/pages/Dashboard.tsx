@@ -207,36 +207,37 @@ const Dashboard = () => {
                   }`}
                   onClick={() => setSelectedCustomer(customer)}
                 >
-                  {/* Visual Indicators - Top Right Corner */}
-                  <div className="absolute top-2 right-2 flex gap-1 z-10">
-                    {customer.hasCampaign && (
-                      <Badge 
-                        variant="secondary" 
-                        className="h-4 px-1.5 text-[9px] bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20"
-                        title="Active Campaign"
-                      >
-                        C
-                      </Badge>
-                    )}
-                    {customer.hasEvent && (
-                      <Badge 
-                        variant="secondary" 
-                        className="h-4 px-1.5 text-[9px] bg-purple/10 text-purple border border-purple/20 hover:bg-purple/20"
-                        title="Intervention Event"
-                      >
-                        E
-                      </Badge>
-                    )}
-                  </div>
-
                   <div className="flex items-center justify-between h-full">
                     <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                      <Avatar className="w-12 h-12 border-2 border-primary/20 flex-shrink-0">
-                        <AvatarImage src="" alt={customer.name} />
-                        <AvatarFallback className="bg-gradient-to-br from-primary/20 to-secondary/20 text-primary text-xs font-semibold">
-                          {customer.name.split(" ").slice(1).map((n) => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
+                      <div className="relative flex-shrink-0">
+                        <Avatar className="w-12 h-12 border-2 border-primary/20">
+                          <AvatarImage src="" alt={customer.name} />
+                          <AvatarFallback className="bg-gradient-to-br from-primary/20 to-secondary/20 text-primary text-xs font-semibold">
+                            {customer.name.split(" ").slice(1).map((n) => n[0]).join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        {/* Visual Indicators - Bottom of Avatar */}
+                        {(customer.hasCampaign || customer.hasEvent) && (
+                          <div className="absolute -bottom-1 -right-1 flex gap-0.5">
+                            {customer.hasCampaign && (
+                              <div 
+                                className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[8px] font-bold border border-white shadow-sm"
+                                title="Active Campaign"
+                              >
+                                C
+                              </div>
+                            )}
+                            {customer.hasEvent && (
+                              <div 
+                                className="w-4 h-4 rounded-full bg-purple text-white flex items-center justify-center text-[8px] font-bold border border-white shadow-sm"
+                                title="Intervention Event"
+                              >
+                                E
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-xs leading-tight text-foreground truncate">{customer.name}</p>
                         <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{customer.specialty}</p>
