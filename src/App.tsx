@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import NudgeCenter from "./pages/NudgeCenter";
 import PopupDesigns from "./pages/PopupDesigns";
 import NotFound from "./pages/NotFound";
-import SalesPerformancePage from "./components/SalesPerformanceDialogPage";
+import SalesPerformancePage from "./components/SalesPerformancePage";
 
 const queryClient = new QueryClient();
 
