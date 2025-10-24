@@ -10,6 +10,8 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { PerformanceSummaryDialog } from "@/components/PerformanceSummaryDialog";
 import { PrimarySalesWidget } from "@/components/PrimarySalesWidget";
 import { PrimarySalesDialog } from "@/components/PrimarySalesDialog";
+import { SalesPerformanceWidget } from "@/components/SalesPerformanceWidget";
+import { SalesPerformanceDialog } from "@/components/SalesPerformanceDialog";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -54,6 +56,7 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPerformanceSummaryOpen, setIsPerformanceSummaryOpen] = useState(false);
   const [isPrimarySalesOpen, setIsPrimarySalesOpen] = useState(false);
+  const [isSalesPerformanceOpen, setIsSalesPerformanceOpen] = useState(false);
 
   // Show performance summary on mount (first login)
   useEffect(() => {
@@ -1004,6 +1007,7 @@ const Dashboard = () => {
             {/* Row 10: Primary Sales Performance Widget */}
             <div className="flex gap-4">
               <PrimarySalesWidget onClick={() => setIsPrimarySalesOpen(true)} />
+              <SalesPerformanceWidget onClick={() => setIsSalesPerformanceOpen(true)} />
             </div>
           </div>
         </div>
@@ -1076,6 +1080,11 @@ const Dashboard = () => {
       <PrimarySalesDialog 
         open={isPrimarySalesOpen} 
         onOpenChange={setIsPrimarySalesOpen} 
+      />
+
+      <SalesPerformanceDialog 
+        open={isSalesPerformanceOpen} 
+        onOpenChange={setIsSalesPerformanceOpen} 
       />
     </div>
   );
