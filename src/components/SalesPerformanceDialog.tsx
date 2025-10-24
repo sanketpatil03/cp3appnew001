@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { X, TrendingUp, AlertCircle } from "lucide-react";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
 interface SalesPerformanceDialogProps {
   open: boolean;
@@ -36,29 +37,66 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
 
   // Primary Sales data
   const primarySalesData = [
-    { month: "Apr'23", target: 100000, actual: 98000, achievement: 98.0 },
-    { month: "May'23", target: 105000, actual: 102000, achievement: 97.1 },
-    { month: "Jun'23", target: 110000, actual: 115000, achievement: 104.5 },
-    { month: "Jul'23", target: 115000, actual: 112000, achievement: 97.4 },
-    { month: "Aug'23", target: 120000, actual: 125000, achievement: 104.2 },
-    { month: "Sep'23", target: 125000, actual: 120000, achievement: 96.0 },
+    { month: "Jan", target: 10000, actual: 9000, past: 3000, achievement: 90.0 },
+    { month: "Feb", target: 20000, actual: 15000, past: 9000, achievement: 75.0 },
+    { month: "Mar", target: 30000, actual: 18000, past: 14500, achievement: 60.0 },
+    { month: "Apr", target: 38000, actual: 25000, past: 21800, achievement: 66.0 },
+    { month: "May", target: 45000, actual: 35000, past: 31300, achievement: 78.0 },
+    { month: "Jun", target: 50000, actual: 40000, past: 36500, achievement: 80.0 },
+    { month: "Jul", target: 55000, actual: 45000, past: 41500, achievement: 82.0 },
+    { month: "Aug", target: 60000, actual: 50000, past: 46500, achievement: 83.0 },
+    { month: "Sep", target: 70000, actual: 57000, past: 53500, achievement: 81.0 },
+    { month: "Oct", target: 80000, actual: 64000, past: 58500, achievement: 80.0 },
+    { month: "Nov", target: 90000, actual: 0, past: 63700, achievement: 0 },
+    { month: "Dec", target: 100000, actual: 0, past: 76000, achievement: 0 },
   ];
 
   // Secondary Sales data
   const secondarySalesData = [
-    { month: "Apr'23", target: 95000, actual: 92000, achievement: 96.8 },
-    { month: "May'23", target: 100000, actual: 98000, achievement: 98.0 },
-    { month: "Jun'23", target: 105000, actual: 110000, achievement: 104.8 },
-    { month: "Jul'23", target: 110000, actual: 108000, achievement: 98.2 },
-    { month: "Aug'23", target: 115000, actual: 120000, achievement: 104.3 },
-    { month: "Sep'23", target: 120000, actual: 115000, achievement: 95.8 },
+    { month: "Jan", target: 9500, actual: 8500, past: 2800, achievement: 89.5 },
+    { month: "Feb", target: 19000, actual: 14200, past: 8500, achievement: 74.7 },
+    { month: "Mar", target: 28500, actual: 17100, past: 13800, achievement: 60.0 },
+    { month: "Apr", target: 36100, actual: 23750, past: 20710, achievement: 65.8 },
+    { month: "May", target: 42750, actual: 33250, past: 29735, achievement: 77.8 },
+    { month: "Jun", target: 47500, actual: 38000, past: 34675, achievement: 80.0 },
+    { month: "Jul", target: 52250, actual: 42750, past: 39425, achievement: 81.8 },
+    { month: "Aug", target: 57000, actual: 47500, past: 44175, achievement: 83.3 },
+    { month: "Sep", target: 66500, actual: 54150, past: 50825, achievement: 81.4 },
+    { month: "Oct", target: 76000, actual: 60800, past: 55575, achievement: 80.0 },
+    { month: "Nov", target: 85500, actual: 0, past: 60515, achievement: 0 },
+    { month: "Dec", target: 95000, actual: 0, past: 72200, achievement: 0 },
   ];
 
   // Brand insights
   const brandInsights = [
-    { brand: "Aprox", status: "underperforming", message: "23% below target in Q2", color: "destructive" },
-    { brand: "Bprox", status: "performing", message: "8% above target consistently", color: "success" },
-    { brand: "Cprox", status: "attention", message: "Declining trend for 3 months", color: "warning" },
+    { 
+      brand: "Lupin Tiotropium", 
+      status: "underperforming", 
+      message: "Sales dropped 10% last month in your territory; competitor launched promotional campaign. Prescription frequency reduced by 15%.",
+      suggestion: "Increase detailing calls to doctors who switched brands; share new clinical data.",
+      color: "destructive" 
+    },
+    { 
+      brand: "Lupin Azithromycin", 
+      status: "attention", 
+      message: "Stock shortages reported at 3 key distributors, causing delayed deliveries.",
+      suggestion: "Coordinate with distributor and scheduler to ensure timely restocking.",
+      color: "warning" 
+    },
+    { 
+      brand: "Lupin Salmeterol", 
+      status: "performing", 
+      message: "High brand loyalty from top 5 prescribers; multiple recent positive feedback.",
+      suggestion: "Send appreciation notes to doctors and invite them to upcoming medical events.",
+      color: "success" 
+    },
+    { 
+      brand: "Lupin Glimepiride", 
+      status: "attention", 
+      message: "Moderate sales but rising competitor threat; secondary sales lagging by 20%.",
+      suggestion: "Increase chemist engagement and inventory audits to boost availability.",
+      color: "warning" 
+    },
   ];
 
   // Mock product breakdown data
@@ -113,6 +151,29 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
             </TabsList>
 
             <TabsContent value="primary" className="space-y-6 mt-6">
+              {/* Trend Chart */}
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Primary Sales Trend</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={primarySalesData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: "hsl(var(--card))", 
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "8px"
+                      }}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="target" stroke="#2563eb" strokeWidth={2} name="Target" dot={{ r: 4 }} />
+                    <Line type="monotone" dataKey="actual" stroke="#f97316" strokeWidth={2} name="Actuals" dot={{ r: 4 }} />
+                    <Line type="monotone" dataKey="past" stroke="#16a34a" strokeWidth={2} name="Past" dot={{ r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </Card>
+
               {/* Table View */}
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Monthly Performance Overview</h3>
@@ -123,6 +184,7 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                         <TableHead>Month</TableHead>
                         <TableHead className="text-right">Target (₹)</TableHead>
                         <TableHead className="text-right">Actual (₹)</TableHead>
+                        <TableHead className="text-right">Past (₹)</TableHead>
                         <TableHead className="text-right">Achievement %</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -132,18 +194,27 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                           <TableCell className="font-medium">{row.month}</TableCell>
                           <TableCell className="text-right">{row.target.toLocaleString()}</TableCell>
                           <TableCell className="text-right">
-                            <Button
-                              variant="link"
-                              className="p-0 h-auto text-primary font-medium hover:underline"
-                              onClick={() => handleActualClick(row.month)}
-                            >
-                              {row.actual.toLocaleString()}
-                            </Button>
+                            {row.actual > 0 ? (
+                              <Button
+                                variant="link"
+                                className="p-0 h-auto text-primary font-medium hover:underline"
+                                onClick={() => handleActualClick(row.month)}
+                              >
+                                {row.actual.toLocaleString()}
+                              </Button>
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
                           </TableCell>
+                          <TableCell className="text-right">{row.past.toLocaleString()}</TableCell>
                           <TableCell className="text-right">
-                            <span className={row.achievement >= 100 ? "text-success font-semibold" : "text-warning font-semibold"}>
-                              {row.achievement}%
-                            </span>
+                            {row.achievement > 0 ? (
+                              <span className={row.achievement >= 100 ? "text-success font-semibold" : "text-warning font-semibold"}>
+                                {row.achievement}%
+                              </span>
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -152,14 +223,14 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                 </div>
               </Card>
 
-              {/* Brand Insights Section */}
+              {/* Brand Performance Section */}
               <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Brand-Related Insights</h3>
+                <h3 className="text-lg font-semibold mb-4">Brand Performance</h3>
                 <div className="space-y-3">
                   {brandInsights.map((insight) => (
                     <Card
                       key={insight.brand}
-                      className="p-4 cursor-pointer hover:shadow-md transition-shadow border-l-4"
+                      className="p-5 cursor-pointer hover:shadow-md transition-shadow border-l-4"
                       style={{ 
                         borderLeftColor: 
                           insight.color === "destructive" ? "hsl(var(--destructive))" : 
@@ -168,21 +239,19 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                       }}
                       onClick={() => handleBrandClick(insight.brand)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <AlertCircle className={`w-5 h-5 ${
-                            insight.color === "destructive" ? "text-destructive" : 
-                            insight.color === "success" ? "text-success" : 
-                            "text-warning"
-                          }`} />
-                          <div>
-                            <p className="font-semibold">{insight.brand}</p>
-                            <p className="text-sm text-muted-foreground">{insight.message}</p>
-                          </div>
+                      <div className="space-y-2">
+                        <div className="flex items-start justify-between">
+                          <h4 className="font-semibold text-base text-primary">{insight.brand}</h4>
+                          <Button variant="ghost" size="sm" className="text-xs">
+                            View Details →
+                          </Button>
                         </div>
-                        <Button variant="ghost" size="sm">
-                          View Details →
-                        </Button>
+                        <p className="text-sm leading-relaxed">{insight.message}</p>
+                        <div className="pt-2 border-t border-border/50">
+                          <p className="text-sm text-muted-foreground">
+                            <span className="font-medium">Suggestion:</span> {insight.suggestion}
+                          </p>
+                        </div>
                       </div>
                     </Card>
                   ))}
@@ -191,6 +260,29 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
             </TabsContent>
 
             <TabsContent value="secondary" className="space-y-6 mt-6">
+              {/* Trend Chart */}
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Secondary Sales Trend</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={secondarySalesData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: "hsl(var(--card))", 
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "8px"
+                      }}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="target" stroke="#2563eb" strokeWidth={2} name="Target" dot={{ r: 4 }} />
+                    <Line type="monotone" dataKey="actual" stroke="#f97316" strokeWidth={2} name="Actuals" dot={{ r: 4 }} />
+                    <Line type="monotone" dataKey="past" stroke="#16a34a" strokeWidth={2} name="Past" dot={{ r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </Card>
+
               {/* Table View */}
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Monthly Performance Overview</h3>
@@ -201,6 +293,7 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                         <TableHead>Month</TableHead>
                         <TableHead className="text-right">Target (₹)</TableHead>
                         <TableHead className="text-right">Actual (₹)</TableHead>
+                        <TableHead className="text-right">Past (₹)</TableHead>
                         <TableHead className="text-right">Achievement %</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -210,18 +303,27 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                           <TableCell className="font-medium">{row.month}</TableCell>
                           <TableCell className="text-right">{row.target.toLocaleString()}</TableCell>
                           <TableCell className="text-right">
-                            <Button
-                              variant="link"
-                              className="p-0 h-auto text-primary font-medium hover:underline"
-                              onClick={() => handleActualClick(row.month)}
-                            >
-                              {row.actual.toLocaleString()}
-                            </Button>
+                            {row.actual > 0 ? (
+                              <Button
+                                variant="link"
+                                className="p-0 h-auto text-primary font-medium hover:underline"
+                                onClick={() => handleActualClick(row.month)}
+                              >
+                                {row.actual.toLocaleString()}
+                              </Button>
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
                           </TableCell>
+                          <TableCell className="text-right">{row.past.toLocaleString()}</TableCell>
                           <TableCell className="text-right">
-                            <span className={row.achievement >= 100 ? "text-success font-semibold" : "text-warning font-semibold"}>
-                              {row.achievement}%
-                            </span>
+                            {row.achievement > 0 ? (
+                              <span className={row.achievement >= 100 ? "text-success font-semibold" : "text-warning font-semibold"}>
+                                {row.achievement}%
+                              </span>
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -230,14 +332,14 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                 </div>
               </Card>
 
-              {/* Brand Insights Section */}
+              {/* Brand Performance Section */}
               <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Brand-Related Insights</h3>
+                <h3 className="text-lg font-semibold mb-4">Brand Performance</h3>
                 <div className="space-y-3">
                   {brandInsights.map((insight) => (
                     <Card
                       key={insight.brand}
-                      className="p-4 cursor-pointer hover:shadow-md transition-shadow border-l-4"
+                      className="p-5 cursor-pointer hover:shadow-md transition-shadow border-l-4"
                       style={{ 
                         borderLeftColor: 
                           insight.color === "destructive" ? "hsl(var(--destructive))" : 
@@ -246,21 +348,19 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
                       }}
                       onClick={() => handleBrandClick(insight.brand)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <AlertCircle className={`w-5 h-5 ${
-                            insight.color === "destructive" ? "text-destructive" : 
-                            insight.color === "success" ? "text-success" : 
-                            "text-warning"
-                          }`} />
-                          <div>
-                            <p className="font-semibold">{insight.brand}</p>
-                            <p className="text-sm text-muted-foreground">{insight.message}</p>
-                          </div>
+                      <div className="space-y-2">
+                        <div className="flex items-start justify-between">
+                          <h4 className="font-semibold text-base text-primary">{insight.brand}</h4>
+                          <Button variant="ghost" size="sm" className="text-xs">
+                            View Details →
+                          </Button>
                         </div>
-                        <Button variant="ghost" size="sm">
-                          View Details →
-                        </Button>
+                        <p className="text-sm leading-relaxed">{insight.message}</p>
+                        <div className="pt-2 border-t border-border/50">
+                          <p className="text-sm text-muted-foreground">
+                            <span className="font-medium">Suggestion:</span> {insight.suggestion}
+                          </p>
+                        </div>
                       </div>
                     </Card>
                   ))}
