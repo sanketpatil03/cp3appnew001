@@ -420,13 +420,13 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
 
       {/* Brand YTD Performance Dialog */}
       <Dialog open={brandYTDOpen} onOpenChange={setBrandYTDOpen}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Brand Performance - {selectedBrandName} (YTD)</DialogTitle>
+            <DialogTitle>Brand Performance - {selectedBrandName}</DialogTitle>
           </DialogHeader>
           <div className="mt-4">
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Month-wise Sales Performance</h3>
+            <Card className="p-4">
+              <h3 className="text-base font-semibold mb-3">Month-wise Sales Performance</h3>
               <div className="rounded-md border">
                 <Table>
                   <TableHeader>
