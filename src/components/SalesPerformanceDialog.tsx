@@ -21,9 +21,9 @@ interface ProductBreakdown {
 
 interface BrandYTDData {
   month: string;
-  target: number;
-  actual: number;
-  achievement: number;
+  sales2025: number;
+  sales2024: number;
+  growth: number;
 }
 
 export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceDialogProps) => {
@@ -113,18 +113,18 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
   const getBrandYTDData = (brand: string): BrandYTDData[] => {
     // Data from Tiotropium sales table
     return [
-      { month: "Jan", target: 2200, actual: 3000, achievement: 136.36 },
-      { month: "Feb", target: 1800, actual: 2100, achievement: 116.67 },
-      { month: "Mar", target: 3700, actual: 4500, achievement: 121.62 },
-      { month: "Apr", target: 1500, actual: 1200, achievement: 80.0 },
-      { month: "May", target: 1400, actual: 1600, achievement: 114.29 },
-      { month: "Jun", target: 2800, actual: 4000, achievement: 142.86 },
-      { month: "Jul", target: 3900, actual: 5000, achievement: 128.21 },
-      { month: "Aug", target: 6000, actual: 6000, achievement: 100.0 },
-      { month: "Sep", target: 4800, actual: 5600, achievement: 116.67 },
-      { month: "Oct", target: 4500, actual: 5100, achievement: 113.33 },
-      { month: "Nov", target: 5000, actual: 0, achievement: 0 },
-      { month: "Dec", target: 4200, actual: 0, achievement: 0 },
+      { month: "Jan", sales2025: 3000, sales2024: 2200, growth: 36.36 },
+      { month: "Feb", sales2025: 2100, sales2024: 1800, growth: 16.67 },
+      { month: "Mar", sales2025: 4500, sales2024: 3700, growth: 21.62 },
+      { month: "Apr", sales2025: 1200, sales2024: 1500, growth: -20.0 },
+      { month: "May", sales2025: 1600, sales2024: 1400, growth: 14.29 },
+      { month: "Jun", sales2025: 4000, sales2024: 2800, growth: 42.86 },
+      { month: "Jul", sales2025: 5000, sales2024: 3900, growth: 28.21 },
+      { month: "Aug", sales2025: 6000, sales2024: 6000, growth: 0.0 },
+      { month: "Sep", sales2025: 5600, sales2024: 4800, growth: 16.67 },
+      { month: "Oct", sales2025: 5100, sales2024: 4500, growth: 13.33 },
+      { month: "Nov", sales2025: 0, sales2024: 5000, growth: 0.0 },
+      { month: "Dec", sales2025: 0, sales2024: 4200, growth: 0.0 },
     ];
   };
 
@@ -426,50 +426,57 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
           </DialogHeader>
           <div className="mt-4">
             <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Month-wise Performance</h3>
+              <h3 className="text-lg font-semibold mb-4">Month-wise Sales Performance</h3>
               <div className="rounded-md border">
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Month</TableHead>
-                      <TableHead className="text-right">Target (₹)</TableHead>
-                      <TableHead className="text-right">Actual (₹)</TableHead>
-                      <TableHead className="text-right">Achievement %</TableHead>
-                      <TableHead className="text-right">Variance (₹)</TableHead>
+                      <TableHead className="text-right">Primary Sales - 2025 (₹)</TableHead>
+                      <TableHead className="text-right">Primary Sales - 2024 (₹)</TableHead>
+                      <TableHead className="text-right">Growth %</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {brandYTDData.map((row) => (
                       <TableRow key={row.month}>
                         <TableCell className="font-medium">{row.month}</TableCell>
-                        <TableCell className="text-right">{row.target.toLocaleString()}</TableCell>
-                        <TableCell className="text-right font-semibold">{row.actual.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">
-                          <span className={row.achievement >= 100 ? "text-success font-semibold" : "text-destructive font-semibold"}>
-                            {row.achievement}%
-                          </span>
+                        <TableCell className="text-right font-semibold">
+                          {row.sales2025 > 0 ? row.sales2025.toLocaleString() : "-"}
                         </TableCell>
                         <TableCell className="text-right">
-                          <span className={row.actual >= row.target ? "text-success" : "text-destructive"}>
-                            {row.actual >= row.target ? "+" : ""}{(row.actual - row.target).toLocaleString()}
-                          </span>
+                          {row.sales2024 > 0 ? row.sales2024.toLocaleString() : "-"}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {row.growth !== 0 ? (
+                            <span className={row.growth > 0 ? "text-success font-semibold" : "text-destructive font-semibold"}>
+                              {row.growth > 0 ? "+" : ""}{row.growth.toFixed(2)}%
+                            </span>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
                     <TableRow className="bg-muted/50 font-bold">
-                      <TableCell>Total YTD</TableCell>
+                      <TableCell>Total</TableCell>
                       <TableCell className="text-right">
-                        {brandYTDData.reduce((sum, r) => sum + r.target, 0).toLocaleString()}
+                        {brandYTDData.reduce((sum, r) => sum + r.sales2025, 0).toLocaleString()}
                       </TableCell>
                       <TableCell className="text-right">
-                        {brandYTDData.reduce((sum, r) => sum + r.actual, 0).toLocaleString()}
+                        {brandYTDData.reduce((sum, r) => sum + r.sales2024, 0).toLocaleString()}
                       </TableCell>
                       <TableCell className="text-right">
-                        {((brandYTDData.reduce((sum, r) => sum + r.actual, 0) / 
-                           brandYTDData.reduce((sum, r) => sum + r.target, 0)) * 100).toFixed(1)}%
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {(brandYTDData.reduce((sum, r) => sum + r.actual - r.target, 0)).toLocaleString()}
+                        {(() => {
+                          const total2025 = brandYTDData.reduce((sum, r) => sum + r.sales2025, 0);
+                          const total2024 = brandYTDData.reduce((sum, r) => sum + r.sales2024, 0);
+                          const totalGrowth = total2024 > 0 ? ((total2025 - total2024) / total2024) * 100 : 0;
+                          return (
+                            <span className={totalGrowth > 0 ? "text-success" : totalGrowth < 0 ? "text-destructive" : ""}>
+                              {totalGrowth > 0 ? "+" : ""}{totalGrowth.toFixed(2)}%
+                            </span>
+                          );
+                        })()}
                       </TableCell>
                     </TableRow>
                   </TableBody>
