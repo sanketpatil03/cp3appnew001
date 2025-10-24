@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import NudgeCenter from "./pages/NudgeCenter";
 import PopupDesigns from "./pages/PopupDesigns";
 import NotFound from "./pages/NotFound";
+import SalesPerformancePage from "./components/SalesPerformanceDialogPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/nudge-center" element={<NudgeCenter />} />
           <Route path="/popup-designs" element={<PopupDesigns />} />
+          <Route path="/sales" element={<SalesPerformancePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
