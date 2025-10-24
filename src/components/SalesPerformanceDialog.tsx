@@ -109,15 +109,22 @@ export const SalesPerformanceDialog = ({ open, onOpenChange }: SalesPerformanceD
     ];
   };
 
-  // Mock brand YTD data
+  // Brand YTD data based on Tiotropium reference
   const getBrandYTDData = (brand: string): BrandYTDData[] => {
+    // Data from Tiotropium sales table
     return [
-      { month: "Apr'23", target: 25000, actual: 23000, achievement: 92.0 },
-      { month: "May'23", target: 26000, actual: 24500, achievement: 94.2 },
-      { month: "Jun'23", target: 27000, actual: 28000, achievement: 103.7 },
-      { month: "Jul'23", target: 28000, actual: 27200, achievement: 97.1 },
-      { month: "Aug'23", target: 29000, actual: 30100, achievement: 103.8 },
-      { month: "Sep'23", target: 30000, actual: 29500, achievement: 98.3 },
+      { month: "Jan", target: 2200, actual: 3000, achievement: 136.36 },
+      { month: "Feb", target: 1800, actual: 2100, achievement: 116.67 },
+      { month: "Mar", target: 3700, actual: 4500, achievement: 121.62 },
+      { month: "Apr", target: 1500, actual: 1200, achievement: 80.0 },
+      { month: "May", target: 1400, actual: 1600, achievement: 114.29 },
+      { month: "Jun", target: 2800, actual: 4000, achievement: 142.86 },
+      { month: "Jul", target: 3900, actual: 5000, achievement: 128.21 },
+      { month: "Aug", target: 6000, actual: 6000, achievement: 100.0 },
+      { month: "Sep", target: 4800, actual: 5600, achievement: 116.67 },
+      { month: "Oct", target: 4500, actual: 5100, achievement: 113.33 },
+      { month: "Nov", target: 5000, actual: 0, achievement: 0 },
+      { month: "Dec", target: 4200, actual: 0, achievement: 0 },
     ];
   };
 
