@@ -68,11 +68,11 @@ const Dashboard = () => {
   }, []);
   
   const customers = [
-    { name: "Dr. Prakash Patil", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
-    { name: "Dr. Austin Berg", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
-    { name: "Dr. Jalen Tindel", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
-    { name: "Dr. Lindsey Stack", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
-    { name: "Dr. Cesar Amadon", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"] },
+    { name: "Dr. Prakash Patil", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"], hasCampaign: true, hasEvent: false, isImportant: true },
+    { name: "Dr. Austin Berg", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"], hasCampaign: false, hasEvent: true, isImportant: false },
+    { name: "Dr. Jalen Tindel", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"], hasCampaign: true, hasEvent: true, isImportant: false },
+    { name: "Dr. Lindsey Stack", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"], hasCampaign: false, hasEvent: false, isImportant: true },
+    { name: "Dr. Cesar Amadon", specialty: "Dentist - A/VF-1", time: "10:04 AM", status: ["s", "c", "i", "r", "p"], hasCampaign: false, hasEvent: false, isImportant: false },
   ];
   
   // Focus brands data with launch dates
@@ -200,9 +200,35 @@ const Dashboard = () => {
               {customers.map((customer, idx) => (
                 <Card 
                   key={idx} 
-                  className="w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                  className={`w-[330px] h-[75px] p-3 bg-white/95 backdrop-blur-sm shadow-md hover:shadow-lg transition-all cursor-pointer relative ${
+                    customer.isImportant 
+                      ? 'border-2 border-accent' 
+                      : 'border-0'
+                  }`}
                   onClick={() => setSelectedCustomer(customer)}
                 >
+                  {/* Visual Indicators - Top Right Corner */}
+                  <div className="absolute top-2 right-2 flex gap-1 z-10">
+                    {customer.hasCampaign && (
+                      <Badge 
+                        variant="secondary" 
+                        className="h-4 px-1.5 text-[9px] bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20"
+                        title="Active Campaign"
+                      >
+                        C
+                      </Badge>
+                    )}
+                    {customer.hasEvent && (
+                      <Badge 
+                        variant="secondary" 
+                        className="h-4 px-1.5 text-[9px] bg-purple/10 text-purple border border-purple/20 hover:bg-purple/20"
+                        title="Intervention Event"
+                      >
+                        E
+                      </Badge>
+                    )}
+                  </div>
+
                   <div className="flex items-center justify-between h-full">
                     <div className="flex items-center gap-2.5 flex-1 min-w-0">
                       <Avatar className="w-12 h-12 border-2 border-primary/20 flex-shrink-0">
