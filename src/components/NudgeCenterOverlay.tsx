@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { X, Mic, Send, Sparkles, Download, Gift, AlertTriangle, Plus } from "lucide-react";
+import { X, Mic, Send, Sparkles, Download, Gift, AlertTriangle, Plus, ThumbsUp, ThumbsDown } from "lucide-react";
 
 interface ChatMessage {
   id: string;
@@ -19,11 +19,6 @@ interface NudgeCenterOverlayProps {
 
 const initialMessages: ChatMessage[] = [
   {
-    id: "welcome",
-    type: "assistant",
-    message: "Hi! I'm Phyzii, your AI assistant. I have 4 important updates for you today. How can I help?"
-  },
-  {
     id: "1",
     type: "assistant",
     message: "📥 You have 21 new content items to download.",
@@ -37,13 +32,33 @@ const initialMessages: ChatMessage[] = [
     icon: Gift
   },
   {
+    id: "user-1",
+    type: "user",
+    message: "What's my plan for today?"
+  },
+  {
     id: "3",
+    type: "assistant",
+    message: "You have 8 doctor visits scheduled today. Starting with Dr. Sharma at 10 AM, followed by Dr. Patel at 11:30 AM. Would you like to see the complete schedule?"
+  },
+  {
+    id: "4",
     type: "assistant",
     message: "⚠️ 12 Action points are overdue for the doctors planned today. Please check.",
     icon: AlertTriangle
   },
   {
-    id: "4",
+    id: "user-2",
+    type: "user",
+    message: "Show me insights for Dr. Sharma"
+  },
+  {
+    id: "5",
+    type: "assistant",
+    message: "Dr. Sharma prefers Brand X and Y. Last visit: 15 days ago. Recommended talking points: New clinical study results for Brand X. Remember to follow up on the sample request from last visit."
+  },
+  {
+    id: "6",
     type: "assistant",
     message: "✨ New brand (Z1) has been added and Promotogram has changed for (Cardiologist) - please review their playlist.",
     icon: Plus,
@@ -103,23 +118,41 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
                   key={msg.id} 
                   className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div 
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                      msg.type === 'user' 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' 
-                        : 'bg-gray-100 dark:bg-gray-900 text-foreground border border-border shadow-sm'
-                    }`}
-                  >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {msg.message}
-                    </p>
-                    {msg.ctaText && (
-                      <Button 
-                        size="sm"
-                        className="mt-2 h-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-md"
-                      >
-                        {msg.ctaText}
-                      </Button>
+                  <div className="flex flex-col gap-1.5">
+                    <div 
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                        msg.type === 'user' 
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' 
+                          : 'bg-gray-100 dark:bg-gray-900 text-foreground border border-border shadow-sm'
+                      }`}
+                    >
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {msg.message}
+                      </p>
+                      {msg.ctaText && (
+                        <Button 
+                          size="sm"
+                          className="mt-2 h-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-md"
+                        >
+                          {msg.ctaText}
+                        </Button>
+                      )}
+                    </div>
+                    {msg.type === 'assistant' && (
+                      <div className="flex items-center gap-2 px-2">
+                        <button 
+                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                          aria-label="Like this message"
+                        >
+                          <ThumbsUp className="h-3.5 w-3.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400" />
+                        </button>
+                        <button 
+                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                          aria-label="Dislike this message"
+                        >
+                          <ThumbsDown className="h-3.5 w-3.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400" />
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
