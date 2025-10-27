@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge";
 import { LeaderboardWidget } from "@/components/LeaderboardWidget";
 import { CustomerProfileDialog } from "@/components/CustomerProfileDialog";
-import { VoiceBot } from "@/components/VoiceBot";
+import { NudgeCenterOverlay } from "@/components/NudgeCenterOverlay";
 import { AppSidebar } from "@/components/AppSidebar";
 import { PerformanceSummaryDialog } from "@/components/PerformanceSummaryDialog";
 import { PrimarySalesWidget } from "@/components/PrimarySalesWidget";
@@ -57,6 +57,7 @@ const Dashboard = () => {
   const [isPerformanceSummaryOpen, setIsPerformanceSummaryOpen] = useState(false);
   const [isPrimarySalesOpen, setIsPrimarySalesOpen] = useState(false);
   const [isSalesPerformanceOpen, setIsSalesPerformanceOpen] = useState(false);
+  const [isNudgeCenterOpen, setIsNudgeCenterOpen] = useState(false);
 
   // Show performance summary on mount (first login)
   useEffect(() => {
@@ -1091,8 +1092,8 @@ const Dashboard = () => {
         />
       )}
 
-      {/* Voice Bot */}
-      <VoiceBot />
+      {/* Nudge Center Overlay */}
+      <NudgeCenterOverlay open={isNudgeCenterOpen} onOpenChange={setIsNudgeCenterOpen} />
 
       {/* Sidebar Menu */}
       <AppSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
