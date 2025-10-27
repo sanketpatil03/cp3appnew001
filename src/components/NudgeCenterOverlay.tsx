@@ -10,6 +10,7 @@ interface ChatMessage {
   message: string;
   icon?: any;
   ctaText?: string;
+  isNudge?: boolean;
 }
 
 interface NudgeCenterOverlayProps {
@@ -23,13 +24,15 @@ const initialMessages: ChatMessage[] = [
     type: "assistant",
     message: "📥 You have 21 new content items to download.",
     icon: Download,
-    ctaText: "Download"
+    ctaText: "Download",
+    isNudge: true
   },
   {
     id: "2",
     type: "assistant",
     message: "🎁 Please have 25 qty of samples for Brand (x, y and z) for the day for distribution.",
-    icon: Gift
+    icon: Gift,
+    isNudge: true
   },
   {
     id: "user-1",
@@ -45,7 +48,8 @@ const initialMessages: ChatMessage[] = [
     id: "4",
     type: "assistant",
     message: "⚠️ 12 Action points are overdue for the doctors planned today. Please check.",
-    icon: AlertTriangle
+    icon: AlertTriangle,
+    isNudge: true
   },
   {
     id: "user-2",
@@ -62,7 +66,8 @@ const initialMessages: ChatMessage[] = [
     type: "assistant",
     message: "✨ New brand (Z1) has been added and Promotogram has changed for (Cardiologist) - please review their playlist.",
     icon: Plus,
-    ctaText: "Review Playlist"
+    ctaText: "Review Playlist",
+    isNudge: true
   }
 ];
 
@@ -113,12 +118,50 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
           {/* Chat Messages - Compact */}
           <ScrollArea className="flex-1 px-4 py-3">
             <div className="space-y-3 pb-2">
-              {messages.map((msg) => (
-                <div 
-                  key={msg.id} 
-                  className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className="flex flex-col gap-1.5">
+              {messages.map((msg) => {
+                // Nudge cards - centrally aligned
+                if (msg.isNudge) {
+                  return (
+                    <div key={msg.id} className="flex justify-center">
+                      <div className="w-full max-w-[340px] rounded-xl px-4 py-3 bg-gray-100 dark:bg-gray-900 border border-border shadow-sm">
+                        <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground">
+                          {msg.message}
+                        </p>
+                        {msg.ctaText && (
+                          <Button 
+                            size="sm"
+                            className="mt-2 h-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-md"
+                          >
+                            {msg.ctaText}
+                          </Button>
+                        )}
+                        <div className="flex items-center gap-3 mt-2 pt-2 border-t border-border/50">
+                          <button 
+                            className="flex items-center gap-1.5 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            aria-label="Like this nudge"
+                          >
+                            <ThumbsUp className="h-3.5 w-3.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400" />
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Like</span>
+                          </button>
+                          <button 
+                            className="flex items-center gap-1.5 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            aria-label="Dislike this nudge"
+                          >
+                            <ThumbsDown className="h-3.5 w-3.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400" />
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Dislike</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Chat messages - left/right aligned
+                return (
+                  <div 
+                    key={msg.id} 
+                    className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
                     <div 
                       className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                         msg.type === 'user' 
@@ -129,34 +172,10 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">
                         {msg.message}
                       </p>
-                      {msg.ctaText && (
-                        <Button 
-                          size="sm"
-                          className="mt-2 h-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-md"
-                        >
-                          {msg.ctaText}
-                        </Button>
-                      )}
                     </div>
-                    {msg.type === 'assistant' && (
-                      <div className="flex items-center gap-2 px-2">
-                        <button 
-                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
-                          aria-label="Like this message"
-                        >
-                          <ThumbsUp className="h-3.5 w-3.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400" />
-                        </button>
-                        <button 
-                          className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
-                          aria-label="Dislike this message"
-                        >
-                          <ThumbsDown className="h-3.5 w-3.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400" />
-                        </button>
-                      </div>
-                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </ScrollArea>
 
