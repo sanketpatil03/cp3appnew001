@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ThumbsUp, ThumbsDown, Bell, X, Mic, Send, Sparkles, CheckCircle2, Download, Gift, AlertTriangle, Plus } from "lucide-react";
+import { X, Mic, Send, Sparkles, Download, Gift, AlertTriangle, Plus } from "lucide-react";
 
-interface Nudge {
+interface ChatMessage {
   id: string;
-  title: string;
+  type: 'user' | 'assistant';
   message: string;
+  icon?: any;
   ctaText?: string;
 }
 
@@ -19,43 +17,44 @@ interface NudgeCenterOverlayProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const nudges: Nudge[] = [
+const initialMessages: ChatMessage[] = [
+  {
+    id: "welcome",
+    type: "assistant",
+    message: "Hi! I'm Phyzii, your AI assistant. I have 4 important updates for you today. How can I help?"
+  },
   {
     id: "1",
-    title: "Download Content",
-    message: "You have 21 new content to download.",
+    type: "assistant",
+    message: "📥 You have 21 new content items to download.",
+    icon: Download,
     ctaText: "Download"
   },
   {
     id: "2",
-    title: "Sample Distribution",
-    message: "Please have 25 qty of samples for Brand (x, y and z) for the day for distribution.",
-    ctaText: undefined
+    type: "assistant",
+    message: "🎁 Please have 25 qty of samples for Brand (x, y and z) for the day for distribution.",
+    icon: Gift
   },
   {
     id: "3",
-    title: "Action Points Overdue",
-    message: "12 Action points are overdue for the doctors planned today. Please check.",
-    ctaText: undefined
+    type: "assistant",
+    message: "⚠️ 12 Action points are overdue for the doctors planned today. Please check.",
+    icon: AlertTriangle
   },
   {
     id: "4",
-    title: "New Brand Added",
-    message: "New brand (Z1) has been added and Promotogram has changed for (Cardiologist) ((Dr Naresh and Harish)) - please review their playlist.",
+    type: "assistant",
+    message: "✨ New brand (Z1) has been added and Promotogram has changed for (Cardiologist) - please review their playlist.",
+    icon: Plus,
     ctaText: "Review Playlist"
   }
 ];
 
 export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayProps) => {
-  const [feedback, setFeedback] = useState<Record<string, "like" | "dislike" | null>>({});
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [message, setMessage] = useState("");
-
-  const handleFeedback = (nudgeId: string, type: "like" | "dislike") => {
-    setFeedback(prev => ({
-      ...prev,
-      [nudgeId]: prev[nudgeId] === type ? null : type
-    }));
-  };
+  const [isRecording, setIsRecording] = useState(false);
 
   return (
     <>
@@ -67,143 +66,110 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
         />
       )}
       
-      {/* Overlay Panel - Zoom AI Companion Inspired */}
+      {/* Compact Chat Overlay */}
       {open && (
         <div 
-          className="fixed top-0 right-0 z-50 h-full w-full max-w-[520px] bg-gradient-to-br from-white via-white to-blue-50/30 dark:from-gray-950 dark:via-gray-950 dark:to-blue-950/20 shadow-2xl animate-slide-in-right flex flex-col border-l-2 border-primary/20"
+          className="fixed top-0 right-0 z-50 h-full w-full max-w-[420px] bg-white dark:bg-gray-950 shadow-2xl animate-slide-in-right flex flex-col border-l border-border"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header - Clean & Modern */}
-          <div className="px-8 py-6 border-b border-border/30 bg-gradient-to-r from-blue-50/50 to-purple-50/30 dark:from-blue-950/30 dark:to-purple-950/20">
+          {/* Compact Header */}
+          <div className="px-4 py-3 border-b border-border bg-gradient-to-r from-blue-50/50 to-purple-50/30 dark:from-blue-950/30 dark:to-purple-950/20">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 flex items-center justify-center shadow-lg ring-2 ring-blue-500/20">
-                    <Sparkles className="h-7 w-7 text-white" />
-                  </div>
-                  <span className="absolute -top-1 -right-1 h-6 w-6 bg-gradient-to-br from-orange-500 to-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-md animate-pulse ring-2 ring-white dark:ring-gray-950">
-                    4
-                  </span>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 flex items-center justify-center shadow-md">
+                  <Sparkles className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-bold">
-                    <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Hey </span>
-                    <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Phyzii</span>
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">Your CRM Assistant</p>
+                  <h3 className="text-lg font-bold text-foreground">Hey Phyzii</h3>
+                  <p className="text-xs text-muted-foreground">AI Assistant</p>
                 </div>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="h-10 w-10 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="h-8 w-8 rounded-lg"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          {/* Nudges List - Clean Card Design */}
-          <ScrollArea className="flex-1 px-8 py-6 bg-gradient-to-b from-gray-50/30 to-white dark:from-gray-900/30 dark:to-gray-950">
-            <div className="space-y-4 pb-4">
-              {nudges.map((nudge, index) => (
+          {/* Chat Messages - Compact */}
+          <ScrollArea className="flex-1 px-4 py-3">
+            <div className="space-y-3 pb-2">
+              {messages.map((msg) => (
                 <div 
-                  key={nudge.id} 
-                  className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md border-2 border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-lg transition-all duration-200"
+                  key={msg.id} 
+                  className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                      {index === 0 && <Download className="h-6 w-6 text-white" />}
-                      {index === 1 && <Gift className="h-6 w-6 text-white" />}
-                      {index === 2 && <AlertTriangle className="h-6 w-6 text-white" />}
-                      {index === 3 && <Plus className="h-6 w-6 text-white" />}
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">
-                        {nudge.title}
-                      </h4>
-                      <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                        {nudge.message}
-                      </p>
-                      
-                      <div className="flex items-center justify-between gap-3 pt-4 border-t-2 border-gray-100 dark:border-gray-800">
-                        {nudge.ctaText && (
-                          <Button 
-                            size="sm"
-                            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md rounded-lg px-5 h-10"
-                          >
-                            {nudge.ctaText}
-                          </Button>
-                        )}
-                        
-                        <div className="flex items-center gap-2 ml-auto">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`h-9 w-9 rounded-lg border ${
-                              feedback[nudge.id] === "like" 
-                                ? "bg-green-100 text-green-700 border-green-300 dark:bg-green-900/40 dark:text-green-400 dark:border-green-700" 
-                                : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                            }`}
-                            onClick={() => handleFeedback(nudge.id, "like")}
-                          >
-                            <ThumbsUp className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`h-9 w-9 rounded-lg border ${
-                              feedback[nudge.id] === "dislike" 
-                                ? "bg-red-100 text-red-700 border-red-300 dark:bg-red-900/40 dark:text-red-400 dark:border-red-700" 
-                                : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                            }`}
-                            onClick={() => handleFeedback(nudge.id, "dislike")}
-                          >
-                            <ThumbsDown className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                          >
-                            <Bell className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                  <div 
+                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                      msg.type === 'user' 
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' 
+                        : 'bg-gray-100 dark:bg-gray-900 text-foreground border border-border shadow-sm'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {msg.message}
+                    </p>
+                    {msg.ctaText && (
+                      <Button 
+                        size="sm"
+                        className="mt-2 h-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xs font-semibold shadow-md"
+                      >
+                        {msg.ctaText}
+                      </Button>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
           </ScrollArea>
 
-          {/* Input Footer - High Contrast for Outdoor Visibility */}
-          <div className="px-8 py-6 border-t-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-            <div className="flex items-center gap-3">
+          {/* Input Footer - High Contrast */}
+          <div className="px-4 py-3 border-t-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950">
+            <div className="flex items-center gap-2">
               <div className="flex-1 relative">
                 <Input
                   placeholder="Type your message..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="h-12 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 shadow-md focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 font-medium px-4"
+                  className="h-11 rounded-xl bg-white dark:bg-gray-900 border-2 border-gray-400 dark:border-gray-600 shadow-sm focus:border-blue-600 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400 font-medium px-4 text-base"
                 />
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-12 w-12 rounded-xl border-2 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-600 shadow-md"
+                onClick={() => setIsRecording(!isRecording)}
+                className={`h-11 w-11 rounded-xl border-2 shadow-sm transition-all ${
+                  isRecording 
+                    ? 'border-red-500 bg-red-50 dark:bg-red-950/30 animate-pulse' 
+                    : 'border-gray-400 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
               >
-                <Mic className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                <Mic className={`h-5 w-5 ${isRecording ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-gray-300'}`} />
+                {isRecording && (
+                  <span className="absolute inset-0 rounded-xl border-2 border-red-500 animate-ping opacity-75" />
+                )}
               </Button>
               <Button
                 size="icon"
-                className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
+                className="h-11 w-11 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all"
               >
                 <Send className="h-5 w-5" />
               </Button>
             </div>
+            {isRecording && (
+              <div className="mt-2 flex items-center gap-2 text-xs text-red-600 dark:text-red-400 font-medium">
+                <div className="flex gap-1">
+                  <span className="w-1 h-3 bg-red-500 rounded animate-[pulse_0.8s_ease-in-out_infinite]" />
+                  <span className="w-1 h-3 bg-red-500 rounded animate-[pulse_0.8s_ease-in-out_0.2s_infinite]" />
+                  <span className="w-1 h-3 bg-red-500 rounded animate-[pulse_0.8s_ease-in-out_0.4s_infinite]" />
+                </div>
+                Recording...
+              </div>
+            )}
           </div>
         </div>
       )}
