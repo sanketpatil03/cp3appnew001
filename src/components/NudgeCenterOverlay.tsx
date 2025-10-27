@@ -19,6 +19,7 @@ interface NudgeCenterOverlayProps {
 }
 
 const initialMessages: ChatMessage[] = [
+  // Nudges first
   {
     id: "1",
     type: "assistant",
@@ -35,6 +36,22 @@ const initialMessages: ChatMessage[] = [
     isNudge: true
   },
   {
+    id: "4",
+    type: "assistant",
+    message: "⚠️ 12 Action points are overdue for the doctors planned today. Please check.",
+    icon: AlertTriangle,
+    isNudge: true
+  },
+  {
+    id: "6",
+    type: "assistant",
+    message: "✨ New brand (Z1) has been added and Promotogram has changed for (Cardiologist) - please review their playlist.",
+    icon: Plus,
+    ctaText: "Review Playlist",
+    isNudge: true
+  },
+  // Then conversation messages
+  {
     id: "user-1",
     type: "user",
     message: "What's my plan for today?"
@@ -45,13 +62,6 @@ const initialMessages: ChatMessage[] = [
     message: "You have 8 doctor visits scheduled today. Starting with Dr. Sharma at 10 AM, followed by Dr. Patel at 11:30 AM. Would you like to see the complete schedule?"
   },
   {
-    id: "4",
-    type: "assistant",
-    message: "⚠️ 12 Action points are overdue for the doctors planned today. Please check.",
-    icon: AlertTriangle,
-    isNudge: true
-  },
-  {
     id: "user-2",
     type: "user",
     message: "Show me insights for Dr. Sharma"
@@ -60,14 +70,6 @@ const initialMessages: ChatMessage[] = [
     id: "5",
     type: "assistant",
     message: "Dr. Sharma prefers Brand X and Y. Last visit: 15 days ago. Recommended talking points: New clinical study results for Brand X. Remember to follow up on the sample request from last visit."
-  },
-  {
-    id: "6",
-    type: "assistant",
-    message: "✨ New brand (Z1) has been added and Promotogram has changed for (Cardiologist) - please review their playlist.",
-    icon: Plus,
-    ctaText: "Review Playlist",
-    isNudge: true
   }
 ];
 
@@ -135,20 +137,20 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
                             {msg.ctaText}
                           </Button>
                         )}
-                        <div className="flex items-center gap-3 mt-2 pt-2 border-t border-border/50">
+                        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border/50">
                           <button 
-                            className="flex items-center gap-1.5 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            className="flex items-center gap-1 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
                             aria-label="Like this nudge"
                           >
-                            <ThumbsUp className="h-3.5 w-3.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400" />
-                            <span className="text-xs text-gray-500 dark:text-gray-400">Like</span>
+                            <ThumbsUp className="h-3 w-3 text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400" />
+                            <span className="text-xs text-muted-foreground">Like</span>
                           </button>
                           <button 
-                            className="flex items-center gap-1.5 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            className="flex items-center gap-1 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
                             aria-label="Dislike this nudge"
                           >
-                            <ThumbsDown className="h-3.5 w-3.5 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400" />
-                            <span className="text-xs text-gray-500 dark:text-gray-400">Dislike</span>
+                            <ThumbsDown className="h-3 w-3 text-muted-foreground hover:text-red-600 dark:hover:text-red-400" />
+                            <span className="text-xs text-muted-foreground">Dislike</span>
                           </button>
                         </div>
                       </div>
@@ -162,16 +164,36 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
                     key={msg.id} 
                     className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div 
-                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                        msg.type === 'user' 
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' 
-                          : 'bg-gray-100 dark:bg-gray-900 text-foreground border border-border shadow-sm'
-                      }`}
-                    >
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                        {msg.message}
-                      </p>
+                    <div className="flex flex-col gap-1 max-w-[85%]">
+                      <div 
+                        className={`rounded-2xl px-4 py-2.5 ${
+                          msg.type === 'user' 
+                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' 
+                            : 'bg-gray-100 dark:bg-gray-900 text-foreground border border-border shadow-sm'
+                        }`}
+                      >
+                        <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                          {msg.message}
+                        </p>
+                      </div>
+                      {msg.type === 'assistant' && (
+                        <div className="flex items-center gap-2 px-1">
+                          <button 
+                            className="flex items-center gap-1 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            aria-label="Like this response"
+                          >
+                            <ThumbsUp className="h-3 w-3 text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400" />
+                            <span className="text-xs text-muted-foreground">Like</span>
+                          </button>
+                          <button 
+                            className="flex items-center gap-1 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                            aria-label="Dislike this response"
+                          >
+                            <ThumbsDown className="h-3 w-3 text-muted-foreground hover:text-red-600 dark:hover:text-red-400" />
+                            <span className="text-xs text-muted-foreground">Dislike</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
