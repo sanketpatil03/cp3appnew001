@@ -57,8 +57,6 @@ export const NudgeCenterOverlay = ({ open, onOpenChange }: NudgeCenterOverlayPro
     }));
   };
 
-  if (!open) return null;
-
   return (
     <>
       {/* Backdrop */}
