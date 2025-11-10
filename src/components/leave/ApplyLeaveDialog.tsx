@@ -8,10 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, Upload, Info } from "lucide-react";
+import { CalendarIcon, Upload, Info, X, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Card } from "@/components/ui/card";
 
 interface ApplyLeaveDialogProps {
   open: boolean;
@@ -24,6 +25,17 @@ interface LeaveType {
   name: string;
 }
 
+interface LeaveBalance {
+  balance: number;
+  granted: number;
+  availed: number;
+}
+
+interface ImagePreview {
+  file: File;
+  preview: string;
+}
+
 const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogProps) => {
   const [fromDate, setFromDate] = useState<Date>();
   const [toDate, setToDate] = useState<Date>();
@@ -31,10 +43,11 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
   const [toSession, setToSession] = useState<string>("Session 1");
   const [leaveTypeId, setLeaveTypeId] = useState<string>("");
   const [comments, setComments] = useState("");
-  const [attachment, setAttachment] = useState<File | null>(null);
+  const [attachments, setAttachments] = useState<ImagePreview[]>([]);
   const [leaveTypes, setLeaveTypes] = useState<LeaveType[]>([]);
   const [loading, setLoading] = useState(false);
   const [reportingManager, setReportingManager] = useState<string>("Manager Name");
+  const [leaveBalance, setLeaveBalance] = useState<LeaveBalance | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -80,6 +93,66 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
     }
   };
 
+  const fetchLeaveBalance = async (leaveTypeId: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const currentYear = new Date().getFullYear();
+      const { data, error } = await supabase
+        .from('leave_balances')
+        .select('balance, granted, availed')
+        .eq('user_id', user.id)
+        .eq('leave_type_id', leaveTypeId)
+        .eq('year', currentYear)
+        .single();
+
+      if (error) throw error;
+      setLeaveBalance(data);
+    } catch (error: any) {
+      console.error('Error fetching leave balance:', error);
+      setLeaveBalance(null);
+    }
+  };
+
+  const handleLeaveTypeChange = (value: string) => {
+    setLeaveTypeId(value);
+    if (value) {
+      fetchLeaveBalance(value);
+    } else {
+      setLeaveBalance(null);
+    }
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    
+    if (attachments.length + files.length > 5) {
+      toast({
+        title: "Too many files",
+        description: "You can upload a maximum of 5 images",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newPreviews: ImagePreview[] = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+
+    setAttachments(prev => [...prev, ...newPreviews]);
+  };
+
+  const removeImage = (index: number) => {
+    setAttachments(prev => {
+      const updated = [...prev];
+      URL.revokeObjectURL(updated[index].preview);
+      updated.splice(index, 1);
+      return updated;
+    });
+  };
+
   const calculateDays = (): number => {
     if (!fromDate || !toDate) return 0;
 
@@ -118,23 +191,25 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("User not authenticated");
 
-      // Upload attachment if present
-      let attachmentUrl = null;
-      if (attachment) {
-        const fileExt = attachment.name.split('.').pop();
-        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('leave-attachments')
-          .upload(fileName, attachment);
+      // Upload attachments if present
+      const attachmentUrls: string[] = [];
+      if (attachments.length > 0) {
+        for (const { file } of attachments) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${user.id}/${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('leave-attachments')
+            .upload(fileName, file);
 
-        if (uploadError) throw uploadError;
+          if (uploadError) throw uploadError;
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('leave-attachments')
-          .getPublicUrl(fileName);
+          const { data: { publicUrl } } = supabase.storage
+            .from('leave-attachments')
+            .getPublicUrl(fileName);
 
-        attachmentUrl = publicUrl;
+          attachmentUrls.push(publicUrl);
+        }
       }
 
       const days = calculateDays();
@@ -150,7 +225,7 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
           to_session: toSession,
           days,
           comments,
-          attachment_url: attachmentUrl,
+          attachment_url: attachmentUrls.length > 0 ? JSON.stringify(attachmentUrls) : null,
           reporting_manager: reportingManager,
           status: 'Pending'
         });
@@ -183,7 +258,9 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
     setToSession("Session 1");
     setLeaveTypeId("");
     setComments("");
-    setAttachment(null);
+    attachments.forEach(({ preview }) => URL.revokeObjectURL(preview));
+    setAttachments([]);
+    setLeaveBalance(null);
   };
 
   return (
@@ -196,11 +273,11 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          {/* Leave Type */}
-          <div className="space-y-2">
+          {/* Leave Type with Balance */}
+          <div className="space-y-3">
             <Label htmlFor="leave-type">Leave Type *</Label>
-            <Select value={leaveTypeId} onValueChange={setLeaveTypeId}>
-              <SelectTrigger>
+            <Select value={leaveTypeId} onValueChange={handleLeaveTypeChange}>
+              <SelectTrigger className="h-11">
                 <SelectValue placeholder="Select leave type" />
               </SelectTrigger>
               <SelectContent>
@@ -211,6 +288,23 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
                 ))}
               </SelectContent>
             </Select>
+            
+            {leaveBalance && (
+              <Card className="bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20 p-3">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">Available Balance</p>
+                    <p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      {leaveBalance.balance} days
+                    </p>
+                  </div>
+                  <div className="text-right text-xs text-muted-foreground">
+                    <p>Granted: {leaveBalance.granted}</p>
+                    <p>Used: {leaveBalance.availed}</p>
+                  </div>
+                </div>
+              </Card>
+            )}
           </div>
 
           {/* From Date and Session */}
@@ -332,30 +426,64 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
             />
           </div>
 
-          {/* Attachment */}
-          <div className="space-y-2">
-            <Label htmlFor="attachment">Attach File</Label>
-            <div className="flex items-center gap-2">
-              <Input
-                id="attachment"
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png"
-                onChange={(e) => setAttachment(e.target.files?.[0] || null)}
-                className="hidden"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => document.getElementById('attachment')?.click()}
-                className="gap-2"
-              >
-                <Upload className="w-4 h-4" />
-                {attachment ? attachment.name : "Choose File"}
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              File Types: .pdf, .jpg, .png (Max 5MB)
-            </p>
+          {/* Attachments */}
+          <div className="space-y-3">
+            <Label htmlFor="attachment" className="flex items-center justify-between">
+              <span>Attach Images</span>
+              <span className="text-xs text-muted-foreground font-normal">
+                {attachments.length}/5 images
+              </span>
+            </Label>
+            
+            {attachments.length < 5 && (
+              <>
+                <Input
+                  id="attachment"
+                  type="file"
+                  accept="image/jpeg,image/jpg,image/png"
+                  multiple
+                  onChange={handleImageSelect}
+                  className="hidden"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => document.getElementById('attachment')?.click()}
+                  className="w-full gap-2 border-dashed border-2 border-primary/30 hover:border-primary/50 h-20"
+                >
+                  <Upload className="w-5 h-5 text-primary" />
+                  <div className="text-center">
+                    <p className="text-sm font-medium">Upload Images</p>
+                    <p className="text-xs text-muted-foreground">JPG, PNG (Max 5 images)</p>
+                  </div>
+                </Button>
+              </>
+            )}
+            
+            {attachments.length > 0 && (
+              <div className="grid grid-cols-3 gap-3">
+                {attachments.map((item, index) => (
+                  <div key={index} className="relative group">
+                    <div className="aspect-square rounded-lg overflow-hidden border-2 border-primary/20 bg-muted">
+                      <img 
+                        src={item.preview} 
+                        alt={`Preview ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                      onClick={() => removeImage(index)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
