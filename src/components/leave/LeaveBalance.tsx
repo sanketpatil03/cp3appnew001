@@ -95,40 +95,36 @@ const LeaveBalance = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {leaveBalances.map((leave) => (
           <Card 
             key={leave.id} 
-            className="hover:shadow-xl transition-all duration-300 border-2 border-primary/10 hover:border-primary/30 bg-gradient-to-br from-white to-primary-light/20"
+            className="hover:shadow-lg transition-all duration-300 border border-primary/20 hover:border-primary/40 bg-white/80 backdrop-blur-sm overflow-hidden rounded-xl"
           >
-            <CardHeader className="bg-gradient-to-r from-primary/10 to-secondary/10">
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    {leave.leave_type.name}
-                  </CardTitle>
-                  <CardDescription className="text-sm mt-2 font-medium">
-                    Granted: <span className="text-foreground">{leave.granted} days</span>
-                  </CardDescription>
-                </div>
-              </div>
+            <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5 pb-3 pt-4 px-5">
+              <CardTitle className="text-base font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                {leave.leave_type.name}
+              </CardTitle>
+              <CardDescription className="text-xs mt-1">
+                Granted: <span className="text-foreground font-medium">{leave.granted} days</span>
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4 pt-6">
-              <div className="text-center bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
-                <div className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <CardContent className="space-y-3 pt-4 pb-4 px-5">
+              <div className="text-center bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg py-3 px-4">
+                <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   {leave.balance}
                 </div>
-                <div className="text-sm text-muted-foreground mt-1 font-medium">Days Available</div>
+                <div className="text-xs text-muted-foreground mt-0.5">Days Available</div>
               </div>
               
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground font-medium">Consumed</span>
-                  <span className="font-semibold">{leave.availed} of {leave.granted}</span>
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Consumed</span>
+                  <span className="font-semibold text-foreground">{leave.availed} of {leave.granted}</span>
                 </div>
                 <Progress 
                   value={getProgressPercentage(leave.availed, leave.granted)} 
-                  className="h-2 bg-primary-light"
+                  className="h-1.5 bg-primary-light"
                 />
               </div>
             </CardContent>
