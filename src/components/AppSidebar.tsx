@@ -17,9 +17,11 @@ import {
   ChevronDown,
   CalendarDays
 } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 interface AppSidebarProps {
   isOpen: boolean;
@@ -63,7 +65,38 @@ const menuItems = [
 
 export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [openMenus, setOpenMenus] = useState<string[]>([]);
+  const [userName, setUserName] = useState<string>("User");
+  const [userInitials, setUserInitials] = useState<string>("U");
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        if (profile?.full_name) {
+          setUserName(profile.full_name);
+          const nameParts = profile.full_name.split(' ');
+          setUserInitials(nameParts.map(part => part[0]).join('').toUpperCase().slice(0, 2));
+        } else {
+          // Fallback to email username
+          const emailName = user.email?.split('@')[0] || 'User';
+          setUserName(emailName);
+          setUserInitials(emailName.substring(0, 2).toUpperCase());
+        }
+      }
+    };
+
+    if (isOpen) {
+      fetchUserProfile();
+    }
+  }, [isOpen]);
 
   const toggleSubmenu = (title: string) => {
     setOpenMenus(prev => 
@@ -75,19 +108,38 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Logged out successfully",
+        description: "See you next time!"
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Logout failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent side="right" className="w-[320px] p-0 flex flex-col">
         {/* User Profile Section */}
         <div className="bg-gradient-to-r from-primary to-secondary p-6 flex items-center gap-3">
           <Avatar className="w-14 h-14 border-2 border-white/40">
-            <AvatarImage src="" alt="Prakash" />
+            <AvatarImage src="" alt={userName} />
             <AvatarFallback className="bg-primary-dark text-primary-foreground font-semibold text-lg">
-              P
+              {userInitials}
             </AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-white font-semibold text-lg">Prakash</p>
+            <p className="text-white font-semibold text-lg">{userName}</p>
             <p className="text-white/80 text-sm">Sales Representative</p>
           </div>
         </div>
@@ -154,10 +206,7 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
         <div className="p-4 border-t border-border">
           <Button 
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-            onClick={() => {
-              // Handle logout logic here
-              console.log("Logging out...");
-            }}
+            onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 mr-2" />
             LOGOUT

@@ -14,6 +14,7 @@ import { SalesPerformanceWidget } from "@/components/SalesPerformanceWidget";
 import { SalesPerformanceDialog } from "@/components/SalesPerformanceDialog";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Power,
   Mail,
@@ -58,6 +59,34 @@ const Dashboard = () => {
   const [isPrimarySalesOpen, setIsPrimarySalesOpen] = useState(false);
   const [isSalesPerformanceOpen, setIsSalesPerformanceOpen] = useState(false);
   const [isNudgeCenterOpen, setIsNudgeCenterOpen] = useState(false);
+  const [userName, setUserName] = useState<string>("User");
+  const [userInitials, setUserInitials] = useState<string>("U");
+
+  // Fetch user profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        if (profile?.full_name) {
+          setUserName(profile.full_name);
+          const nameParts = profile.full_name.split(' ');
+          setUserInitials(nameParts.map(part => part[0]).join('').toUpperCase().slice(0, 2));
+        } else {
+          const emailName = user.email?.split('@')[0] || 'User';
+          setUserName(emailName);
+          setUserInitials(emailName.substring(0, 2).toUpperCase());
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   // Show performance summary on mount (first login)
   useEffect(() => {
@@ -113,10 +142,10 @@ const Dashboard = () => {
       <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-6 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-3">
           <Avatar className="w-12 h-12 border-2 border-white/40">
-            <AvatarImage src="" alt="Prakash" />
-            <AvatarFallback className="bg-primary-dark text-primary-foreground font-semibold">P</AvatarFallback>
+            <AvatarImage src="" alt={userName} />
+            <AvatarFallback className="bg-primary-dark text-primary-foreground font-semibold">{userInitials}</AvatarFallback>
           </Avatar>
-          <span className="text-lg font-semibold">Prakash</span>
+          <span className="text-lg font-semibold">{userName}</span>
         </div>
 
         <div className="flex items-center gap-2">
