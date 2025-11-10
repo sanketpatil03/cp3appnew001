@@ -12,6 +12,7 @@ import { PrimarySalesWidget } from "@/components/PrimarySalesWidget";
 import { PrimarySalesDialog } from "@/components/PrimarySalesDialog";
 import { SalesPerformanceWidget } from "@/components/SalesPerformanceWidget";
 import { SalesPerformanceDialog } from "@/components/SalesPerformanceDialog";
+import { ProfilePictureUpload } from "@/components/ProfilePictureUpload";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -61,6 +62,7 @@ const Dashboard = () => {
   const [isNudgeCenterOpen, setIsNudgeCenterOpen] = useState(false);
   const [userName, setUserName] = useState<string>("User");
   const [userInitials, setUserInitials] = useState<string>("U");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   // Fetch user profile
   useEffect(() => {
@@ -69,7 +71,7 @@ const Dashboard = () => {
       if (user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('full_name')
+          .select('full_name, avatar_url')
           .eq('id', user.id)
           .single();
 
@@ -82,11 +84,17 @@ const Dashboard = () => {
           setUserName(emailName);
           setUserInitials(emailName.substring(0, 2).toUpperCase());
         }
+
+        setAvatarUrl(profile?.avatar_url || null);
       }
     };
 
     fetchUserProfile();
   }, []);
+
+  const handleAvatarUploadComplete = (url: string) => {
+    setAvatarUrl(url);
+  };
 
   // Show performance summary on mount (first login)
   useEffect(() => {
@@ -141,10 +149,16 @@ const Dashboard = () => {
       {/* Top Navigation */}
       <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-6 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-3">
-          <Avatar className="w-12 h-12 border-2 border-white/40">
-            <AvatarImage src="" alt={userName} />
-            <AvatarFallback className="bg-primary-dark text-primary-foreground font-semibold">{userInitials}</AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <Avatar className="w-12 h-12 border-2 border-white/40">
+              <AvatarImage src={avatarUrl || ""} alt={userName} />
+              <AvatarFallback className="bg-primary-dark text-primary-foreground font-semibold">{userInitials}</AvatarFallback>
+            </Avatar>
+            <ProfilePictureUpload 
+              currentAvatarUrl={avatarUrl || undefined}
+              onUploadComplete={handleAvatarUploadComplete}
+            />
+          </div>
           <span className="text-lg font-semibold">{userName}</span>
         </div>
 
