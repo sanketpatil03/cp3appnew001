@@ -188,9 +188,11 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Apply for Leave</DialogTitle>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-white to-primary-light/30">
+        <DialogHeader className="border-b border-primary/20 pb-4">
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Apply for Leave
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
@@ -299,10 +301,12 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
 
           {/* Days Calculation */}
           {fromDate && toDate && (
-            <div className="bg-muted p-3 rounded-md">
+            <div className="bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30 p-4 rounded-xl">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Applying for:</span>
-                <span className="text-lg font-bold">{calculateDays()} days</span>
+                <span className="text-sm font-medium text-foreground">Applying for:</span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  {calculateDays()} days
+                </span>
               </div>
             </div>
           )}
@@ -355,12 +359,20 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
           </div>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+        <DialogFooter className="border-t border-primary/20 pt-4">
+          <Button 
+            variant="outline" 
+            onClick={() => onOpenChange(false)}
+            className="border-primary/30 hover:bg-primary/5"
+          >
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
+          <Button 
+            onClick={handleSubmit} 
+            disabled={loading}
+            className="bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-primary shadow-md"
+          >
+            {loading ? "Submitting..." : "Submit Leave Request"}
           </Button>
         </DialogFooter>
       </DialogContent>

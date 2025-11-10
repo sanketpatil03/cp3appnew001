@@ -23,6 +23,11 @@ export default {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
           dark: "hsl(var(--primary-dark))",
+          light: "hsl(var(--primary-light))",
+        },
+        leave: {
+          accent: "hsl(var(--leave-accent))",
+          "accent-muted": "hsl(var(--leave-accent-muted))",
         },
         success: {
           DEFAULT: "hsl(var(--success))",

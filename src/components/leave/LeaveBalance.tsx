@@ -86,7 +86,10 @@ const LeaveBalance = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <Button onClick={() => setIsApplyDialogOpen(true)} className="gap-2">
+        <Button 
+          onClick={() => setIsApplyDialogOpen(true)} 
+          className="gap-2 bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-primary shadow-lg hover:shadow-xl transition-all"
+        >
           <Plus className="w-4 h-4" />
           Apply Leave
         </Button>
@@ -94,28 +97,39 @@ const LeaveBalance = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {leaveBalances.map((leave) => (
-          <Card key={leave.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
+          <Card 
+            key={leave.id} 
+            className="hover:shadow-xl transition-all duration-300 border-2 border-primary/10 hover:border-primary/30 bg-gradient-to-br from-white to-primary-light/20"
+          >
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-secondary/10">
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-lg">{leave.leave_type.name}</CardTitle>
-                  <CardDescription className="text-sm mt-1">
-                    Granted: {leave.granted}
+                  <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    {leave.leave_type.name}
+                  </CardTitle>
+                  <CardDescription className="text-sm mt-2 font-medium">
+                    Granted: <span className="text-foreground">{leave.granted} days</span>
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary">{leave.balance}</div>
-                <div className="text-sm text-muted-foreground">Balance</div>
+            <CardContent className="space-y-4 pt-6">
+              <div className="text-center bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
+                <div className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  {leave.balance}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1 font-medium">Days Available</div>
               </div>
               
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{leave.availed} of {leave.granted} Consumed</span>
+                  <span className="text-muted-foreground font-medium">Consumed</span>
+                  <span className="font-semibold">{leave.availed} of {leave.granted}</span>
                 </div>
-                <Progress value={getProgressPercentage(leave.availed, leave.granted)} />
+                <Progress 
+                  value={getProgressPercentage(leave.availed, leave.granted)} 
+                  className="h-2 bg-primary-light"
+                />
               </div>
             </CardContent>
           </Card>
