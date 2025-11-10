@@ -14,7 +14,8 @@ import {
   Plus,
   LogOut,
   Palette,
-  ChevronDown
+  ChevronDown,
+  CalendarDays
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -56,6 +57,7 @@ const menuItems = [
     hasSubmenu: true,
     submenu: []
   },
+  { title: "Leave", url: "/leave", icon: CalendarDays },
   { title: "Pop-up Designs", url: "/popup-designs", icon: Palette },
 ];
 

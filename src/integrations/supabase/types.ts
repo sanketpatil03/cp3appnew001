@@ -14,7 +14,133 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leave_applications: {
+        Row: {
+          applied_on: string
+          attachment_url: string | null
+          comments: string | null
+          created_at: string
+          days: number
+          from_date: string
+          from_session: string
+          id: string
+          leave_type_id: string
+          reporting_manager: string
+          status: string
+          to_date: string
+          to_session: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applied_on?: string
+          attachment_url?: string | null
+          comments?: string | null
+          created_at?: string
+          days: number
+          from_date: string
+          from_session: string
+          id?: string
+          leave_type_id: string
+          reporting_manager: string
+          status?: string
+          to_date: string
+          to_session: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applied_on?: string
+          attachment_url?: string | null
+          comments?: string | null
+          created_at?: string
+          days?: number
+          from_date?: string
+          from_session?: string
+          id?: string
+          leave_type_id?: string
+          reporting_manager?: string
+          status?: string
+          to_date?: string
+          to_session?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_applications_leave_type_id_fkey"
+            columns: ["leave_type_id"]
+            isOneToOne: false
+            referencedRelation: "leave_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leave_balances: {
+        Row: {
+          availed: number
+          balance: number
+          created_at: string
+          granted: number
+          id: string
+          leave_type_id: string
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          availed?: number
+          balance?: number
+          created_at?: string
+          granted?: number
+          id?: string
+          leave_type_id: string
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          availed?: number
+          balance?: number
+          created_at?: string
+          granted?: number
+          id?: string
+          leave_type_id?: string
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_balances_leave_type_id_fkey"
+            columns: ["leave_type_id"]
+            isOneToOne: false
+            referencedRelation: "leave_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leave_types: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
