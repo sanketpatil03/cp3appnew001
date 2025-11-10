@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import CreateDemoUserButton from "@/components/leave/CreateDemoUserButton";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, User, HelpCircle } from "lucide-react";
@@ -149,6 +150,14 @@ const Login = () => {
               LOGIN
             </Button>
           </form>
+
+          {/* Demo User Creation */}
+          <div className="pt-6 border-t border-gray-200">
+            <div className="text-center mb-3">
+              <p className="text-sm text-gray-600">For demo/testing purposes:</p>
+            </div>
+            <CreateDemoUserButton />
+          </div>
 
           {/* Client logo placeholder */}
           <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center space-y-2.5 mt-10 bg-white/50">
