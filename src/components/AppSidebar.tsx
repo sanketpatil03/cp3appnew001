@@ -75,7 +75,7 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="left" className="w-[320px] p-0 flex flex-col">
+      <SheetContent side="right" className="w-[320px] p-0 flex flex-col">
         {/* User Profile Section */}
         <div className="bg-gradient-to-r from-primary to-secondary p-6 flex items-center gap-3">
           <Avatar className="w-14 h-14 border-2 border-white/40">
