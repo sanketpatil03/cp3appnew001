@@ -1,25 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import CreateDemoUserButton from "@/components/leave/CreateDemoUserButton";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, User, HelpCircle } from "lucide-react";
+import { Eye, EyeOff, Mail, HelpCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/dashboard");
+      }
+    };
+    checkUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        navigate("/dashboard");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const isFirstTimeUser = !localStorage.getItem("inductionComplete");
-    
-    if (isFirstTimeUser) {
-      navigate("/induction");
-    } else {
-      navigate("/dashboard");
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password: password,
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        toast({
+          title: "Login Successful",
+          description: "Welcome back!"
+        });
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Login Failed",
+        description: error.message || "Invalid email or password",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,17 +137,32 @@ const Login = () => {
         <div className="w-full max-w-[420px] space-y-8">
           <div className="text-center space-y-5">
             <div className="inline-flex items-center justify-center w-[180px] h-[180px] rounded-full bg-[#C5C9CE] mb-1">
-              <User className="w-[90px] h-[90px] text-white" strokeWidth={1.2} />
+              <Mail className="w-[90px] h-[90px] text-white" strokeWidth={1.2} />
             </div>
             <h1 className="text-[38px] font-light text-primary leading-tight">
-              Hi, Prakash Patil
+              Welcome Back
             </h1>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
+              <label htmlFor="email" className="block text-[15px] font-normal text-gray-600 mb-2.5">
+                Email Address
+              </label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="amaan.khan@demo.com"
+                className="h-[52px] text-base border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-primary focus:border-primary shadow-sm"
+                required
+              />
+            </div>
+
+            <div>
               <label htmlFor="password" className="block text-[15px] font-normal text-gray-600 mb-2.5">
-                Enter your password
+                Password
               </label>
               <div className="relative">
                 <Input
@@ -112,7 +170,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="*****"
+                  placeholder="Enter your password"
                   className="pr-12 h-[52px] text-base border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-primary focus:border-primary shadow-sm"
                   required
                 />
@@ -145,9 +203,10 @@ const Login = () => {
 
             <Button 
               type="submit" 
-              className="w-full h-[52px] text-base font-bold bg-primary hover:bg-primary/90 rounded-xl shadow-md hover:shadow-lg transition-all uppercase tracking-wide"
+              disabled={loading}
+              className="w-full h-[52px] text-base font-bold bg-primary hover:bg-primary/90 rounded-xl shadow-md hover:shadow-lg transition-all uppercase tracking-wide disabled:opacity-50"
             >
-              LOGIN
+              {loading ? "LOGGING IN..." : "LOGIN"}
             </Button>
           </form>
 
@@ -157,6 +216,11 @@ const Login = () => {
               <p className="text-sm text-gray-600">For demo/testing purposes:</p>
             </div>
             <CreateDemoUserButton />
+            <div className="mt-3 text-center">
+              <p className="text-xs text-gray-500">
+                Demo credentials: amaan.khan@demo.com / aaaa
+              </p>
+            </div>
           </div>
 
           {/* Client logo placeholder */}

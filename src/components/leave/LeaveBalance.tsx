@@ -6,7 +6,6 @@ import { Progress } from "@/components/ui/progress";
 import { Plus } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import ApplyLeaveDialog from "./ApplyLeaveDialog";
-import SeedDataButton from "./SeedDataButton";
 
 interface LeaveBalance {
   id: string;
@@ -86,8 +85,7 @@ const LeaveBalance = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <SeedDataButton onSuccess={fetchLeaveBalances} />
+      <div className="flex justify-end">
         <Button onClick={() => setIsApplyDialogOpen(true)} className="gap-2">
           <Plus className="w-4 h-4" />
           Apply Leave

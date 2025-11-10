@@ -34,13 +34,34 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
   const [attachment, setAttachment] = useState<File | null>(null);
   const [leaveTypes, setLeaveTypes] = useState<LeaveType[]>([]);
   const [loading, setLoading] = useState(false);
-  const reportingManager = "Manager Name"; // This should come from user profile
+  const [reportingManager, setReportingManager] = useState<string>("Manager Name");
 
   useEffect(() => {
     if (open) {
       fetchLeaveTypes();
+      fetchUserProfile();
     }
   }, [open]);
+
+  const fetchUserProfile = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('reporting_manager')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+      if (data?.reporting_manager) {
+        setReportingManager(data.reporting_manager);
+      }
+    } catch (error: any) {
+      console.error('Error fetching profile:', error);
+    }
+  };
 
   const fetchLeaveTypes = async () => {
     try {
