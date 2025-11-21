@@ -14,70 +14,13 @@ export type Database = {
   }
   public: {
     Tables: {
-      escalation_config: {
-        Row: {
-          created_at: string
-          enabled: boolean
-          escalation_hours: number
-          id: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          enabled?: boolean
-          escalation_hours?: number
-          id?: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          enabled?: boolean
-          escalation_hours?: number
-          id?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      holidays: {
-        Row: {
-          created_at: string
-          date: string
-          id: string
-          name: string
-          type: string
-          year: number
-        }
-        Insert: {
-          created_at?: string
-          date: string
-          id?: string
-          name: string
-          type?: string
-          year: number
-        }
-        Update: {
-          created_at?: string
-          date?: string
-          id?: string
-          name?: string
-          type?: string
-          year?: number
-        }
-        Relationships: []
-      }
       leave_applications: {
         Row: {
           applied_on: string
-          approval_level: number
           attachment_url: string | null
-          cancellation_approved_by: string | null
-          cancellation_reason: string | null
-          cancelled_by: string | null
           comments: string | null
           created_at: string
-          current_approver_id: string | null
           days: number
-          escalated_at: string | null
           from_date: string
           from_session: string
           id: string
@@ -91,16 +34,10 @@ export type Database = {
         }
         Insert: {
           applied_on?: string
-          approval_level?: number
           attachment_url?: string | null
-          cancellation_approved_by?: string | null
-          cancellation_reason?: string | null
-          cancelled_by?: string | null
           comments?: string | null
           created_at?: string
-          current_approver_id?: string | null
           days: number
-          escalated_at?: string | null
           from_date: string
           from_session: string
           id?: string
@@ -114,16 +51,10 @@ export type Database = {
         }
         Update: {
           applied_on?: string
-          approval_level?: number
           attachment_url?: string | null
-          cancellation_approved_by?: string | null
-          cancellation_reason?: string | null
-          cancelled_by?: string | null
           comments?: string | null
           created_at?: string
-          current_approver_id?: string | null
           days?: number
-          escalated_at?: string | null
           from_date?: string
           from_session?: string
           id?: string
@@ -141,47 +72,6 @@ export type Database = {
             columns: ["leave_type_id"]
             isOneToOne: false
             referencedRelation: "leave_types"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      leave_approvals: {
-        Row: {
-          action: string
-          application_id: string
-          approver_id: string | null
-          comments: string | null
-          created_at: string
-          id: string
-          level: number
-          updated_at: string
-        }
-        Insert: {
-          action: string
-          application_id: string
-          approver_id?: string | null
-          comments?: string | null
-          created_at?: string
-          id?: string
-          level?: number
-          updated_at?: string
-        }
-        Update: {
-          action?: string
-          application_id?: string
-          approver_id?: string | null
-          comments?: string | null
-          created_at?: string
-          id?: string
-          level?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "leave_approvals_application_id_fkey"
-            columns: ["application_id"]
-            isOneToOne: false
-            referencedRelation: "leave_applications"
             referencedColumns: ["id"]
           },
         ]
@@ -235,58 +125,19 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
-          is_lwp: boolean
-          mandatory_attachment_days: number | null
           name: string
-          requires_approval: boolean
-          requires_balance_check: boolean
         }
         Insert: {
           created_at?: string
           description?: string | null
           id?: string
-          is_lwp?: boolean
-          mandatory_attachment_days?: number | null
           name: string
-          requires_approval?: boolean
-          requires_balance_check?: boolean
         }
         Update: {
           created_at?: string
           description?: string | null
           id?: string
-          is_lwp?: boolean
-          mandatory_attachment_days?: number | null
           name?: string
-          requires_approval?: boolean
-          requires_balance_check?: boolean
-        }
-        Relationships: []
-      }
-      manager_hierarchy: {
-        Row: {
-          created_at: string
-          employee_id: string
-          id: string
-          level: number
-          manager_id: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          employee_id: string
-          id?: string
-          level?: number
-          manager_id?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          employee_id?: string
-          id?: string
-          level?: number
-          manager_id?: string | null
-          updated_at?: string
         }
         Relationships: []
       }
@@ -323,63 +174,15 @@ export type Database = {
         }
         Relationships: []
       }
-      user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
-      weekly_offs: {
-        Row: {
-          created_at: string
-          day_of_week: number
-          id: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          day_of_week: number
-          id?: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          day_of_week?: number
-          id?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "rep" | "manager" | "admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -506,8 +309,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["rep", "manager", "admin"],
-    },
+    Enums: {},
   },
 } as const

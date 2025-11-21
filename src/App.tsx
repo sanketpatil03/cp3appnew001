@@ -12,7 +12,6 @@ import PopupDesigns from "./pages/PopupDesigns";
 import NotFound from "./pages/NotFound";
 import SalesPerformancePage from "./components/SalesPerformancePage";
 import Leave from "./pages/Leave";
-import Approvals from "./pages/Approvals";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +30,6 @@ const App = () => (
           <Route path="/popup-designs" element={<PopupDesigns />} />
           <Route path="/sales" element={<SalesPerformancePage />} />
           <Route path="/leave" element={<Leave />} />
-          <Route path="/approvals" element={<Approvals />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -185,34 +185,6 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
       return;
     }
 
-    // Check if leave type requires balance check
-    const selectedLeaveType = leaveTypes.find(lt => lt.id === leaveTypeId);
-    if (selectedLeaveType && 'requires_balance_check' in selectedLeaveType && (selectedLeaveType as any).requires_balance_check && leaveBalance) {
-      const daysToApply = calculateDays();
-      if (daysToApply > leaveBalance.balance) {
-        toast({
-          title: "Insufficient Balance",
-          description: `You only have ${leaveBalance.balance} days available for ${selectedLeaveType.name}`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
-    // Check if mandatory attachment is required
-    if (selectedLeaveType && 'mandatory_attachment_days' in selectedLeaveType) {
-      const mandatoryDays = (selectedLeaveType as any).mandatory_attachment_days;
-      const daysToApply = calculateDays();
-      if (mandatoryDays && daysToApply > mandatoryDays && attachments.length === 0) {
-        toast({
-          title: "Attachment Required",
-          description: `Attachment is mandatory for leave requests exceeding ${mandatoryDays} days`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
     setLoading(true);
 
     try {
@@ -242,13 +214,6 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
 
       const days = calculateDays();
 
-      // Get manager for approval workflow
-      const { data: managerHierarchy } = await supabase
-        .from('manager_hierarchy')
-        .select('manager_id')
-        .eq('employee_id', user.id)
-        .single();
-
       const { error } = await supabase
         .from('leave_applications')
         .insert({
@@ -262,9 +227,7 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
           comments,
           attachment_url: attachmentUrls.length > 0 ? JSON.stringify(attachmentUrls) : null,
           reporting_manager: reportingManager,
-          status: 'Pending',
-          current_approver_id: managerHierarchy?.manager_id || null,
-          approval_level: 1,
+          status: 'Pending'
         });
 
       if (error) throw error;
