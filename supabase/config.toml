@@ -2,3 +2,15 @@ project_id = "adxinogzhchlkgoljvcw"
 
 [functions.realtime-voice]
 verify_jwt = false
+
+[functions.create-demo-user]
+verify_jwt = false
+
+[functions.seed-leave-data]
+verify_jwt = false
+
+[functions.create-manager]
+verify_jwt = false
+
+[functions.seed-demo-leaves]
+verify_jwt = false

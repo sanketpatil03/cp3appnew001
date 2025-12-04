@@ -7,6 +7,7 @@ import AppliedLeaves from "@/components/leave/AppliedLeaves";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { SeedDemoButton } from "@/components/leave/SeedDemoButton";
 
 const Leave = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -53,14 +54,17 @@ const Leave = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate("/")}
-            className="mb-4 hover:bg-primary/10"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
+          <div className="flex items-center justify-between mb-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate("/")}
+              className="hover:bg-primary/10"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Button>
+            <SeedDemoButton />
+          </div>
           
           <div className="bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl shadow-lg">
             <div className="flex items-center justify-between">
