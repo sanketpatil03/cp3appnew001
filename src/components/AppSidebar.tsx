@@ -15,7 +15,8 @@ import {
   LogOut,
   Palette,
   ChevronDown,
-  CalendarDays
+  CalendarDays,
+  CheckCircle
 } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -29,7 +30,16 @@ interface AppSidebarProps {
   onClose: () => void;
 }
 
-const menuItems = [
+interface MenuItem {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+  hasSubmenu?: boolean;
+  submenu?: string[];
+  managerOnly?: boolean;
+}
+
+const baseMenuItems: MenuItem[] = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "My Reports", url: "/my-reports", icon: FileText },
   { title: "Action Point View", url: "/action-point-view", icon: Target },
@@ -61,6 +71,7 @@ const menuItems = [
     submenu: []
   },
   { title: "Leave", url: "/leave", icon: CalendarDays },
+  { title: "Approvals", url: "/approvals", icon: CheckCircle, managerOnly: true },
   { title: "Pop-up Designs", url: "/popup-designs", icon: Palette },
 ];
 
@@ -71,6 +82,8 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
   const [userName, setUserName] = useState<string>("User");
   const [userInitials, setUserInitials] = useState<string>("U");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [isManager, setIsManager] = useState(false);
+  const [userRole, setUserRole] = useState<string>("Sales Representative");
 
   const fetchUserProfile = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -93,6 +106,19 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
       }
 
       setAvatarUrl(profile?.avatar_url || null);
+
+      // Check if user is a manager
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'manager')
+        .maybeSingle();
+
+      if (roleData) {
+        setIsManager(true);
+        setUserRole("Manager");
+      }
     }
   };
 
@@ -101,6 +127,9 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
       fetchUserProfile();
     }
   }, [isOpen]);
+
+  // Filter menu items based on user role
+  const menuItems = baseMenuItems.filter(item => !item.managerOnly || isManager);
 
   const handleAvatarUploadComplete = (url: string) => {
     setAvatarUrl(url);
@@ -154,7 +183,7 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
           </div>
           <div>
             <p className="text-white font-semibold text-lg">{userName}</p>
-            <p className="text-white/80 text-sm">Sales Representative</p>
+            <p className="text-white/80 text-sm">{userRole}</p>
           </div>
         </div>
 
