@@ -191,6 +191,15 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("User not authenticated");
 
+      // Get manager ID from hierarchy
+      const { data: hierarchyData } = await supabase
+        .from('manager_hierarchy')
+        .select('manager_id')
+        .eq('employee_id', user.id)
+        .single();
+
+      const managerId = hierarchyData?.manager_id || null;
+
       // Upload attachments if present
       const attachmentUrls: string[] = [];
       if (attachments.length > 0) {
@@ -227,6 +236,7 @@ const ApplyLeaveDialog = ({ open, onOpenChange, onSuccess }: ApplyLeaveDialogPro
           comments,
           attachment_url: attachmentUrls.length > 0 ? JSON.stringify(attachmentUrls) : null,
           reporting_manager: reportingManager,
+          current_approver_id: managerId,
           status: 'Pending'
         });
 
