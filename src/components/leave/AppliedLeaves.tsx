@@ -25,6 +25,8 @@ interface LeaveApplication {
   from_session: string;
   to_session: string;
   reporting_manager: string;
+  approval_remarks?: string;
+  approved_by?: string;
 }
 
 const AppliedLeaves = () => {
@@ -62,9 +64,31 @@ const AppliedLeaves = () => {
 
       if (error) throw error;
 
+      // Fetch approval remarks for each application
+      const applicationIds = data?.map(d => d.id) || [];
+      const { data: approvals } = await supabase
+        .from('leave_approvals')
+        .select('application_id, comments, approver_id')
+        .in('application_id', applicationIds);
+
+      // Fetch approver names
+      const approverIds = [...new Set(approvals?.map(a => a.approver_id).filter(Boolean) || [])];
+      const { data: approverProfiles } = await supabase
+        .from('profiles')
+        .select('id, full_name')
+        .in('id', approverIds);
+
+      const approverMap = new Map(approverProfiles?.map(p => [p.id, p.full_name]) || []);
+      const approvalMap = new Map(approvals?.map(a => [
+        a.application_id, 
+        { remarks: a.comments, approver: approverMap.get(a.approver_id) || 'Manager' }
+      ]) || []);
+
       const formattedData = data?.map(item => ({
         ...item,
-        leave_type: Array.isArray(item.leave_types) ? item.leave_types[0] : item.leave_types
+        leave_type: Array.isArray(item.leave_types) ? item.leave_types[0] : item.leave_types,
+        approval_remarks: approvalMap.get(item.id)?.remarks,
+        approved_by: approvalMap.get(item.id)?.approver
       })) || [];
 
       setApplications(formattedData);

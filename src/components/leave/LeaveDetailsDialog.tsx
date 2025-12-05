@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { Calendar, Clock, FileText, User } from "lucide-react";
+import { Calendar, Clock, FileText, User, MessageSquare } from "lucide-react";
 
 interface LeaveApplication {
   id: string;
@@ -18,6 +18,8 @@ interface LeaveApplication {
   comments: string;
   attachment_url: string | null;
   reporting_manager: string;
+  approval_remarks?: string;
+  approved_by?: string;
 }
 
 interface LeaveDetailsDialogProps {
@@ -107,6 +109,25 @@ const LeaveDetailsDialog = ({ leave, open, onOpenChange }: LeaveDetailsDialogPro
               {leave.comments}
             </div>
           </div>
+
+          {/* Manager Remarks - Only show for Approved/Rejected */}
+          {(leave.status === 'Approved' || leave.status === 'Rejected') && (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-muted-foreground" />
+                <div className="text-sm font-medium">
+                  Manager Remarks {leave.approved_by && `(${leave.approved_by})`}
+                </div>
+              </div>
+              <div className={`p-3 rounded-md text-sm ${
+                leave.status === 'Approved' 
+                  ? 'bg-green-50 border border-green-200 text-green-800' 
+                  : 'bg-red-50 border border-red-200 text-red-800'
+              }`}>
+                {leave.approval_remarks || 'No remarks provided'}
+              </div>
+            </div>
+          )}
 
           {/* Attachment */}
           {leave.attachment_url && (
